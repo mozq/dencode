@@ -27,9 +27,11 @@
 <p>Por ejemplo, convertir "Hello" en Ascii85 da el siguiente resultado:</p>
 
 <p>1. Dividir en grupos de 4 bytes. Si hay menos de 4 bytes, rellenar el final con "00".</p>
+
 <pre>48656C6C<sub>(16)</sub> 6F000000<sub>(16)</sub>  (Hell o)</pre>
 
 <p>2. Tratar cada 4 bytes como un entero sin signo big-endian y convertir ese valor a dígitos en base 85.</p>
+
 <pre>48656C6C<sub>(16)</sub>
 = 1214606444<sub>(10)</sub>
 = <b>23</b> * 85<sup>4</sup> + <b>22</b> * 85<sup>3</sup> + <b>66</b> * 85<sup>2</sup> + <b>52</b> * 85 + <b>49</b></pre>

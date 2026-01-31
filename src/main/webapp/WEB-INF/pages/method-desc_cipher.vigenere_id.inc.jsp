@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>Tentang sandi Vigenere</h3>
-<p>Sandi Vigenere adalah jenis sandi polialfabetik yang menggunakan Bujursangkar Vigenère (Vigenère square) berikut.</p>
+<p>Sandi Vigenere adalah jenis sandi polialfabetik.</p>
+<p>Substitusi karakter dilakukan menggunakan kunci enkripsi dan Bujursangkar Vigenère berikut.</p>
 
 <div class="table-responsive">
 	<table class="table table-sm table-bordered text-center text-nowrap text-monospace">

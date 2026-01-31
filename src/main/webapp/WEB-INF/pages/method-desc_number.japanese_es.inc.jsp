@@ -72,7 +72,7 @@
 	</table>
 </div>
 
-<p>Para 10, 100 y 1000, es común omitir el "uno" y escribir "十", "百", "千" en lugar de "一十", "一百", "一千". Sin embargo, en el caso de Daiji, a veces se escribe explícitamente "壱".</p>
+<p>Para 10, 100 y 1000, es común omitir el "一" y escribir "十", "百", "千" en lugar de "一十", "一百", "一千". Sin embargo, en el caso de Daiji, a veces se escribe explícitamente "壱".</p>
 
 <p>Los decimales se representan después de "・" utilizando notación posicional.</p>
 

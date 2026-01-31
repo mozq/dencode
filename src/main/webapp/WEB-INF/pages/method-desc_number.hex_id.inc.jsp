@@ -26,8 +26,7 @@
 	</table>
 </div>
 
-<p>Selain itu, nilai desimal dalam angka heksadesimal dikonversi sebagai nilai tempat 16<sup>-1</sup> (1/16), 16<sup>-2</sup> (1/256), 16<sup>-3</sup> (1/4096), ... </p>
-<p>Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 16<sup>-n</sup>, konversi ke angka heksadesimal tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
+<p>Selain itu, nilai desimal dalam angka heksadesimal dikonversi sebagai nilai tempat 16<sup>-1</sup> (1/16), 16<sup>-2</sup> (1/256), 16<sup>-3</sup> (1/4096), ... Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 16<sup>-n</sup>, konversi ke angka heksadesimal tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
 
 <div class="table-responsive">
 	<table class="table">

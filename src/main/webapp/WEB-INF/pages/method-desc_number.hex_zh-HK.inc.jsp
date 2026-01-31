@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>關於十六進位 (Hexadecimal)</h3>
-<p>十六進位是用十六進位記數法表示的數值。</p>
+%><h3>關於十六進制 (Hexadecimal)</h3>
+<p>十六進制是用十六進制記數法表示的數值。</p>
 
-<p>在十六進位中，數值以 16 為基數，用「0123456789ABCDEF」表示。十進位的 0 到 9 在十六進位中也用 0 到 9 表示，10 到 15 用 A 到 F 表示。</p>
+<p>在十六進制中，數值以 16 為基數，用「0123456789ABCDEF」表示。十進制的 0 到 9 在十六進制中也用 0 到 9 表示，10 到 15 用 A 到 F 表示。</p>
 
-<p>十六進位的轉換範例如下。作為參考，同時也列出了二進位和八進位的轉換範例。</p>
+<p>十六進制轉換範例如下。作為參考，同時也列出了二進制和八進制的轉換範例。</p>
 
 <div class="table-responsive">
 	<table class="table">
 		<thead>
-			<tr><th>十進位</th><th>二進位</th><th>八進位</th><th>十六進位</th></tr>
+			<tr><th>十進制</th><th>二進制</th><th>八進制</th><th>十六進制</th></tr>
 		</thead>
 		<tbody>
 			<tr><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td></tr>
@@ -26,12 +26,12 @@
 	</table>
 </div>
 
-<p>此外，小數點後的數值在十六進位中作為 16<sup>-1</sup> (1/16), 16<sup>-2</sup> (1/256), 16<sup>-3</sup> (1/4096), ... 的各位的值進行轉換。如果小數點後的數值不能用 16<sup>-n</sup> 的總和表示，則無法完全轉換為十六進位，會產生誤差。在這種情況下，DenCode 通過在末尾附加「...」來省略表示。</p>
+<p>此外，小數點後的數值在十六進制中作為 16<sup>-1</sup> (1/16), 16<sup>-2</sup> (1/256), 16<sup>-3</sup> (1/4096), ... 的各位的值進行轉換。如果小數點後的數值不能用 16<sup>-n</sup> 的總和表示，則無法完全轉換為十六進制，會產生誤差。在這種情況下，DenCode 通過在末尾附加「...」來省略表示。</p>
 
 <div class="table-responsive">
 	<table class="table">
 		<thead>
-			<tr><th>十進位</th><th>二進位</th><th>八進位</th><th>十六進位</th></tr>
+			<tr><th>十進制</th><th>二進制</th><th>八進制</th><th>十六進制</th></tr>
 		</thead>
 		<tbody>
 			<tr><td>0.5</td><td>0.1</td><td>0.4</td><td>0.8</td></tr>

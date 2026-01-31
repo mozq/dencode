@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>About Unicode escape sequence</h3>
+<p>Converts a string to Unicode escape sequence format.</p>
 <p>Unicode escape sequence convert a single character to the format of a 4-digit hexadecimal code point, such as \uXXXX. For example, "A" becomes "\u0041".</p>
 
 <p>In DenCode, in addition to the \uXXXX format, the following notation formats are also supported.</p>

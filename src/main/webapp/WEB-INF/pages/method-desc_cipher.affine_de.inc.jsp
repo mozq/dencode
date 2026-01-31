@@ -39,6 +39,7 @@ Geheimtext : DINSXCHMRWBGLQVAFKPUZEJOTY
 
 <p><var>a</var> muss teilerfremd (koprim) zu <var>m</var> sein. Das bedeutet, dass der größte gemeinsame Teiler von <var>a</var> und <var>m</var> 1 sein muss. Zum Beispiel ist <var>a</var> = 4 bei <var>m</var> = 26 nicht zulässig, da beide durch 2 teilbar sind. In DenCode wird das ursprüngliche Zeichen unverändert zurückgegeben, wenn ein ungültiges <var>a</var> angegeben wird.</p>
 
+
 <h4>Unterstützung anderer Sprachen</h4>
 <p>Neben lateinischen Buchstaben werden auch Kyrillisch und japanisches Hiragana/Katakana unterstützt.</p>
 

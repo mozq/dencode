@@ -26,8 +26,7 @@
 	</table>
 </div>
 
-<p>Selain itu, nilai desimal dalam angka biner dikonversi sebagai nilai tempat 2<sup>-1</sup> (1/2), 2<sup>-2</sup> (1/4), 2<sup>-3</sup> (1/8), ... </p>
-<p>Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 2<sup>-n</sup>, konversi ke angka biner tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
+<p>Selain itu, nilai desimal dalam angka biner dikonversi sebagai nilai tempat 2<sup>-1</sup> (1/2), 2<sup>-2</sup> (1/4), 2<sup>-3</sup> (1/8), ... Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 2<sup>-n</sup>, konversi ke angka biner tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
 
 <div class="table-responsive">
 	<table class="table">

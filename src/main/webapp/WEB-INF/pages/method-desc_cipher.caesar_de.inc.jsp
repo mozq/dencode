@@ -20,6 +20,7 @@ Geheimtext-Nachricht : QEFP FP X PBZOBQ JBPPXDB
 
 <p>Buchstaben werden unter Beibehaltung diakritischer Zeichen verschoben. So wird zum Beispiel „Á“ zu „X́“ verschlüsselt.</p>
 
+
 <h4>Unterstützung anderer Sprachen</h4>
 <p>Neben lateinischen Buchstaben werden auch Kyrillisch und japanisches Hiragana/Katakana unterstützt.</p>
 

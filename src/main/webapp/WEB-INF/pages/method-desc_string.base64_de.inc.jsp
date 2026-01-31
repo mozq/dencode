@@ -94,6 +94,7 @@
 
 <pre>SGVsbG8=</pre>
 
+
 <h4>MIME-Nachrichtenheader (RFC 2047)</h4>
 <p>DenCode unterstützt auch die Dekodierung von MIME-Headern (RFC 2047). Dies wird verwendet, wenn E-Mail-Betreffzeilen oder Empfänger Nicht-ASCII-Zeichen enthalten.</p>
 

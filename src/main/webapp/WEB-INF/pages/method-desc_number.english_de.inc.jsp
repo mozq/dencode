@@ -9,6 +9,7 @@
 <pre>0.99 = Zero point Nine Nine
 0.99 = Zero and 99/100</pre>
 
+
 <h4>Große Zahlen</h4>
 <p>Bei größeren Zahlen ändern sich die Bezeichnungen der Größenordnungen je nach verwendeter Skala: Short Scale (kurze Skala) oder Long Scale (lange Skala). In der Short Scale ändern sich die Namen alle 3 Ziffern, in der Long Scale alle 6 Ziffern. Die Long Scale verfügt außerdem über das Chuquet-System (10<sup>6N+3</sup> als „Thousand -illion“) und das Peletier-System („-illiard“).</p>
 <p>Die Short Scale wird hauptsächlich in englischsprachigen Ländern wie den USA, Kanada und Großbritannien (seit 1974) verwendet. Die Long Scale (Chuquet) wurde in Großbritannien vor 1973 verwendet, und das Peletier-System ist in vielen nicht-englischsprachigen europäischen Ländern (wie Frankreich, Deutschland, Italien) üblich.</p>
@@ -49,6 +50,7 @@
 <p>Die oben genannten Namen entsprechen modernen englischen Wörterbüchern.</p>
 <p>Die Namen der Long Scale (Chuquet und Peletier) gehen auf den französischen Mathematiker Nicolas Chuquet zurück, der 1484 Namen bis "Nonillion" (N=9) definierte. 1549 führte Jacques Peletier du Mans die "Milliard" ein.</p>
 
+
 <h4>Conway-Wechsler-System</h4>
 <p>Für sehr große Zahlen (N=10 oder 10<sup>33</sup> und größer) gibt es das <dfn>Conway-Wechsler-System</dfn>, definiert von John Horton Conway und Allan Wechsler. Es folgt diesen Regeln:</p>
 
@@ -83,6 +85,7 @@
 <pre>10<sup>252</sup> = 10<sup>3*83+3</sup> = One Tresoctogintillion</pre>
 
 <p>Für N >= 1.000 (10<sup>3003</sup>+) werden die Namen für jede 3er-Gruppe von N gebildet und aneinandergehängt. Bei N = 1.000.000<b>X</b> + 1.000<b>Y</b> + <b>Z</b> wird es zu „<b>X</b>illi<b>y</b>illi<b>z</b>illion“ kombiniert, wobei das „on“ von „-illion“ dazwischen wegfällt.</p>
+<p>Wenn der Wert 3-stellig 0 ist, wird es „Nillion“. Zum Beispiel bei N=1.000.003: „Million“(1) + „Nillion“(0) + „Trillion“(3) = „Millinillitrillion“.</p>
 <pre>10<sup>3012</sup> = 10<sup>3*1003+3</sup> = One Millitrillion
 10<sup>36633</sup> = 10<sup>3*12210+3</sup> = One Duodecillideciducentillion
 10<sup>3000012</sup> = 10<sup>3*1000003+3</sup> = One Millinillitrillion</pre>
@@ -103,6 +106,7 @@
 </div>
 
 <p>DenCode verwendet für „quinqua“ die Form „quin“, da dies näher an den Wörterbuchdefinitionen liegt (vorgeschlagen von Olivier Miakinen).</p>
+
 
 <h4>CW4EN-System</h4>
 <p>DenCode unterstützt das Conway-Wechsler-System, verwendet aber standardmäßig ein angepasstes System, das den englischen Wörterbüchern näher kommt: das <dfn><abbr title="Conway-Wechsler for English">CW4EN</abbr>-System</dfn>.</p>
@@ -128,6 +132,8 @@
 </div>
 
 <p>Die Assimilationsregeln sind im CW4EN-System vereinfacht und feste Schreibweisen werden bevorzugt (z.B. „se<b>x</b>“, „septe<b>n</b>“, „nove<b>m</b>“).</p>
+<p>Es gibt Beispiele für ähnliche Systeme wie CW4EN, aber diese berücksichtigen nicht den Unterschied zwischen „Tre<b>s</b>centillion“ und „Trecentillion“. (Bsp.: <cite><a href="https://www.nasdaq.com/glossary" target="_blank">Glossary of Stock Market Terms &amp; Definitions | Nasdaq</a></cite>)</p>
+
 <p>Einige Unterschiede zwischen Conway-Wechsler und CW4EN:</p>
 
 <div class="table-responsive">

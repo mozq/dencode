@@ -79,15 +79,19 @@
 <p>Por ejemplo, convertir "Hello" en Base64 da el siguiente resultado:</p>
 
 <p>1. Convertir a representación binaria.</p>
+
 <pre>01001000 01100101 01101100 01101100 01101111  (Para US-ASCII / UTF-8)</pre>
 
 <p>2. Dividir en grupos de 6 bits. Si hay menos de 6 bits, rellenar el final con "0".</p>
+
 <pre>010010 000110 010101 101100 011011 000110 111100</pre>
 
 <p>3. Convertir a caracteres usando la tabla de conversión. Se convierten cada 4 caracteres, y si hay menos de 4 caracteres, se rellena el final con "=".</p>
+
 <pre>SGVs bG8=</pre>
 
 <p>4. Unir todos los caracteres para obtener el resultado de la conversión Base64.</p>
+
 <pre>SGVsbG8=</pre>
 
 

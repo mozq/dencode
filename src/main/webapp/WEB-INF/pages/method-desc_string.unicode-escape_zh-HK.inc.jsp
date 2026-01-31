@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>關於 Unicode 跳脫序列 (Unicode Escape Sequence)</h3>
 <p>將字串轉換為 Unicode 跳脫序列的格式。</p>
-<p>Unicode 跳脫序列將 1 個字元轉換為類似 \uXXXX 的 4 位十六進位碼位格式。例如「あ」轉換為「\u3042」。</p>
+<p>Unicode 跳脫序列將 1 個字元轉換為類似 \uXXXX 的 4 位十六進制碼位格式。例如「あ」轉換為「\u3042」。</p>
 
 <p>DenCode 除了 \uXXXX 格式外，還支援以下格式的表示法的轉換。</p>
 
@@ -15,7 +15,7 @@
 		<tr><td>&amp;#xX;</td><td>&amp;#x41;&amp;#x42;&amp;#x43;</td><td>HTML, XML</td></tr>
 		<tr><td>%uXXXX</td><td>%u0041%u0042%u0043</td><td>百分號編碼 (非標準)</td></tr>
 		<tr><td>U+XXXX</td><td>U+0041 U+0042 U+0043</td><td>碼位的 Unicode 標準表示 (空格分隔)</td></tr>
-		<tr><td>0xX</td><td>0x41 0x42 0x43</td><td>碼位的十六進位表示 (空格分隔)</td></tr>
+		<tr><td>0xX</td><td>0x41 0x42 0x43</td><td>碼位的十六進制表示 (空格分隔)</td></tr>
 	</table>
 </div>
 

@@ -23,6 +23,7 @@ Geheimtext : תשרקצפעסנמלכיטחזוהדגבא
 
 <p>Da die erneute Verschlüsselung des Geheimtextes wieder den Klartext ergibt (Reziprozität), kann die Entschlüsselung auf demselben Weg wie die Verschlüsselung erfolgen.</p>
 
+
 <h4>Unterstützung anderer Sprachen</h4>
 <p>Neben lateinischen Buchstaben und Hebräisch werden auch Kyrillisch und japanisches Hiragana/Katakana unterstützt.</p>
 

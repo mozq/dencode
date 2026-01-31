@@ -26,8 +26,7 @@
 	</table>
 </div>
 
-<p>Selain itu, nilai desimal dalam angka oktal dikonversi sebagai nilai tempat 8<sup>-1</sup> (1/8), 8<sup>-2</sup> (1/64), 8<sup>-3</sup> (1/512), ... </p>
-<p>Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 8<sup>-n</sup>, konversi ke angka oktal tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
+<p>Selain itu, nilai desimal dalam angka oktal dikonversi sebagai nilai tempat 8<sup>-1</sup> (1/8), 8<sup>-2</sup> (1/64), 8<sup>-3</sup> (1/512), ... Jika nilai desimal tidak dapat direpresentasikan sebagai jumlah dari 8<sup>-n</sup>, konversi ke angka oktal tidak akan lengkap dan terjadi kesalahan. Dalam kasus tersebut, DenCode menyingkat representasi dengan menambahkan "..." di akhir.</p>
 
 <div class="table-responsive">
 	<table class="table">
