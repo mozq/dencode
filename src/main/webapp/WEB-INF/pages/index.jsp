@@ -297,6 +297,8 @@
 						<li data-oe="ISO-8859-9" tabindex="0">ISO-8859-9 (Latin-5)</li>
 						<li data-oe="windows-1254" tabindex="0">Windows-1254</li>
 						<li><hr /></li>
+						<li data-oe="ISCII91" tabindex="0">ISCII91</li>
+						<li><hr /></li>
 						<li data-oe="TIS-620" tabindex="0">TIS-620</li>
 						<li data-oe="windows-874" tabindex="0">Windows-874</li>
 						<li><hr /></li>
