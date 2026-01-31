@@ -136,6 +136,7 @@ DenCode supports the following languages:
 - [Korean (ko)](https://dencode.com/ko/)
 - [Portuguese (pt)](https://dencode.com/pt/)
 - [Russian (ru)](https://dencode.com/ru/)
+- [Vietnamese (vi)](https://dencode.com/vi/)
 - [Chinese Simplified (zh-CN)](https://dencode.com/zh-cn/)
 - [Chinese Traditional - Hong Kong (zh-HK)](https://dencode.com/zh-hk/)
 - [Chinese Traditional - Taiwan (zh-TW)](https://dencode.com/zh-tw/)
