@@ -61,7 +61,7 @@ public class IndexServlet extends AbstractDencodeHttpServlet {
 		
 		TZ_MAP = tzMap.entrySet().stream()
 				.sorted(Map.Entry.comparingByValue())
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (_, y) -> y, LinkedHashMap::new));
 	}
 	
 	private static final Map<String, String> SUPPORTED_LOCALE_MAP;
@@ -144,7 +144,7 @@ public class IndexServlet extends AbstractDencodeHttpServlet {
 			String basePath = request().getContextPath();
 			String localeId = reqres().attribute("localeId");
 			if (localeId != null && !localeId.isEmpty()) {
-				basePath = basePath + "/" + localeId;
+				basePath = basePath + "/" + localeId.toLowerCase();
 			}
 			reqres().setAttribute("basePath",  basePath);
 		}
