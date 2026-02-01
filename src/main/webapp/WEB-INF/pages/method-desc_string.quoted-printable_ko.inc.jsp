@@ -11,4 +11,4 @@
 
 <p>디코딩 후의 결과는 다음과 같습니다.</p>
 
-<pre>Subject: 샘플(サンプル)</pre>
+<pre>Subject: サンプル</pre>

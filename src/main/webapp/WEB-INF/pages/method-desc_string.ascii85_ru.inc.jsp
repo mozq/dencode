@@ -69,6 +69,6 @@
 		<tr><th></th><th>Cокращения</th></tr>
 		<tr><th>Z85</th><td>Нет</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 или более поздняя версия)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 или более поздняя версия)</td></tr>
 	</table>
 </div>

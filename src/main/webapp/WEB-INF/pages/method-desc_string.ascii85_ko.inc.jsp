@@ -69,6 +69,6 @@
 		<tr><th></th><th>단축형</th></tr>
 		<tr><th>Z85</th><td>없음</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 이후)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 이후)</td></tr>
 	</table>
 </div>

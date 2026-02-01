@@ -69,6 +69,6 @@
 		<tr><th></th><th>Kurzform</th></tr>
 		<tr><th>Z85</th><td>Keine</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (ab btoa v4.2)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (ab btoa v4.2)</td></tr>
 	</table>
 </div>

@@ -69,6 +69,6 @@
 		<tr><th></th><th>Contractions</th></tr>
 		<tr><th>Z85</th><td>None</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 or later)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 or later)</td></tr>
 	</table>
 </div>

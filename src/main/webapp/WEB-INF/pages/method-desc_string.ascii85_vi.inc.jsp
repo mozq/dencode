@@ -69,6 +69,6 @@
 		<tr><th></th><th>Dạng viết tắt</th></tr>
 		<tr><th>Z85</th><td>Không</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (từ btoa v4.2 trở đi)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (từ btoa v4.2 trở đi)</td></tr>
 	</table>
 </div>

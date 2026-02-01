@@ -69,6 +69,6 @@
 		<tr><th></th><th>संक्षिप्त रूप</th></tr>
 		<tr><th>Z85</th><td>None (कोई नहीं)</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 या बाद का संस्करण)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (btoa v4.2 या बाद का संस्करण)</td></tr>
 	</table>
 </div>

@@ -69,6 +69,6 @@
 		<tr><th></th><th>Abbreviazione</th></tr>
 		<tr><th>Z85</th><td>Nessuna</td></tr>
 		<tr><th>Adobe</th><td>00000000<sub>(16)</sub> -&gt; z</td></tr>
-		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (da btoa v4.2)<br /></td></tr>
+		<tr><th>btoa</th><td>00000000<sub>(16)</sub> -&gt; z<br />20202020<sub>(16)</sub> -&gt; y (da btoa v4.2)</td></tr>
 	</table>
 </div>

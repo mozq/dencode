@@ -186,8 +186,8 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ  : UKW-A
 <p>The normal notation for reflector rings is "ABCDEFGHIJKLMNOPQRSTUVWXYZ", but UKW-D's notation is in a special order, "A-ZXWVUTSRQPON-MLKIHGFEDCB". The two "-" (BO in normal notation) in the notation are fixed and always wired to each other and cannot be changed. The other 24 characters and 12 pairs of wires are set.</p>
 
 <pre>
-UKW-D notation : A-ZXWVUTSRQPON-MLKIHGFEDCB
-Normal notation: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+UKW-D notation  : A-ZXWVUTSRQPON-MLKIHGFEDCB
+Normal notation : ABCDEFGHIJKLMNOPQRSTUVWXYZ
 </pre>
 
 <p>UKW-D can be set for Enigma I, Enigma M4, and Enigma KD.</p>
