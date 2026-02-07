@@ -1,4 +1,4 @@
-dencode-web
+DenCode
 ============================
 DenCode is a web application for encoding and decoding values.  
 e.g. HTML Escape / URL Encoding / Base64 / MD5 / SHA-1 / CRC32 / and many other String, Number, DateTime, Color, Cipher, Hash formats
@@ -17,7 +17,7 @@ You can use DenCode online without downloading it.
 With [Docker](https://www.docker.com/), you can run DenCode wherever you want.
 
 ```bash
-docker run -p 8080:8080 ghcr.io/mozq/dencode-web:latest
+docker run -p 8080:8080 ghcr.io/mozq/dencode:latest
 ```
 
 After startup, DenCode can be accessed at http://localhost:8080/ .

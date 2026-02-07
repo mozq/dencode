@@ -2342,7 +2342,7 @@
 </div>
 
 <footer role="contentinfo">
-	© <a href="https://github.com/mozq/dencode-web" target="_blank">Mozq</a>
+	© <a href="https://github.com/mozq/dencode" target="_blank">Mozq</a>
 	| <a href="#policy">${dc:h(msg['label.policy'])}</a>
 </footer>
 
