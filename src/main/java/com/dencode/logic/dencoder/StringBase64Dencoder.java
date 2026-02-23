@@ -16,7 +16,7 @@
  */
 package com.dencode.logic.dencoder;
 
-import java.io.ByteArrayOutputStream;
+
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
@@ -134,7 +134,8 @@ public class StringBase64Dencoder {
 			}
 		}
 		
-		ByteArrayOutputStream binBuf = new ByteArrayOutputStream(len);
+		byte[] binBuf = new byte[len * 3 / 4]; // Max decoded size
+		int binBufIdx = 0;
 		int bitsBuf = 0;
 		int bitCount = 0;
 		for (int i = 0; i < len; i++) {
@@ -156,11 +157,11 @@ public class StringBase64Dencoder {
 			
 			if (8 <= bitCount) {
 				byte b = (byte)((bitsBuf >>> (bitCount - 8)) & 0b11111111);
-				binBuf.write(b);
+				binBuf[binBufIdx++] = b;
 				bitCount -= 8;
 			}
 		}
 		
-		return binBuf.toString(charset);
+		return new String(binBuf, 0, binBufIdx, charset);
 	}
 }

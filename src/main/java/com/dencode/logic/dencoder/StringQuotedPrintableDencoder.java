@@ -16,7 +16,7 @@
  */
 package com.dencode.logic.dencoder;
 
-import java.io.ByteArrayOutputStream;
+
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
@@ -169,7 +169,8 @@ public class StringQuotedPrintableDencoder {
 		}
 		
 		int len = val.length();
-		ByteArrayOutputStream binBuf = new ByteArrayOutputStream(len);
+		byte[] binBuf = new byte[len];
+		int binBufIdx = 0;
 		
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
@@ -204,16 +205,16 @@ public class StringQuotedPrintableDencoder {
 						
 						int high = DencodeUtils.hexDigitToNum(ch1);
 						int low = DencodeUtils.hexDigitToNum(ch2);
-						binBuf.write((byte)((high << 4) | low));
+						binBuf[binBufIdx++] = (byte)((high << 4) | low);
 					} catch (IndexOutOfBoundsException | IllegalArgumentException e) {
 						return null;
 					}
 				}
 			} else {
-				binBuf.write((byte)ch);
+				binBuf[binBufIdx++] = (byte)ch;
 			}
 		}
 		
-		return binBuf.toString(charset);
+		return new String(binBuf, 0, binBufIdx, charset);
 	}
 }

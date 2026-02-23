@@ -18,7 +18,6 @@ package com.dencode.logic.dencoder;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.dencode.logic.dencoder.annotation.Dencoder;
@@ -43,7 +42,7 @@ public class StringHTMLEscapeDencoder {
 		public char char2() { return this.char2; }
 		public Chars set(char char1) { return set(char1, '\0'); }
 		public Chars set(char char1, char char2) { this.char1 =char1; this.char2 =char2; this.hash = -1; return this; }
-		@Override public int hashCode() { if (this.hash == -1) { this.hash = Objects.hash(char1, char2); } return this.hash; }
+		@Override public int hashCode() { if (this.hash == -1) { this.hash = (char1 << 16) ^ char2; } return this.hash; }
 		@Override public boolean equals(Object obj) { return (char1 == ((Chars)obj).char1) && (char2 == ((Chars)obj).char2); }
 	}
 	
@@ -2304,7 +2303,7 @@ public class StringHTMLEscapeDencoder {
 	
 	private static final Map<Chars, String> CHARS_NAME_MAP = NAME_CHARS_MAP.entrySet().stream()
 			.filter((entry) -> entry.getKey().charAt(entry.getKey().length() - 1) == ';')
-			.collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (first, second) -> first));
+			.collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (first, _) -> first));
 	
 	
 	private StringHTMLEscapeDencoder() {

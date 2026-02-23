@@ -74,7 +74,7 @@ public class DencodeUtils {
 	}
 	
 	protected static <T> String dencodeLines(List<T> vals, Function<T, String> func) {
-		return dencodeLines(vals, null, (val1, val2) -> func.apply(val1));
+		return dencodeLines(vals, null, (val1, _) -> func.apply(val1));
 	}
 	
 	protected static <T, U> String dencodeLines(List<T> vals, List<U> vals2, BiFunction<T, U, String> func) {
