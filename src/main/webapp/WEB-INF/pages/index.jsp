@@ -107,6 +107,7 @@
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/morse-code" data-dencode-method="string.morse-code">${dc:h(msg['string.morse-code.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/braille" data-dencode-method="string.braille">${dc:h(msg['string.braille.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/hieroglyphs" data-dencode-method="string.hieroglyphs">${dc:h(msg['string.hieroglyphs.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/naming-convention" data-dencode-method="string.naming-convention">${dc:h(msg['string.naming-convention.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/camel-case" data-dencode-method="string.camel-case">❯ ${dc:h(msg['string.camel-case.method'])}</a></li>
@@ -381,6 +382,7 @@
 									</div>
 								</div>
 							</td></tr></c:if>
+							<c:if test="${methods.contains('string.hieroglyphs')}"><tr data-dencode-method="string.hieroglyphs"><th>${dc:h(msg['string.hieroglyphs.func.decStrHieroglyphs'])}</th><td><span id="decStrHieroglyphs" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.decStrUnicodeNFC'])}</th><td><span id="decStrUnicodeNFC" class="for-disp"></span></td></tr></c:if>
@@ -1326,6 +1328,7 @@
 									</div>
 								</div>
 							</td></tr></c:if>
+							<c:if test="${methods.contains('string.hieroglyphs')}"><tr data-dencode-method="string.hieroglyphs"><th>${dc:h(msg['string.hieroglyphs.func.encStrHieroglyphs'])}</th><td><span id="encStrHieroglyphs" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.naming-convention') or methods.contains('string.camel-case')}"><tr data-dencode-method="string.camel-case"><th>${dc:h(msg['string.camel-case.func.encStrUpperCamelCase'])}</th><td><span id="encStrUpperCamelCase" class="for-disp"></span></td></tr></c:if>

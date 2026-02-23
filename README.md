@@ -67,6 +67,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Unicode Escape](https://dencode.com/string/unicode-escape)
     - [Program String](https://dencode.com/string/program-string)
     - [Morse Code](https://dencode.com/string/morse-code)
+    - [Hieroglyphs](https://dencode.com/string/hieroglyphs)
     - [Braille](https://dencode.com/string/braille)
     - [Naming Convention](https://dencode.com/string/naming-convention)
         - [Camel Case](https://dencode.com/string/camel-case)
