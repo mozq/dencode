@@ -34,19 +34,6 @@
 	<script defer src="${pageContext.request.contextPath}/static/js/all.min.js?v=${dc:fileLastModified(pageContext, '/static/js/all.min.js')}"></script>
 	<script id="scriptTesseract" data-src="https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js" integrity="sha256-EP/3hIQGd1nEMCigKnLXbQuQ6xcwK7I7WKnsVBC8kos=" crossorigin="anonymous"></script>
 	<script id="scriptZXing" data-src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js" integrity="sha256-18yPad1wvc86wAya5XK/KsufQTK6N5xy34QuTbkYZS0=" crossorigin="anonymous"></script>
-	<style><%-- Bootstrap Icons --%>
-		.bi-globe2 { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/globe2.svg'); }
-		.bi-pin-angle-fill { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/pin-angle-fill.svg'); }
-		.bi-file-earmark-arrow-up { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/file-earmark-arrow-up.svg'); }
-		.bi-link-45deg { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/link-45deg.svg'); }
-		.bi-file-text { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/file-text.svg'); }
-		.bi-camera { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/camera.svg'); }
-		.bi-qr-code-scan { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/qr-code-scan.svg'); }
-		.bi-clipboard { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/clipboard.svg'); }
-		.bi-link-45deg { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/link-45deg.svg'); }
-		.bi-share-fill { --bi-icon: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1/icons/share-fill.svg'); }
-		.bi { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; background-color: currentColor; -webkit-mask-image: var(--bi-icon); mask-image: var(--bi-icon); -webkit-mask-size: cover; mask-size: cover; }
-	</style>
 	<script>
 		document.documentElement.setAttribute("data-ui-theme", (window.matchMedia?.("(prefers-color-scheme:dark)")?.matches) ? "dark" : "light");
 	</script>
@@ -63,7 +50,7 @@
 		
 		<div id="localeMenu" class="dropdown">
 			<div class="dropdown-toggle" role="button" aria-expanded="false">
-				<i class="bi bi-globe2"></i>
+				<svg class="inline-icon"><use href="#globe" /></svg>
 				${dc:h(msg['locale.name'])}
 				
 				<ul class="dropdown-menu dropdown-menu-end" role="menu">
@@ -221,7 +208,7 @@
 	<main role="main">
 		<div id="exp">
 			<div id="expHeader">
-				<span id="follow" title="${dc:h(msg['label.follow'])}"><i class="bi bi-pin-angle-fill"></i></span>
+				<span id="follow" title="${dc:h(msg['label.follow'])}"><svg class="inline-icon"><use href="#pin" /></svg></span>
 				<span id="vLen" class="popover-toggle" title="${dc:h(msg['label.val.length'])}" data-len-chars="0" data-len-bytes="0">0</span>
 			</div>
 			<div id="expValue">
@@ -229,17 +216,17 @@
 					<textarea id="v" class="form-control" placeholder="${dc:h(msg[method += '.tooltip'])}">${dc:h(v)}</textarea>
 					<div class="btn-group-vertical">
 						<button type="button" id="load" class="btn btn-v-icon-label dropdown-toggle" title="${dc:h(msg['label.load'])}" aria-expanded="false">
-							<i class="bi bi-file-earmark-arrow-up"></i>
+							<svg class="inline-icon"><use href="#file-upload" /></svg>
 							<span class="btn-label">${dc:h(msg['label.load.buttonLabel'])}</span>
 							
 							<ul class="dropdown-menu dropdown-menu-end" role="menu">
-								<li id="loadFile" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><i class="bi bi-file-text"></i> ${dc:h(msg['label.load.file'])}</li>
-								<li id="loadImage" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><i class="bi bi-camera"></i> ${dc:h(msg['label.load.image'])}</li>
-								<li id="loadCode" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><i class="bi bi-qr-code-scan"></i> ${dc:h(msg['label.load.code'])}</li>
+								<li id="loadFile" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><svg class="inline-icon"><use href="#text-file" /></svg> ${dc:h(msg['label.load.file'])}</li>
+								<li id="loadImage" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><svg class="inline-icon"><use href="#text-scan" /></svg> ${dc:h(msg['label.load.image'])}</li>
+								<li id="loadCode" data-load-message="${dc:h(msg['label.load.message'])}" data-load-error-message="${dc:h(msg['label.load.errorMessage'])}" tabindex="0"><svg class="inline-icon"><use href="#code-scan" /></svg> ${dc:h(msg['label.load.code'])}</li>
 							</ul>
 						</button>
 						<button type="button" class="btn btn-v-icon-label permanent-link popover-toggle" title="${dc:h(msg['label.permanentLink'])}">
-							<i class="bi bi-link-45deg"></i>
+							<svg class="inline-icon"><use href="#link" /></svg>
 							<span class="btn-label">${dc:h(msg['label.permanentLink.buttonLabel'])}</span>
 						</button>
 					</div>
@@ -2389,23 +2376,118 @@
 	
 	<svg>
 		<defs>
-			<symbol id="loading-indicator" fill="none" stroke="currentColor" viewBox="0 0 100 100">
-				<circle cx="50" cy="50" r="40" stroke-width="15" stroke-dasharray="200">
-					<animateTransform attributeName="transform" type="rotate" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50" repeatCount="indefinite" />
+			<symbol id="loading-indicator" viewBox="0 0 16 16">
+				<circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="32">
+					<animateTransform attributeName="transform" type="rotate" dur="1s" keyTimes="0;1" values="0 8 8;360 8 8" repeatCount="indefinite" />
 				</circle>
 			</symbol>
+			
 			<symbol id="menu" viewBox="0 0 16 16" fill="currentColor">
 				<rect x="2" y="3" width="12" height="1.5" rx="0.7" />
 				<rect x="2" y="7" width="12" height="1.5" rx="0.7" />
 				<rect x="2" y="11" width="12" height="1.5" rx="0.7" />
 			</symbol>
+			
 			<symbol id="caret-down-square" viewBox="0 0 16 16">
 				<rect x="1" y="1" rx="2" ry="2" width="14" height="14" fill="none" stroke="currentColor" stroke-width="0.9" />
-				<polygon points="3.5,6 12.5,6 8,11.2" fill="currentColor" />
+				<path d="M3.5 6 L12.5 6 L8 11.2 Z" fill="currentColor" />
 			</symbol>
+			
 			<symbol id="close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 				<line x1="3" y1="3" x2="13" y2="13" />
 				<line x1="13" y1="3" x2="3" y2="13" />
+			</symbol>
+			
+			<symbol id="globe" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
+				<circle cx="8" cy="8" r="6.5" />
+				<ellipse cx="8" cy="8" rx="2.5" ry="6.5" />
+				<path d="M1.5 8h13" />
+				<path d="M3 4.5h10" />
+				<path d="M3 11.5h10" />
+			</symbol>
+			
+			<symbol id="pin" viewBox="0 0 16 16" fill="currentColor">
+				<path d="M7.2 9.5 L8.8 9.5 L8 15.5 Z" />
+				<path d="M 2.5,9.5 A 5.5 3.5 0 0 1 13.5 9.5 Z" />
+				<rect x="5.5" y="2" width="5" height="7.5" />
+				<path d="M5.5 2 L4 0.5 L12 0.5 L10.5 2 Z" />
+			</symbol>
+			
+			<symbol id="file-upload" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+				<path d="M3.5 0.5 H10 L13.5 4 V14.5 A1 1 0 0 1 12.5 15.5 H3.5 A1 1 0 0 1 2.5 14.5 V1.5 A1 1 0 0 1 3.5 0.5 Z" />
+				<path d="M10 0.5 V4 H13.5" />
+				<path d="M8 12 V6" />
+				<path d="M5.5 8.5 L8 6 L10.5 8.5" />
+			</symbol>
+			
+			<symbol id="link" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+				<g transform="rotate(-45 8 8)">
+					<path d="M5.25 10.75 H3 A2.5 2.5 0 0 1 3 5.75 H7.25 A2.5 2.5 0 0 1 9.75 8.25 V8.5" />
+					<path d="M10.75 5.25 H13 A2.5 2.5 0 0 1 13 10.25 H8.75 A2.5 2.5 0 0 1 6.25 7.75 V7.5" />
+				</g>
+			</symbol>
+			
+			<symbol id="text-file" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+				<path d="M4 1.5 H10 L13.5 5 V14.5 A1 1 0 0 1 12.5 15.5 H3.5 A1 1 0 0 1 2.5 14.5 V2.5 A1 1 0 0 1 3.5 1.5 Z" />
+				<path d="M10 1.5 V5 H13.5" />
+				<path d="M5.5 8.5 H10.5" />
+				<path d="M5.5 11 H10.5" />
+				<path d="M5.5 6 H7.5" />
+			</symbol>
+			
+			<symbol id="text-scan" viewBox="0 0 16 16">
+				<g class="viewfinder" fill="none" stroke="currentColor" stroke-width="1.6">
+					<path d="M0 4 V0 H4" />
+					<path d="M16 4 V0 H12" />
+					<path d="M0 12 V16 H4" />
+					<path d="M16 12 V16 H12" />
+				</g>
+				<g class="text-file" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+					<path d="M3 2.5 H10.5 L13 5 V13.5 H3 Z" />
+					<path d="M10.5 2.5 V5 H13" />
+					<path d="M5.5 7 H9.5" />
+					<path d="M5.5 9 H10.5" />
+					<path d="M5.5 11 H8.5" />
+				</g>
+			</symbol>
+			
+			<symbol id="code-scan" viewBox="0 0 16 16">
+				<g class="viewfinder" fill="none" stroke="currentColor" stroke-width="1.6">
+					<path d="M0 4 V0 H4" />
+					<path d="M16 4 V0 H12" />
+					<path d="M0 12 V16 H4" />
+					<path d="M16 12 V16 H12" />
+				</g>
+				<g class="qr-code" fill="currentColor">
+					<path d="M2.5 2.5 H6.5 V6.5 H2.5 Z M3.5 3.5 V5.5 H5.5 V3.5 Z M4 4 H5 V5 H4 Z" fill-rule="evenodd" />
+					<path d="M9.5 2.5 H13.5 V6.5 H9.5 Z M10.5 3.5 V5.5 H12.5 V3.5 Z M11 4 H12 V5 H11 Z" fill-rule="evenodd" />
+					<rect x="7" y="3" width="1" height="1" />
+					<rect x="7" y="5" width="2" height="1" />
+					<rect x="3" y="7" width="2" height="1" />
+					<rect x="6" y="7" width="1" height="1" />
+					<rect x="8" y="7" width="3" height="1" />
+					<rect x="12" y="7" width="1" height="1" />
+				</g>
+				<g class="barcode" fill="currentColor">
+					<rect x="2.5" y="9.5" width="1" height="4" />
+					<rect x="4.5" y="9.5" width="1.5" height="4" />
+					<rect x="7" y="9.5" width="1" height="4" />
+					<rect x="9" y="9.5" width="2" height="4" />
+					<rect x="12" y="9.5" width="1.5" height="4" />
+				</g>
+			</symbol>
+			
+			<symbol id="copy" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
+				<path d="M 10.5 5.5 V 2.5 A 1.5 1.5 0 0 0 9 1 H 2.5 A 1.5 1.5 0 0 0 1 2.5 V 9 A 1.5 1.5 0 0 0 2.5 10.5 H 5.5" />
+				<rect x="5.5" y="5.5" width="9.5" height="9.5" rx="1.5" />
+			</symbol>
+			
+			<symbol id="share" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" stroke-width="1.2">
+				<path d="M2.5 8 L13.5 2.5" />
+				<path d="M2.5 8 L13.5 13.5" />
+				<circle cx="13.5" cy="2.5" r="1.9" />
+				<circle cx="13.5" cy="13.5" r="1.9" />
+				<circle cx="2.5" cy="8" r="1.9" />
 			</symbol>
 		</defs>
 	</svg>
@@ -2433,11 +2515,11 @@
 				<textarea id="{{id}}ForCopy" class="form-control select-on-focus" rows="2" readonly>{{value}}</textarea>
 				<span class="btn-group-vertical">
 					<button type="button" class="btn btn-v-icon-label copy-to-clipboard" title="${dc:h(msg['label.copyToClipboard'])}" data-copy-id="{{id}}ForCopy" data-copy-message="${dc:h(msg['label.copyToClipboard.message'])}" data-copy-error-message="${dc:h(msg['label.copyToClipboard.errorMessage'])}">
-						<i class="bi bi-clipboard"></i>
+						<svg class="inline-icon"><use href="#copy" /></svg>
 						<span class="btn-label">${dc:h(msg['label.copyToClipboard.buttonLabel'])}</span>
 					</button>
 					<button type="button" class="btn btn-v-icon-label permanent-link popover-toggle" title="${dc:h(msg['label.permanentLink'])}">
-						<i class="bi bi-link-45deg"></i>
+						<svg class="inline-icon"><use href="#link" /></svg>
 						<span class="btn-label">${dc:h(msg['label.permanentLink.buttonLabel'])}</span>
 					</button>
 				</span>
@@ -2459,11 +2541,11 @@
 		<div id="permanentLink" class="input-group">
 			<input type="text" id="linkURL" class="form-control select-on-focus" value="{{permanentLink}}" readonly />
 			<button type="button" class="btn btn-v-icon-label copy-to-clipboard" title="${dc:h(msg['label.copyToClipboard'])}" data-copy-id="linkURL" data-copy-message="${dc:h(msg['label.copyToClipboard.message'])}" data-copy-error-message="${dc:h(msg['label.copyToClipboard.errorMessage'])}">
-				<i class="bi bi-clipboard"></i>
+				<svg class="inline-icon"><use href="#copy" /></svg>
 				<span class="btn-label">${dc:h(msg['label.copyToClipboard.buttonLabel'])}</span>
 			</button>
 			<button type="button" class="btn btn-v-icon-label dropdown-toggle toggle-manual share" aria-expanded="false">
-				<i class="bi bi-share-fill"></i>
+				<svg class="inline-icon"><use href="#share" /></svg>
 				<span class="btn-label">${dc:h(msg['label.share.buttonLabel'])}</span>
 	
 				<ul class="dropdown-menu" role="menu">

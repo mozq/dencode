@@ -9,7 +9,7 @@
 	--dc-border-color: #dee2e6;
 	
 	--dc-header-border-color: #e8e9ea;
-	--dc-header-color: rgba(0, 0, 0, 0.65);
+	--dc-header-color: #505458;
 	--dc-header-bg: #f8f9fa;
 	
 	--dc-nav-brand-color: black;
@@ -79,7 +79,7 @@
 	--dc-border-color: #495057;
 	
 	--dc-header-border-color: #313539;
-	--dc-header-color: rgba(255, 255, 255, 0.65);
+	--dc-header-color: #acb0b4;
 	--dc-header-bg: #191d21;
 	
 	--dc-nav-brand-color: white;
@@ -656,7 +656,7 @@ footer a, footer a:link, footer a:visited, footer a:hover, footer a:active {
 	vertical-align: 0.1em;
 }
 
-.btn-v-icon-label > .bi {
+.btn-v-icon-label > .inline-icon {
 	display: block;
 	margin: 0 auto;
 	font-size: 1.1em;
@@ -771,8 +771,9 @@ footer a, footer a:link, footer a:visited, footer a:hover, footer a:active {
 
 .inline-icon {
 	display: inline-block;
-	width: 1em;
-	height: 1em;
+	width: 1.1em;
+	height: 1.1em;
+	vertical-align: -0.125em;
 }
 
 .text-right {
@@ -1088,12 +1089,17 @@ table.dencoded-list tr.invalid-value {
 }
 
 #follow {
+	display: inline-block;
+	transform: rotate(45deg);
 	cursor: pointer;
 }
 
+#follow .inline-icon {
+	vertical-align: middle;
+}
+
 #follow.active {
-	display: inline-block;
-	transform: rotate(-45deg);
+	transform: none;
 	color: var(--dc-icon-active-color);
 }
 
