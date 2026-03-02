@@ -1,0 +1,14 @@
+ECI eciCMYK_v2 Color Profile Notice
+===================================
+This product includes the "eciCMYK_v2.icc" color profile, 
+which is provided by the European Color Initiative (ECI).
+
+* Profile Name: eciCMYK v2 (FOGRA59)
+* Source: https://www.eci.org (European Color Initiative)
+* Copyright (c) 2020 European Color Initiative (ECI)
+* Characterization Data: FOGRA59 (ISO 12647-2:2013 compliant)
+
+The eciCMYK_v2 profile is used and distributed in accordance with 
+the terms provided by ECI, which allow for free use and distribution 
+provided that the profile is not modified and the copyright notice 
+is maintained.

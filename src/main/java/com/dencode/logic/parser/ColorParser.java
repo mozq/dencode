@@ -16,12 +16,27 @@
  */
 package com.dencode.logic.parser;
 
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.dencode.logic.util.ColorNameUtils;
 
 public class ColorParser {
+	
+	public static final ICC_ColorSpace COLOR_SPACE_CMYK;
+	static {
+		ICC_ColorSpace cs;
+		try (InputStream is = ColorParser.class.getResourceAsStream("/color_profiles/eciCMYK_v2.icc")) {
+			cs = new ICC_ColorSpace(ICC_Profile.getInstance(is));
+		} catch (IOException e) {
+			cs = null;
+		}
+		COLOR_SPACE_CMYK = cs;
+	}
 	
 	private static final int COLOR_MAX_LENGTH = 50;
 	
@@ -326,9 +341,17 @@ public class ColorParser {
 	}
 	
 	private static double[] fromCMYK(double c, double m, double y, double k, double a) {
-		double r = 1.0 - Math.min(1.0, c + k);
-		double g = 1.0 - Math.min(1.0, m + k);
-		double b = 1.0 - Math.min(1.0, y + k);
+		double r, g, b;
+		if (COLOR_SPACE_CMYK != null) {
+			float[] rgb = COLOR_SPACE_CMYK.toRGB(new float[] {(float)c, (float)m, (float)y, (float)k});
+			r = rgb[0];
+			g = rgb[1];
+			b = rgb[2];
+		} else {
+			r = 1.0 - Math.min(1.0, c + k);
+			g = 1.0 - Math.min(1.0, m + k);
+			b = 1.0 - Math.min(1.0, y + k);
+		}
 		
 		return new double[] {r, g, b, a};
 	}
