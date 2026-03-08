@@ -29,11 +29,9 @@ import java.util.logging.Logger;
 
 import com.dencode.web.model.Message;
 import com.dencode.web.model.ResponseModel;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.json.JsonMapper;
 
 public abstract class AbstractDencodeHttpServlet extends AbstractHttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +44,8 @@ public abstract class AbstractDencodeHttpServlet extends AbstractHttpServlet {
 			return null;
 		}
 	};
+	
+	private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 	
 	private static final Logger LOGGER = Logger.getLogger(AbstractDencodeHttpServlet.class.getName());
 	
@@ -240,16 +240,9 @@ public abstract class AbstractDencodeHttpServlet extends AbstractHttpServlet {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	protected void writeAsJson(OutputStream out, Object value) {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setVisibility(PropertyAccessor.ALL, Visibility.NONE);
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-		try {
-			mapper.writeValue(out, value);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		JSON_MAPPER.writeValue(out, value);
 	}
 	
 	private boolean containsInHeader(String headerName, String value) {

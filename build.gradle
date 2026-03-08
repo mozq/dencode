@@ -30,8 +30,8 @@ dependencies {
   implementation('org.eclipse.jetty.ee11:jetty-ee11-glassfish-jstl:12.1.+') {
     exclude group: 'org.eclipse.jetty.ee11'
   }
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.+'
-  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.20.+'
+  implementation 'tools.jackson.core:jackson-databind:3.1.+'
+  implementation 'tools.jackson.dataformat:jackson-dataformat-cbor:3.1.+'
   implementation 'com.ezylang:EvalEx:3.5.+'
   
   implementation 'com.github.mozq:enigma4j:v1.+'

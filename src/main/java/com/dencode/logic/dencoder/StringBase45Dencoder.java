@@ -25,10 +25,12 @@ import java.util.zip.InflaterInputStream;
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.dataformat.cbor.databind.CBORMapper;
+
+import tools.jackson.core.exc.JacksonIOException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectWriter;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.cbor.CBORMapper;
 
 @Dencoder(type="string", method="string.base45", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
 public class StringBase45Dencoder {
@@ -57,6 +59,10 @@ public class StringBase45Dencoder {
 	private static final int RAW_CHUNK_SIZE_PART = 1;
 	private static final int ENCODED_CHUNK_SIZE_FULL = 3;
 	private static final int ENCODED_CHUNK_SIZE_PART = 2;
+	
+	private static final CBORMapper CBOR_MAPPER = CBORMapper.builder().build();
+	private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
+	private static final ObjectWriter JSON_WRITER = JSON_MAPPER.writerWithDefaultPrettyPrinter();
 	
 	
 	private StringBase45Dencoder() {
@@ -101,11 +107,8 @@ public class StringBase45Dencoder {
 		try (InputStream zlibIs = new ByteArrayInputStream(decValue)) {
 			// Zlib to COSE
 			try (InputStream coseIs = new InflaterInputStream(zlibIs)) {
-				ObjectMapper cborMapper = new CBORMapper();
-				ObjectMapper jsonMapper = new JsonMapper();
-				
 				// COSE to CBOR
-				JsonNode coseNode = cborMapper.readTree(coseIs);
+				JsonNode coseNode = CBOR_MAPPER.readTree(coseIs);
 				JsonNode cosePayloadNode = coseNode.get(2);
 				if (cosePayloadNode == null) {
 					return null;
@@ -117,10 +120,10 @@ public class StringBase45Dencoder {
 				}
 				
 				// CBOR to JSON
-				JsonNode cborNode = cborMapper.readTree(cborBin);
-				cborJson = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cborNode);
+				JsonNode cborNode = CBOR_MAPPER.readTree(cborBin);
+				cborJson = JSON_WRITER.writeValueAsString(cborNode);
 			}
-		} catch (IOException e) {
+		} catch (IOException | JacksonIOException e) {
 			return null;
 		}
 		

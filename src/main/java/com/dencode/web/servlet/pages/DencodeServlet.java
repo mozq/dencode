@@ -26,9 +26,9 @@ import java.util.Map;
 import com.dencode.logic.DencodeMapper;
 import com.dencode.logic.model.DencodeCondition;
 import com.dencode.web.servlet.AbstractDencodeHttpServlet;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.annotation.WebServlet;
+import tools.jackson.databind.json.JsonMapper;
 
 @WebServlet("/dencode")
 public class DencodeServlet extends AbstractDencodeHttpServlet {
@@ -49,12 +49,14 @@ public class DencodeServlet extends AbstractDencodeHttpServlet {
 	private static final String DEFAULT_LINE_BREAK = "\n";
 	private static final ZoneId DEFAULT_ZONE_ID = ZoneId.of("UTC");
 	
+	private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
+	
 	
 	@Override
 	protected void doPost() throws Exception {
 		DencodeRequest req;
 		try (InputStream is = request().getInputStream()) {
-			req = new ObjectMapper().readValue(is, DencodeRequest.class);
+			req = JSON_MAPPER.readValue(is, DencodeRequest.class);
 		}
 		
 		Charset charset = toCharset(req.oe, DEFAULT_CHARSET);
