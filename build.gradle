@@ -32,11 +32,11 @@ dependencies {
   }
   implementation 'tools.jackson.core:jackson-databind:3.1.+'
   implementation 'tools.jackson.dataformat:jackson-dataformat-cbor:3.1.+'
-  implementation 'com.ezylang:EvalEx:3.5.+'
+  implementation 'com.ezylang:EvalEx:3.6.+'
   
   implementation 'com.github.mozq:enigma4j:v1.+'
   
-  testImplementation 'org.junit.jupiter:junit-jupiter:5.+'
+  testImplementation 'org.junit.jupiter:junit-jupiter:6.+'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
