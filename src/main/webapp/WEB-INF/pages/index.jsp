@@ -157,6 +157,11 @@
 					<li><a href="${dc:h(basePath)}/color/rgb" data-dencode-method="color.rgb">${dc:h(msg['color.rgb.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/hsl" data-dencode-method="color.hsl">${dc:h(msg['color.hsl.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/hsv" data-dencode-method="color.hsv">${dc:h(msg['color.hsv.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/color/hwb" data-dencode-method="color.hwb">${dc:h(msg['color.hwb.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/color/lab" data-dencode-method="color.lab">${dc:h(msg['color.lab.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/color/lch" data-dencode-method="color.lch">${dc:h(msg['color.lch.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/color/oklab" data-dencode-method="color.oklab">${dc:h(msg['color.oklab.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/color/oklch" data-dencode-method="color.oklch">${dc:h(msg['color.oklch.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/cmyk" data-dencode-method="color.cmyk">${dc:h(msg['color.cmyk.method'])}</a></li>
 				</ul>
 			</li>
@@ -1543,6 +1548,11 @@
 							</td></tr></c:if>
 							<c:if test="${methods.contains('color.hsl')}"><tr data-dencode-method="color.hsl"><th>${dc:h(msg['color.hsl.func.encColorHSLFn'])}</th><td><span id="encColorHSLFn" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.hsv')}"><tr data-dencode-method="color.hsv"><th>${dc:h(msg['color.hsv.func.encColorHSVFn'])}</th><td><span id="encColorHSVFn" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.hwb')}"><tr data-dencode-method="color.hwb"><th>${dc:h(msg['color.hwb.func.encColorHwb'])}</th><td><span id="encColorHwb" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.lab')}"><tr data-dencode-method="color.lab"><th>${dc:h(msg['color.lab.func.encColorLab'])}</th><td><span id="encColorLab" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.lch')}"><tr data-dencode-method="color.lch"><th>${dc:h(msg['color.lch.func.encColorLch'])}</th><td><span id="encColorLch" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.oklab')}"><tr data-dencode-method="color.oklab"><th>${dc:h(msg['color.oklab.func.encColorOklab'])}</th><td><span id="encColorOklab" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.oklch')}"><tr data-dencode-method="color.oklch"><th>${dc:h(msg['color.oklch.func.encColorOklch'])}</th><td><span id="encColorOklch" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCMYKFn'])}</th><td><span id="encColorCMYKFn" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>

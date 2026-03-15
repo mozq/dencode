@@ -47,6 +47,10 @@ public class ColorParser {
 	private static final Pattern COLOR_HSL_FN_PATTERN = Pattern.compile("^hsla?\\s*\\(\\s*([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 	private static final Pattern COLOR_HSV_FN_PATTERN = Pattern.compile("^hsva?\\s*\\(\\s*([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 	private static final Pattern COLOR_HWB_FN_PATTERN = Pattern.compile("^hwba?\\s*\\(\\s*([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
+	private static final Pattern COLOR_LAB_FN_PATTERN = Pattern.compile("^lab\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
+	private static final Pattern COLOR_LCH_FN_PATTERN = Pattern.compile("^lch\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
+	private static final Pattern COLOR_OKLAB_FN_PATTERN = Pattern.compile("^oklab\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
+	private static final Pattern COLOR_OKLCH_FN_PATTERN = Pattern.compile("^oklch\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 	private static final Pattern COLOR_GRAY_FN_PATTERN = Pattern.compile("^graya?\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 	private static final Pattern COLOR_CMY_FN_PATTERN = Pattern.compile("^(?:device-)?cmya?\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 	private static final Pattern COLOR_CMYK_FN_PATTERN = Pattern.compile("^(?:device-)?cmyka?\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
@@ -80,10 +84,10 @@ public class ColorParser {
 					double b = parseToRate(rgbFnMatcher.group(3), 255.0);
 					double a = parseToRate(rgbFnMatcher.group(4), 1.0, 1.0);
 					
-					r = Math.min(Math.max(r, 0.0), 1.0);
-					g = Math.min(Math.max(g, 0.0), 1.0);
-					b = Math.min(Math.max(b, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					r = normalizeRate(r);
+					g = normalizeRate(g);
+					b = normalizeRate(b);
+					a = normalizeRate(a);
 					
 					return new double[] {r, g, b, a};
 				}
@@ -95,10 +99,10 @@ public class ColorParser {
 					double l = parseToRate(hslFnMatcher.group(3), 1.0);
 					double a = parseToRate(hslFnMatcher.group(4), 1.0, 1.0);
 					
-					h = Math.min(Math.max(h, 0.0), 360.0);
-					s = Math.min(Math.max(s, 0.0), 1.0);
-					l = Math.min(Math.max(l, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					h = normalizeHue(h);
+					s = normalizeRate(s);
+					l = normalizeRate(l);
+					a = normalizeRate(a);
 					
 					return fromHSL(h, s, l, a);
 				}
@@ -110,10 +114,10 @@ public class ColorParser {
 					double v = parseToRate(hsvFnMatcher.group(3), 1.0);
 					double a = parseToRate(hsvFnMatcher.group(4), 1.0, 1.0);
 					
-					h = Math.min(Math.max(h, 0.0), 360.0);
-					s = Math.min(Math.max(s, 0.0), 1.0);
-					v = Math.min(Math.max(v, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					h = normalizeHue(h);
+					s = normalizeRate(s);
+					v = normalizeRate(v);
+					a = normalizeRate(a);
 					
 					return fromHSV(h, s, v, a);
 				}
@@ -125,12 +129,72 @@ public class ColorParser {
 					double b = parseToRate(hwbFnMatcher.group(3), 1.0);
 					double a = parseToRate(hwbFnMatcher.group(4), 1.0, 1.0);
 					
-					h = Math.min(Math.max(h, 0.0), 360.0);
-					w = Math.min(Math.max(w, 0.0), 1.0);
-					b = Math.min(Math.max(b, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					h = normalizeHue(h);
+					w = normalizeRate(w);
+					b = normalizeRate(b);
+					a = normalizeRate(a);
 					
-					return fromHWB(h, w, b, a);
+					return fromHwb(h, w, b, a);
+				}
+			} else if (lv.startsWith("lab")) {
+				Matcher labFnMatcher = COLOR_LAB_FN_PATTERN.matcher(lv);
+				if (labFnMatcher.matches()) {
+					double l = parseToRate(labFnMatcher.group(1), 100.0);
+					double a = parseToRateWithScale(labFnMatcher.group(2), 125.0);
+					double b = parseToRateWithScale(labFnMatcher.group(3), 125.0);
+					double alpha = parseToRate(labFnMatcher.group(4), 1.0, 1.0);
+					
+					l = normalizeRate(l);
+					alpha = normalizeRate(alpha);
+					
+					return fromLab(l, a, b, alpha);
+				}
+			} else if (lv.startsWith("lch")) {
+				Matcher lchFnMatcher = COLOR_LCH_FN_PATTERN.matcher(lv);
+				if (lchFnMatcher.matches()) {
+					double l = parseToRate(lchFnMatcher.group(1), 100.0);
+					double c = parseToRateWithScale(lchFnMatcher.group(2), 150.0);
+					double h = Double.parseDouble(lchFnMatcher.group(3));
+					double alpha = parseToRate(lchFnMatcher.group(4), 1.0, 1.0);
+					
+					l = normalizeRate(l);
+					h = normalizeHue(h);
+					alpha = normalizeRate(alpha);
+					
+					double a = c * Math.cos(h * Math.PI / 180.0);
+					double b = c * Math.sin(h * Math.PI / 180.0);
+					
+					return fromLab(l, a, b, alpha);
+				}
+			} else if (lv.startsWith("oklab")) {
+				Matcher oklabFnMatcher = COLOR_OKLAB_FN_PATTERN.matcher(lv);
+				if (oklabFnMatcher.matches()) {
+					double l = parseToRate(oklabFnMatcher.group(1), 1.0);
+					double a = parseToRateWithScale(oklabFnMatcher.group(2), 0.4);
+					double b = parseToRateWithScale(oklabFnMatcher.group(3), 0.4);
+					double alpha = parseToRate(oklabFnMatcher.group(4), 1.0, 1.0);
+					
+					l = normalizeRate(l);
+					alpha = normalizeRate(alpha);
+					
+					return fromOklab(l, a, b, alpha);
+				}
+			} else if (lv.startsWith("oklch")) {
+				Matcher oklchFnMatcher = COLOR_OKLCH_FN_PATTERN.matcher(lv);
+				if (oklchFnMatcher.matches()) {
+					double l = parseToRate(oklchFnMatcher.group(1), 1.0);
+					double c = parseToRateWithScale(oklchFnMatcher.group(2), 0.4);
+					double h = Double.parseDouble(oklchFnMatcher.group(3));
+					double alpha = parseToRate(oklchFnMatcher.group(4), 1.0, 1.0);
+					
+					l = normalizeRate(l);
+					h = normalizeHue(h);
+					alpha = normalizeRate(alpha);
+					
+					double a = c * Math.cos(h * Math.PI / 180.0);
+					double b = c * Math.sin(h * Math.PI / 180.0);
+					
+					return fromOklab(l, a, b, alpha);
 				}
 			} else if (lv.startsWith("gray")) {
 				Matcher grayFnMatcher = COLOR_GRAY_FN_PATTERN.matcher(lv);
@@ -138,8 +202,8 @@ public class ColorParser {
 					double g = parseToRate(grayFnMatcher.group(1), 255.0);
 					double a = parseToRate(grayFnMatcher.group(2), 1.0, 1.0);
 					
-					g = Math.min(Math.max(g, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					g = normalizeRate(g);
+					a = normalizeRate(a);
 					
 					return new double[] {g, g, g, a};
 				}
@@ -152,11 +216,11 @@ public class ColorParser {
 					double k = parseToRate(cmykFnMatcher.group(4), 1.0);
 					double a = parseToRate(cmykFnMatcher.group(5), 1.0, 1.0);
 					
-					c = Math.min(Math.max(c, 0.0), 1.0);
-					m = Math.min(Math.max(m, 0.0), 1.0);
-					y = Math.min(Math.max(y, 0.0), 1.0);
-					k = Math.min(Math.max(k, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					c = normalizeRate(c);
+					m = normalizeRate(m);
+					y = normalizeRate(y);
+					k = normalizeRate(k);
+					a = normalizeRate(a);
 					
 					return fromCMYK(c, m, y, k, a);
 				}
@@ -168,10 +232,10 @@ public class ColorParser {
 					double y = parseToRate(cmyFnMatcher.group(3), 1.0);
 					double a = parseToRate(cmyFnMatcher.group(4), 1.0, 1.0);
 
-					c = Math.min(Math.max(c, 0.0), 1.0);
-					m = Math.min(Math.max(m, 0.0), 1.0);
-					y = Math.min(Math.max(y, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					c = normalizeRate(c);
+					m = normalizeRate(m);
+					y = normalizeRate(y);
+					a = normalizeRate(a);
 
 					return fromCMY(c, m, y, a);
 				}
@@ -230,10 +294,10 @@ public class ColorParser {
 					double b = parseToRate(rgbCommaMatcher.group(3), 255.0);
 					double a = parseToRate(rgbCommaMatcher.group(4), 1.0, 1.0);
 
-					r = Math.min(Math.max(r, 0.0), 1.0);
-					g = Math.min(Math.max(g, 0.0), 1.0);
-					b = Math.min(Math.max(b, 0.0), 1.0);
-					a = Math.min(Math.max(a, 0.0), 1.0);
+					r = normalizeRate(r);
+					g = normalizeRate(g);
+					b = normalizeRate(b);
+					a = normalizeRate(a);
 					
 					return new double[] {r, g, b, a};
 				}
@@ -269,6 +333,41 @@ public class ColorParser {
 				return Double.parseDouble(val) / base;
 			}
 		}
+	}
+	
+	private static double parseToRateWithScale(String val, double scale) {
+		if (val == null) {
+			return 0.0;
+		}
+		
+		if (val.endsWith("%")) {
+			String v = val.substring(0, val.length() - 1);
+			return Double.parseDouble(v) * scale / 100.0;
+		} else {
+			return Double.parseDouble(val);
+		}
+	}
+	
+	private static double fromLinearRgb(double c) {
+		if (0.0031308 <= c) {
+			return 1.055 * Math.pow(c, 1.0 / 2.4) - 0.055;
+		} else if (0.0 < c) {
+			return 12.92 * c;
+		} else {
+			return 0.0;
+		}
+	}
+
+	private static double normalizeRate(double c) {
+		return Math.min(Math.max(c, 0.0), 1.0);
+	}
+	
+	private static double normalizeHue(double h) {
+		double hue = h % 360.0;
+		if (hue < 0.0) {
+			hue += 360.0;
+		}
+		return hue;
 	}
 	
 	private static double[] fromHSL(double h, double s, double l, double a) {
@@ -323,21 +422,87 @@ public class ColorParser {
 		};
 	}
 	
-	private static double[] fromHWB(double h, double w, double b, double a) {
-		double hue = h % 360.0;
-		if (hue < 0.0) {
-			hue += 360.0;
+	private static double[] fromHwb(double h, double w, double b, double a) {
+		if (w + b >= 1.0) {
+			double gray = w / (w + b);
+			return new double[] {gray, gray, gray, a};
 		}
 		
+		double hue = normalizeHue(h);
 		double d = 1.0 - w - b;
-		d = Math.min(d, 0.0);
-		
+
 		double[] rgba = fromHSL(hue, 1.0, 0.5, a);
-		rgba[0] = rgba[0] * d + w; // R
-		rgba[1] = rgba[1] * d + w; // G
-		rgba[2] = rgba[2] * d + w; // B
+		rgba[0] = normalizeRate(rgba[0] * d + w);
+		rgba[1] = normalizeRate(rgba[1] * d + w);
+		rgba[2] = normalizeRate(rgba[2] * d + w);
 		
 		return rgba;
+	}
+	
+	private static double[] fromLab(double cl, double ca, double cb, double alpha) {
+		double l = cl * 100.0;
+		
+		// CIELab to XYZ (D50)
+		double y = (l + 16.0) / 116.0;
+		double x = ca / 500.0 + y;
+		double z = y - cb / 200.0;
+		
+		double e = 216.0 / 24389.0;
+		double k = 24389.0 / 27.0;
+		
+		double x3 = x * x * x;
+		double z3 = z * z * z;
+		
+		double xr = (x3 > e) ? x3 : (116.0 * x - 16.0) / k;
+		double yr = (l > 8.0) ? (y * y * y) : l / k;
+		double zr = (z3 > e) ? z3 : (116.0 * z - 16.0) / k;
+		
+		x = xr * 0.96422;
+		y = yr * 1.00000;
+		z = zr * 0.82521;
+		
+		// XYZ (D50) to Linear sRGB
+		double lr =  3.1338561 * x - 1.6168667 * y - 0.4906146 * z;
+		double lg = -0.9787684 * x + 1.9161415 * y + 0.0334540 * z;
+		double lb =  0.0719453 * x - 0.2289914 * y + 1.4052427 * z;
+		
+		// Linear sRGB to sRGB
+		double r = fromLinearRgb(lr);
+		double g = fromLinearRgb(lg);
+		double b = fromLinearRgb(lb);
+		
+		r = normalizeRate(r);
+		g = normalizeRate(g);
+		b = normalizeRate(b);
+		
+		return new double[] {r, g, b, alpha};
+	}
+	
+	private static double[] fromOklab(double ol, double oa, double ob, double alpha) {
+		// Oklab to LMS
+		double l = ol + 0.3963377774 * oa + 0.2158037573 * ob;
+		double m = ol - 0.1055613458 * oa - 0.0638541728 * ob;
+		double s = ol - 0.0894841775 * oa - 1.2914855480 * ob;
+		
+		l = l * l * l;
+		m = m * m * m;
+		s = s * s * s;
+		
+		// LMS to Linear sRGB
+		double lr = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+		double lg = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+		double lb = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
+		
+		// Linear sRGB to sRGB
+		double r = fromLinearRgb(lr);
+		double g = fromLinearRgb(lg);
+		double b = fromLinearRgb(lb);
+		
+		r = normalizeRate(r);
+		g = normalizeRate(g);
+		b = normalizeRate(b);
+		
+		return new double[] {r, g, b, alpha};
 	}
 	
 	private static double[] fromCMYK(double c, double m, double y, double k, double a) {
