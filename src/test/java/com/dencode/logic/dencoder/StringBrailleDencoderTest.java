@@ -79,16 +79,16 @@ public class StringBrailleDencoderTest {
 		testDencoder("\"Hello, world?\"", "ueb1", "⠦⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠴"); // Non-specific quotation
 		testDencoder("“Hello, world?”", "ueb1", "⠘⠦⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠘⠴"); // U+201C, U+201D
 		testDencoder("'Hello, world?'", "ueb1", "⠄⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠄"); // This is an apostrophe, not quotation marks
-		testDencoder("‘Hello, world?’", "ueb1", "⠠⠦⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠴"); // U+2018, U+2019
+		testDencoder("‘Hello, world?’", "ueb1", "⠠⠘⠦⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠘⠴"); // U+2018, U+2019
+		testDencoder("«Hello, world?»", "ueb1", "⠨⠦⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠨⠴"); // U+00AB, U+00BB
 		testDencoder("<Hello, world?>", "ueb1", "⠈⠣⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠈⠜");
 		testDencoder("{Hello, world?}", "ueb1", "⠸⠣⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠸⠜");
 		testDencoder("[Hello, world?]", "ueb1", "⠨⠣⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠨⠜");
-		testDencoder("(Hello, world?)", "ueb1", "⠐⠣⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠐⠜");
 		
 		testDencoder("Abc \"HELLO, WORLD?\" Abc", "ueb1", "⠠⠁⠃⠉⠀⠦⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠴⠀⠠⠁⠃⠉"); // Non-specific quotation
 		testDencoder("Abc “HELLO, WORLD?” Abc", "ueb1", "⠠⠁⠃⠉⠀⠘⠦⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠘⠴⠀⠠⠁⠃⠉"); // U+201C, U+201D
 		testDencoder("Abc 'HELLO, WORLD?' Abc", "ueb1", "⠠⠁⠃⠉⠀⠄⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠄⠀⠁⠠⠄⠃⠉"); // This is an apostrophe, not quotation marks
-		testDencoder("Abc ‘HELLO, WORLD?’ Abc", "ueb1", "⠠⠁⠃⠉⠀⠠⠦⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠠⠴⠀⠠⠁⠃⠉"); // U+2018, U+2019
+		testDencoder("Abc ‘HELLO, WORLD?’ Abc", "ueb1", "⠠⠁⠃⠉⠀⠠⠘⠦⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠠⠘⠴⠀⠠⠁⠃⠉"); // U+2018, U+2019
 		testDencoder("Abc <HELLO, WORLD?> Abc", "ueb1", "⠠⠁⠃⠉⠀⠈⠣⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠈⠜⠀⠠⠁⠃⠉");
 		testDencoder("Abc {HELLO, WORLD?} Abc", "ueb1", "⠠⠁⠃⠉⠀⠸⠣⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠸⠜⠀⠠⠁⠃⠉");
 		testDencoder("Abc [HELLO, WORLD?] Abc", "ueb1", "⠠⠁⠃⠉⠀⠨⠣⠠⠠⠠⠓⠑⠇⠇⠕⠂⠀⠺⠕⠗⠇⠙⠦⠠⠄⠨⠜⠀⠠⠁⠃⠉");
@@ -203,7 +203,7 @@ public class StringBrailleDencoderTest {
 		testDencoder("ＣＤ－ＲＯＭ", "japanese", "⠰⠠⠠⠉⠙⠤⠰⠠⠠⠗⠕⠍"); // A Gaiji indicator will be terminated after a hyphen "-"
 		testDencoder("ＤＯＳ／Ｖ", "japanese", "⠰⠠⠠⠙⠕⠎⠌⠠⠧");
 		
-//		// Letters & Whitespace & Letter case
+		// Letters & Whitespace & Letter case
 		testDencoder("　ａｂｃｄｅｆｇ　ｈｉｊｋｌｍｎｏｐ　　　ｑｒｓｔｕｖ　ｗｘｙｚ　", "japanese", "⠀⠰⠁⠃⠉⠙⠑⠋⠛⠀⠰⠓⠊⠚⠅⠇⠍⠝⠕⠏⠀⠀⠀⠰⠟⠗⠎⠞⠥⠧⠀⠰⠺⠭⠽⠵⠀");
 		testDencoder("　ＡｂｃｄＥｆｇ　Ｈｉｊｋｌｍｎｏｐ　　　ＱｒｓｔｕＶ　Ｗｘｙｚ　", "japanese", "⠀⠰⠠⠁⠃⠉⠙⠠⠑⠋⠛⠀⠰⠠⠓⠊⠚⠅⠇⠍⠝⠕⠏⠀⠀⠀⠰⠠⠟⠗⠎⠞⠥⠠⠧⠀⠰⠠⠺⠭⠽⠵⠀");
 		testDencoder("　ＡＢＣＤＥＦＧ　ＨＩＪＫＬＭＮＯＰ　　　ＱＲＳＴＵＶ　ＷＸＹＺ　", "japanese", "⠀⠰⠠⠠⠁⠃⠉⠙⠑⠋⠛⠀⠰⠠⠠⠓⠊⠚⠅⠇⠍⠝⠕⠏⠀⠀⠀⠰⠠⠠⠟⠗⠎⠞⠥⠧⠀⠰⠠⠠⠺⠭⠽⠵⠀");

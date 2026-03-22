@@ -49,6 +49,7 @@ public class StringBrailleDencoder {
 		RoundBracket(true), // ()
 		DoubleQuote(true), // “”
 		SingleQuote(true), // ‘’
+		DoubleAngleQuote(true), // «»
 		JP_Gaiji,
 		JP_CornerBracket(true), // 「」
 		JP_CornerBracket2(true), // 「」
@@ -267,6 +268,16 @@ public class StringBrailleDencoder {
 					prevType = Type.Symbol;
 				} else if (ch == '⠴') { // Dots-356 (Close quote)
 					sb.append('"');
+					prevType = Type.Symbol;
+				} else if (ch == '⠠' && ch2 == '⠴') { // Dots-6 356 (Close single quote)
+					sb.append('\'');
+					i++;
+					prevType = Type.Symbol;
+				} else if (ch == '⠨' && ch2 == '⠴' && (prevType == Type.Number || sb.indexOf("«") == -1)) { // Dots-6 356
+					// If followed by a number or not preceded by «, convert to '%'
+					// (Otherwise, convert to '»')
+					sb.append('%');
+					i++;
 					prevType = Type.Symbol;
 				} else if (ch == '⠼') { // Dots-3456 (Number indicator)
 					prevType = Type.Number;
@@ -764,7 +775,8 @@ public class StringBrailleDencoder {
 			case '[', '［' -> { indicatorList.add(Indicator.SquareBracket); yield "⠨⠣"; } // Dots-46 126 (Square bracket, opening)
 			case '(', '（' -> { indicatorList.add(Indicator.RoundBracket); yield "⠐⠣"; } // Dots-5 126 (Round bracket, opening)
 			case '“' -> { indicatorList.add(Indicator.DoubleQuote); yield "⠘⠦"; } // Dots-45 236 (U+201C Left double quote)
-			case '‘' -> { indicatorList.add(Indicator.SingleQuote); yield "⠠⠦"; } // Dots-6 236 (U+2018 Left single quote)
+			case '‘' -> { indicatorList.add(Indicator.SingleQuote); yield "⠠⠘⠦"; } // Dots-6 45 236 (U+2018 Left single quote)
+			case '«' -> { indicatorList.add(Indicator.DoubleAngleQuote); yield "⠨⠦"; } // Dots-46 236 (U+00AB Left double angle quote)
 			default -> null;
 		};
 	}
@@ -778,7 +790,8 @@ public class StringBrailleDencoder {
 			case ']', '］' -> { indicator = Indicator.SquareBracket; braille = "⠨⠜"; } // Dots-46 345 (Square bracket, closing)
 			case ')', '）' -> { indicator = Indicator.RoundBracket; braille = "⠐⠜"; } // Dots-5 345 (Round bracket, closing)
 			case '”' -> { indicator = Indicator.DoubleQuote; braille = "⠘⠴"; } // Dots-45 356 (U+201D Right double quote)
-			case '’' -> { indicator = Indicator.SingleQuote; braille = "⠠⠴"; } // Dots-6 356 (U+2019 Right single quote)
+			case '’' -> { indicator = Indicator.SingleQuote; braille = "⠠⠘⠴"; } // Dots-6 45 356 (U+2019 Right single quote)
+			case '»' -> { indicator = Indicator.DoubleAngleQuote; braille = "⠨⠴"; } // Dots-46 356 (U+00BB Right double angle quote)
 			default -> { indicator = null; braille = null; }
 		};
 		
@@ -933,8 +946,9 @@ public class StringBrailleDencoder {
 				switch (ch2) {
 					case '⠣' -> '['; // Dots-46 126 (Square bracket, opening)
 					case '⠜' -> ']'; // Dots-46 345 (Square bracket, closing)
-					case '⠴' -> '%'; // Dots-46 356
 					case '⠤' -> '_'; // Dots-46 36 (Low line)
+					case '⠦' -> '«'; // Dots-46 236 (U+00AB Left double angle quote)
+					case '⠴' -> '»'; // Dots-46 356 (U+00BB Right double angle quote)
 					default -> ch;
 				};
 			case '⠐' -> // Dots-5
@@ -952,8 +966,8 @@ public class StringBrailleDencoder {
 				};
 			case '⠠' -> // Dots-6
 				switch (ch2) {
-					case '⠦' -> '‘'; // Dots-6 236 (U+2018 Left single quote)
-					case '⠴' -> '’'; // Dots-6 356 (U+2019 Right single quote)
+					case '⠦' -> '\''; // Dots-6 236 (Single quote)
+					case '⠴' -> '\''; // Dots-6 356 (Single quote)
 					case '⠤' -> '—'; // Dots-6 36 (U+2014 Em dash)
 					
 					case '⠶' -> '"'; // Dots-6 2356 (Inches)
@@ -983,6 +997,16 @@ public class StringBrailleDencoder {
 							case '⠦' -> '¿'; // Dots-45 56 236 (Inverted question mark)
 							default -> ch;
 						};
+					default -> ch;
+				};
+			case '⠠' -> // Dots-6
+				switch (ch2) {
+					case '⠘' -> // Dots-45
+					switch (ch3) {
+						case '⠦' -> '‘'; // Dots-6 45 236 (U+2018 Left single quote)
+						case '⠴' -> '’'; // Dots-6 45 356 (U+2019 Right single quote)
+						default -> ch;
+					};
 					default -> ch;
 				};
 			default -> ch;
