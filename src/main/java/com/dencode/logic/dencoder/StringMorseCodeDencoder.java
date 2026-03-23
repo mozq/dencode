@@ -27,6 +27,17 @@ import com.dencode.logic.model.DencodeCondition;
 @Dencoder(type="string", method="string.morse-code", hasEncoder=true, hasDecoder=true)
 public class StringMorseCodeDencoder {
 	
+	private static class Notation {
+		public String dit, dah, gap, letterSpace, wordSpace;
+		public Notation(String dit, String dah, String gap, String letterSpace, String wordSpace) {
+			this.dit = dit;
+			this.dah = dah;
+			this.gap = gap;
+			this.letterSpace = letterSpace;
+			this.wordSpace = wordSpace;
+		}
+	}
+	
 	private static class Char {
 		public char value;
 		
@@ -120,7 +131,7 @@ public class StringMorseCodeDencoder {
 			put(".--.-", new char[] {'À', 'à', 'Å', 'å'});
 			put(".-.-", new char[] {'Ä', 'ä', 'Æ', 'æ', 'Ą', 'ą'});
 			put("-.-..", new char[] {'Ć', 'ć', 'Ĉ', 'ĉ', 'Ç', 'ç'});
-			put("..-..", new char[] {'Đ', 'đ', 'É', 'é', 'Ę', 'ę'});
+			put("..-..", new char[] {'É', 'é', 'Ę', 'ę', 'Đ', 'đ'});
 			put("..--.", new char[] {'Ð', 'ð'});
 			put(".-..-", new char[] {'È', 'è', 'Ł', 'ł'});
 			put("--.-.", new char[] {'Ĝ', 'ĝ'});
@@ -268,11 +279,11 @@ public class StringMorseCodeDencoder {
 			put("-.--.-", new char[] {'(', ')'});
 			put(".----.", new char[] {'\''});
 			put(".-..-.", new char[] {'"'});
-			put("-....-", new char[] {'—'});
+			put("-....-", new char[] {'-'});
 			put("-..-.", new char[] {'/'});
 			put("..--..", new char[] {'?'});
 			put("--..--", new char[] {'!'});
-			put("-...-", new char[] {'-'});
+			put("-...-", new char[] {'='});
 			put(".--.-.", new char[] {'@'});
 		}
 	};
@@ -286,6 +297,15 @@ public class StringMorseCodeDencoder {
 	private static final Map<Char, String> ENC_MAP_RUSSIAN = toEncodingMap(MAP_RUSSIAN);
 	private static final MorseTreeNode DEC_NODE_RUSSIAN = toDecodingNode(MAP_RUSSIAN);
 	
+	private static final Map<String, Notation> NOTATION_MAP = new HashMap<>() {
+		private static final long serialVersionUID = 1L;
+		{
+			put("code", new Notation(".", "-", null, " ", "/"));
+			put("code-fullwidth", new Notation("・", "－", null, "　", "／"));
+			put("signals", new Notation("▄", "▄▄▄", " ", "   ", "       "));
+			put("signals-01", new Notation("1", "111", "0", "000", "0000000"));
+		}
+	};
 	
 	private StringMorseCodeDencoder() {
 		// NOP
@@ -295,15 +315,21 @@ public class StringMorseCodeDencoder {
 	@DencoderFunction
 	public static String encStrMorseCode(DencodeCondition cond) {
 		String variant = DencodeUtils.getOption(cond.options(), "string.morse-code.variant", "international");
+		String notationId = DencodeUtils.getOption(cond.options(), "string.morse-code.notation", "code");
 		
 		Map<Char, String> encMap = switch (variant) {
-		case "international" -> ENC_MAP_INTERNATIONAL;
-		case "japanese" -> ENC_MAP_JAPANESE;
-		case "russian" -> ENC_MAP_RUSSIAN;
-		default -> ENC_MAP_INTERNATIONAL;
+			case "international" -> ENC_MAP_INTERNATIONAL;
+			case "japanese" -> ENC_MAP_JAPANESE;
+			case "russian" -> ENC_MAP_RUSSIAN;
+			default -> ENC_MAP_INTERNATIONAL;
 		};
 		
-		return encStrMorseCode(cond.value(), encMap, '.', '-', '/', ' ');
+		Notation notation = NOTATION_MAP.get(notationId);
+		if (notation == null) {
+			notation = NOTATION_MAP.get("code");
+		}
+		
+		return encStrMorseCode(cond.value(), encMap, notation);
 	}
 	
 	@DencoderFunction
@@ -311,20 +337,22 @@ public class StringMorseCodeDencoder {
 		String variant = DencodeUtils.getOption(cond.options(), "string.morse-code.variant", "international");
 		
 		MorseTreeNode node = switch (variant) {
-		case "international" -> DEC_NODE_INTERNATIONAL;
-		case "japanese" -> DEC_NODE_JAPANESE;
-		case "russian" -> DEC_NODE_RUSSIAN;
-		default -> DEC_NODE_INTERNATIONAL;
+			case "international" -> DEC_NODE_INTERNATIONAL;
+			case "japanese" -> DEC_NODE_JAPANESE;
+			case "russian" -> DEC_NODE_RUSSIAN;
+			default -> DEC_NODE_INTERNATIONAL;
 		};
 		
-		return decStrMorseCode(cond.value(), node, '.', '-', ' ');
+		return decStrMorseCode(cond.value(), node, ' ');
 	}
 	
 	
-	private static String encStrMorseCode(String value, Map<Char, String> encMap, char dit, char dah, char wordSpace, char letterSpace) {
+	private static String encStrMorseCode(String value, Map<Char, String> encMap, Notation notation) {
 		if (value == null || value.isEmpty()) {
 			return "";
 		}
+		
+		boolean isSignals = (notation.gap != null);
 		
 		int len = value.length();
 		Char c = new Char(CHAR_UNDEF);
@@ -340,45 +368,51 @@ public class StringMorseCodeDencoder {
 				continue;
 			}
 			
+			if (isWhitespace(ch)) {
+				if (!isSignals && needsLetterSpace) {
+					sb.append(notation.letterSpace);
+				}
+				
+				sb.append(notation.wordSpace);
+				needsLetterSpace = !isSignals;
+				continue;
+			}
+			
 			if (needsLetterSpace) {
-				sb.append(letterSpace);
+				sb.append(notation.letterSpace);
 			}
 			needsLetterSpace = true;
 			
-			if (Character.isWhitespace(ch) || ch == '　') {
-				sb.append(wordSpace);
+			char ch1;
+			char ch2;
+			if (hasVoicedSoundMark(ch)) {
+				ch1 = removeVoicedSoundMark(ch);
+				ch2 = '゛';
+			} else if (hasSemiVoicedSoundMark(ch)) {
+				ch1 = removeSemiVoicedSoundMark(ch);
+				ch2 = '゜';
 			} else {
-				char ch1;
-				char ch2;
-				if (hasVoicedSoundMark(ch)) {
-					ch1 = removeVoicedSoundMark(ch);
-					ch2 = '゛';
-				} else if (hasSemiVoicedSoundMark(ch)) {
-					ch1 = removeSemiVoicedSoundMark(ch);
-					ch2 = '゜';
-				} else {
-					ch1 = ch;
-					ch2 = CHAR_UNDEF;
-				}
+				ch1 = ch;
+				ch2 = CHAR_UNDEF;
+			}
 
-				c.value = ch1;
-				String code = encMap.get(c);
-				if (code == null) {
-					// Unsupported letter
-					sb.append(ch);
-				} else {
-					sb.append(code);
-					
-					if (ch2 != CHAR_UNDEF) {
-						c.value = ch2;
-						code = encMap.get(c);
-						if (code == null) {
-							// Unsupported letter
-							sb.append(ch);
-						} else {
-							sb.append(letterSpace);
-							sb.append(code);
-						}
+			c.value = ch1;
+			String code = encMap.get(c);
+			if (code == null) {
+				// Unsupported letter
+				sb.append(ch);
+			} else {
+				appendCode(sb, code, notation.dit, notation.dah, notation.gap);
+				
+				if (ch2 != CHAR_UNDEF) {
+					c.value = ch2;
+					code = encMap.get(c);
+					if (code == null) {
+						// Unsupported letter
+						sb.append(ch);
+					} else {
+						sb.append(notation.letterSpace);
+						appendCode(sb, code, notation.dit, notation.dah, notation.gap);
 					}
 				}
 			}
@@ -387,10 +421,12 @@ public class StringMorseCodeDencoder {
 		return sb.toString();
 	}
 	
-	private static String decStrMorseCode(String value, MorseTreeNode rootNode, char dit, char dah, char decodedWordSpace) {
+	private static String decStrMorseCode(String value, MorseTreeNode rootNode, char decodedWordSpace) {
 		if (value == null || value.isEmpty()) {
 			return "";
 		}
+		
+		boolean isSignals = isSignals(value, 100);
 		
 		int len = value.length();
 		int lastIdx = len - 1;
@@ -404,40 +440,88 @@ public class StringMorseCodeDencoder {
 			
 			boolean isEndOfWord = isLast;
 			int nch = -1;
-			if (isDit(ch)) {
-				if (node != null) {
-					node = node.dit;
-				}
-				if (codeStartIdx == -1) {
-					codeStartIdx = i;
-				}
-			} else if (isDah(ch)) {
-				if (node != null) {
-					node = node.dah;
-				}
-				if (codeStartIdx == -1) {
-					codeStartIdx = i;
-				}
-			} else if (isLetterSpace(ch)) {
-				isEndOfWord = true;
-			} else if (isWordSpace(ch)) {
-				nch = decodedWordSpace;
-				isEndOfWord = true;
-			} else if (isNewLine(ch)) {
+			if (isNewLine(ch)) {
 				nch = ch;
 				isEndOfWord = true;
+			} else if (isSignals) {
+				// Notation: signal
+				
+				int cntOn = countSignalOn(value, i, 3);
+				if (1 <= cntOn && cntOn <= 2) {
+					// Dit (1)
+					if (node != null) {
+						node = node.dit;
+					}
+					if (codeStartIdx == -1) {
+						codeStartIdx = i;
+					}
+				} else if (cntOn == 3) {
+					// Dah (3)
+					if (node != null) {
+						node = node.dah;
+					}
+					if (codeStartIdx == -1) {
+						codeStartIdx = i;
+					}
+					i += cntOn - 1;
+					isLast = (i == lastIdx);
+					isEndOfWord = isLast;
+				} else {
+					int cntOff = countSignalOff(value, i, 7);
+					if (1 <= cntOff && cntOff <= 2) {
+						// Gap (1)
+						continue;
+					} else if (3 <= cntOff && cntOff <= 6) {
+						// Letter space (3)
+						i += cntOff - 1;
+						isLast = (i == lastIdx);
+						isEndOfWord = true;
+					} else if (cntOff == 7) {
+						// Word space (7)
+						nch = decodedWordSpace;
+						i += cntOff - 1;
+						isLast = (i == lastIdx);
+						isEndOfWord = true;
+					} else {
+						// Unsupported letter
+						nch = ch;
+						isEndOfWord = true;
+					} 
+				}
 			} else {
-				// Unsupported letter
-				nch = ch;
-				isEndOfWord = true;
+				// Notation: code
+				
+				if (isDit(ch)) {
+					if (node != null) {
+						node = node.dit;
+					}
+					if (codeStartIdx == -1) {
+						codeStartIdx = i;
+					}
+				} else if (isDah(ch)) {
+					if (node != null) {
+						node = node.dah;
+					}
+					if (codeStartIdx == -1) {
+						codeStartIdx = i;
+					}
+				} else if (isLetterSpace(ch)) {
+					nch = -2; // Ignore this letter
+					isEndOfWord = true;
+				} else if (isWordSpace(ch)) {
+					nch = decodedWordSpace;
+					isEndOfWord = true;
+				} else {
+					// Unsupported letter
+					nch = ch;
+					isEndOfWord = true;
+				}
 			}
 			
 			if (isEndOfWord) {
-				if (node == rootNode) {
-					// NOP
-				} else {
-					char c = (node == null) ? CHAR_UNDEF : node.value;
-					if (c != CHAR_UNDEF) {
+				if (node != rootNode) {
+					if (node != null) {
+						char c = node.value;
 						if (c == '゛') {
 							DencodeUtils.appendCombinedVoicedSoundMark(sb);
 						} else if (c == '゜') {
@@ -447,11 +531,14 @@ public class StringMorseCodeDencoder {
 						}
 					} else {
 						// Unsupported code
-						sb.append(value, codeStartIdx, i + (isLast ? 1 : 0));
+						if (codeStartIdx != -1) {
+							sb.append(value, codeStartIdx, i + ((nch == -1) ? 1 : 0));
+						}
 					}
 				}
 				
-				if (nch != -1) {
+				// Unsupported letter
+				if (0 <= nch) {
 					sb.append((char)nch);
 				}
 				
@@ -515,12 +602,47 @@ public class StringMorseCodeDencoder {
 		return rootNode;
 	}
 	
+	private static boolean isSignals(String value, int maxScanLen) {
+		int len = Math.min(value.length(), maxScanLen);
+		
+		for (int i = 0; i < len; i++) {
+			char ch = value.charAt(i);
+			
+			if (isWhitespace(ch)) {
+				continue;
+			} else if (isSignalOn(ch) || isSignalOff(ch)) {
+				return true;
+			} else if (isDit(ch) || isDah(ch) || isWordSpace(ch)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private static boolean isSignalOn(char ch) {
+		return (ch == '▄' || ch == '1');
+	}
+	
+	private static boolean isSignalOff(char ch) {
+		return (isWhitespace(ch) || ch == '0');
+	}
+	
 	private static boolean isDit(char ch) {
-		return (ch == '.' || ch == '・' || ch == '·');
+		return (ch == '.' ||  // U+002E FULL STOP
+				ch == '·' ||  // U+00B7 MIDDLE DOT
+				ch == '・'  // U+30FB KATAKANA MIDDLE DOT
+				);
 	}
 	
 	private static boolean isDah(char ch) {
-		return (ch == '-' || ch == '_' || ch == '=' || ch == '=' || ch == '－' || ch == '―' || ch == '−');
+		return (ch == '-' ||  // U+002D HYPHEN-MINUS
+				ch == '_' ||  // U+005F LOW LINE
+				ch == '—' ||  // U+2014 EM DASH
+				ch == '―' ||  // U+2015 HORIZONTAL BAR
+				ch == '−' ||  // U+2212 MINUS SIGN
+				ch == '－'  // U+FF0D FULLWIDTH HYPHEN-MINUS
+				);
 	}
 	
 	private static boolean isLetterSpace(char ch) {
@@ -531,8 +653,51 @@ public class StringMorseCodeDencoder {
 		return (ch == '/' || ch == '／');
 	}
 	
+	private static boolean isWhitespace(char ch) {
+		return Character.isWhitespace(ch) || ch == '　';
+	}
+	
 	private static boolean isNewLine(char ch) {
 		return (ch == '\r' || ch == '\n');
+	}
+	
+	private static int countSignalOn(String value, int idx, int maxCount) {
+		int lastIdx = Math.min(idx + maxCount, value.length());
+		int cnt = 0;
+		for (int i = idx; i < lastIdx; i++) {
+			char ch = value.charAt(i);
+			if (!isSignalOn(ch)) {
+				break;
+			}
+			cnt++;
+		}
+		return cnt;
+	}
+	
+	private static int countSignalOff(String value, int idx, int maxCount) {
+		int lastIdx = Math.min(idx + maxCount, value.length());
+		int cnt = 0;
+		for (int i = idx; i < lastIdx; i++) {
+			char ch = value.charAt(i);
+			if (!isSignalOff(ch)) {
+				break;
+			}
+			cnt++;
+		}
+		return cnt;
+	}
+	
+	private static void appendCode(StringBuilder sb, String code, String dit, String dah, String gap) {
+		int len = code.length();
+		for (int i = 0; i < len; i++) {
+			char ch = code.charAt(i);
+			
+			if (i != 0 && gap != null) {
+				sb.append(gap);
+			}
+			
+			sb.append(isDit(ch) ? dit : dah);
+		}
 	}
 	
 	private static boolean hasVoicedSoundMark(char ch) {

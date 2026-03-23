@@ -1307,6 +1307,15 @@
 											<option value="russian">${dc:h(msg['string.morse-code.variant.russian'])}</option>
 										</select>
 									</div>
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['string.morse-code.notation'])}</span>
+										<select name="string.morse-code.notation" class="dencode-option form-select">
+											<option value="code">${dc:h(msg['string.morse-code.notation.code'])}</option>
+											<option value="code-fullwidth">${dc:h(msg['string.morse-code.notation.code-fullwidth'])}</option>
+											<option value="signals">${dc:h(msg['string.morse-code.notation.signals'])}</option>
+											<option value="signals-01">${dc:h(msg['string.morse-code.notation.signals-01'])}</option>
+										</select>
+									</div>
 								</div>
 							</td></tr></c:if>
 							<c:if test="${methods.contains('string.braille')}"><tr data-dencode-method="string.braille"><th>${dc:h(msg['string.braille.func.encStrBraille'])}</th><td><span id="encStrBraille" class="for-disp"></span>
