@@ -2568,10 +2568,10 @@
 				<span class="btn-label">${dc:h(msg['label.share.buttonLabel'])}</span>
 	
 				<ul class="dropdown-menu" role="menu">
-					<li><a class="share-link" href="{{permanentLink}}" target="_blank" data-share-method="openNewPage">${dc:h(msg['label.openNewPage'])}</a></li>
-					<li><a class="share-link" href="mailto:?body=%0D%0A{{permanentLinkUrlEncoded}}" data-share-method="sendByEmail">${dc:h(msg['label.sendByEmail'])}</a></li>
-					<li><a class="share-link" href="https://twitter.com/share?url={{permanentLinkUrlEncoded}}" target="_blank" data-share-method="shareOnTwitter">${dc:h(msg['label.shareOnTwitter'])}</a></li>
-					<li><a class="share-link" href="https://www.facebook.com/sharer/sharer.php?u={{permanentLinkUrlEncoded}}" target="_blank" data-share-method="shareOnFacebook">${dc:h(msg['label.shareOnFacebook'])}</a></li>
+					<li><a class="share-link" href="{{permanentLink}}" rel="nofollow" target="_blank" data-share-method="openNewPage">${dc:h(msg['label.openNewPage'])}</a></li>
+					<li><a class="share-link" href="mailto:?body=%0D%0A{{permanentLinkUrlEncoded}}" rel="nofollow" data-share-method="sendByEmail">${dc:h(msg['label.sendByEmail'])}</a></li>
+					<li><a class="share-link" href="https://twitter.com/share?url={{permanentLinkUrlEncoded}}" rel="nofollow" target="_blank" data-share-method="shareOnTwitter">${dc:h(msg['label.shareOnTwitter'])}</a></li>
+					<li><a class="share-link" href="https://www.facebook.com/sharer/sharer.php?u={{permanentLinkUrlEncoded}}" rel="nofollow" target="_blank" data-share-method="shareOnFacebook">${dc:h(msg['label.shareOnFacebook'])}</a></li>
 				</ul>
 			</button>
 		</div>
