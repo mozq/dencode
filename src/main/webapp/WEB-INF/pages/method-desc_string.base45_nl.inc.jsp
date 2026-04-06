@@ -52,6 +52,7 @@
 		<tr><td>41</td><td>-</td></tr>
 		<tr><td>42</td><td>.</td></tr>
 		<tr><td>43</td><td>/</td></tr>
+		<tr><td>44</td><td>:</td></tr>
 	</table>
 </div>
 
