@@ -72,12 +72,12 @@ public class StringBase45Dencoder {
 	
 	@DencoderFunction
 	public static String encStrBase45(DencodeCondition cond) {
-		return encStrBase45Encoding(cond.valueAsBinary());
+		return encodeBase45(cond.valueAsBinary());
 	}
 	
 	@DencoderFunction
 	public static String decStrBase45(DencodeCondition cond) {
-		byte[] decValue = decStrBase45Encoding(cond.value());
+		byte[] decValue = decodeBase45(cond.value(), 0, cond.value().length());
 		if (decValue == null) {
 			return null;
 		}
@@ -87,50 +87,26 @@ public class StringBase45Dencoder {
 	
 	@DencoderFunction
 	public static String decStrBase45ZlibCoseCbor(DencodeCondition cond) {
-		byte[] decValue = decStrBase45Encoding(cond.value());
+		String val = cond.value();
+		
+		byte[] decValue = decodeBase45(val, 0, val.length());
 		if (decValue == null) {
-			// Remove prefix like "HC1:" and "NO1:"
-			String v = cond.value();
-			int idx = v.indexOf(':');
+			// Remove context identifiers such as "HC1:" and "LT1:"
+			int idx = val.indexOf(':', 0, Math.min(10, val.length()));
 			if (idx < 0) {
 				return null;
 			}
 			
-			decValue = decStrBase45Encoding(v.substring(idx + 1));
+			decValue = decodeBase45(val, idx + 1, val.length());
 			if (decValue == null) {
 				return null;
 			}
 		}
 		
-		// Zlib to COSE to CBOR to JSON
-		String cborJson;
-		try (InputStream zlibIs = new ByteArrayInputStream(decValue)) {
-			// Zlib to COSE
-			try (InputStream coseIs = new InflaterInputStream(zlibIs)) {
-				// COSE to CBOR
-				JsonNode coseNode = CBOR_MAPPER.readTree(coseIs);
-				JsonNode cosePayloadNode = coseNode.get(2);
-				if (cosePayloadNode == null) {
-					return null;
-				}
-				
-				byte[] cborBin = cosePayloadNode.binaryValue();
-				if (cborBin == null) {
-					return null;
-				}
-				
-				// CBOR to JSON
-				JsonNode cborNode = CBOR_MAPPER.readTree(cborBin);
-				cborJson = JSON_WRITER.writeValueAsString(cborNode);
-			}
-		} catch (IOException | JacksonIOException e) {
-			return null;
-		}
-		
-		return cborJson;
+		return parseZlibCoseCbor(decValue);
 	}
 	
-	private static String encStrBase45Encoding(byte[] binValue) {
+	private static String encodeBase45(byte[] binValue) {
 		int len = binValue.length;
 		int c2 = len / RAW_CHUNK_SIZE_FULL;
 		int c1 = len % RAW_CHUNK_SIZE_FULL;
@@ -159,8 +135,8 @@ public class StringBase45Dencoder {
 		return sb.toString();
 	}
 	
-	private static byte[] decStrBase45Encoding(String val) {
-		int len = val.length();
+	private static byte[] decodeBase45(String val, int startIdx, int endIdx) {
+		int len = endIdx - startIdx;
 		int c3 = len / ENCODED_CHUNK_SIZE_FULL;
 		int c2 = len % ENCODED_CHUNK_SIZE_FULL;
 		
@@ -169,21 +145,21 @@ public class StringBase45Dencoder {
 			return null;
 		}
 		
-		int len3 = len - c2;
+		int len3 = endIdx - c2;
 		int bufLen = (c3 * RAW_CHUNK_SIZE_FULL) + ((c2 == 0) ? 0 : RAW_CHUNK_SIZE_PART);
 		
 		byte[] buf = new byte[bufLen];
 		int bufIdx = 0;
 		
 		// i = 0, 3, 6, 9, ...
-		for (int i = 0; i < len; i += ENCODED_CHUNK_SIZE_FULL) {
+		for (int i = startIdx; i < endIdx; i += ENCODED_CHUNK_SIZE_FULL) {
 			
 			// j = 2, 1, 0
 			// idx = [2, 1, 0], [5, 4, 3], [8, 7, 6], ...
 			int n = 0;
 			for (int j = ENCODED_CHUNK_SIZE_FULL - 1; 0 <= j; j--) {
 				int idx = i + j;
-				if (len <= idx) {
+				if (endIdx <= idx) {
 					continue;
 				}
 				
@@ -216,5 +192,34 @@ public class StringBase45Dencoder {
 		}
 		
 		return buf;
+	}
+	
+	private static String parseZlibCoseCbor(byte[] binValue) {
+		// Zlib to COSE to CBOR to JSON
+		String cborJson;
+		try (InputStream zlibIs = new ByteArrayInputStream(binValue)) {
+			// Zlib to COSE
+			try (InputStream coseIs = new InflaterInputStream(zlibIs)) {
+				// COSE to CBOR
+				JsonNode coseNode = CBOR_MAPPER.readTree(coseIs);
+				JsonNode cosePayloadNode = coseNode.get(2);
+				if (cosePayloadNode == null) {
+					return null;
+				}
+				
+				byte[] cborBin = cosePayloadNode.binaryValue();
+				if (cborBin == null) {
+					return null;
+				}
+				
+				// CBOR to JSON
+				JsonNode cborNode = CBOR_MAPPER.readTree(cborBin);
+				cborJson = JSON_WRITER.writeValueAsString(cborNode);
+			}
+		} catch (IOException | JacksonIOException e) {
+			return null;
+		}
+		
+		return cborJson;
 	}
 }
