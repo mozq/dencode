@@ -103,3 +103,68 @@
 <p>Le résultat après décodage est le suivant.</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) est un format de jeton qui représente de manière compacte des données JSON en utilisant l'encodage Base64url. Il est largement utilisé pour l'authentification et l'autorisation dans les applications web et est standardisé dans la RFC 7519.</p>
+
+<p>Un JWT est composé de trois éléments séparés par des points (.).</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>Le rôle de chaque élément est le suivant.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Élément</th><th>Description</th></tr>
+		<tr><td>Header</td><td>Un objet JSON contenant des métadonnées telles que le type de jeton (typ) et l'algorithme de signature (alg)</td></tr>
+		<tr><td>Payload</td><td>Un objet JSON contenant des informations telles que l'identifiant utilisateur et la date d'expiration</td></tr>
+		<tr><td>Signature</td><td>Données de signature utilisées pour détecter la falsification de l'en-tête et de la charge utile</td></tr>
+	</table>
+</div>
+
+<p>L'en-tête et la charge utile sont chacun encodés en Base64url. Base64url remplace « + » par « - » et « / » par « _ », et omet le remplissage « = » par rapport au Base64 standard (RFC 4648). Cela permet de les inclure en toute sécurité dans les URLs et les en-têtes HTTP.</p>
+
+<p>Par exemple, le décodage du JWT suivant donne l'en-tête et la charge utile au format JSON.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>Les principaux champs (claims) contenus dans l'en-tête et la charge utile sont les suivants.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Champ</th><th>Nom</th><th>Description</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>Algorithme utilisé pour la signature ou le chiffrement (p. ex. HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>Type de jeton (généralement « JWT »)</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>Type de contenu de la charge utile (« JWT » pour les JWT imbriqués)</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>Identifiant de la clé utilisée pour la vérification de signature</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>URL du jeu JWK utilisé pour la vérification de signature</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>URL de la chaîne de certificats X.509 utilisée pour la vérification de signature</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>Empreinte SHA-1 du certificat X.509 utilisé pour la vérification de signature</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Champ</th><th>Nom</th><th>Description</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>Émetteur du jeton</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>Sujet du jeton (p. ex. identifiant utilisateur)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>Destinataire du jeton</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>Date d'expiration du jeton (horodatage Unix)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>Date avant laquelle le jeton n'est pas valide (horodatage Unix)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>Date d'émission du jeton (horodatage Unix)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>Identifiant unique du jeton</td></tr>
+	</table>
+</div>

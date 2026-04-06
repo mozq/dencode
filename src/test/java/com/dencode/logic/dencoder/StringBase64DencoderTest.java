@@ -136,5 +136,40 @@ public class StringBase64DencoderTest {
 		}));
 		assertEquals(expectedDecodedValue, decodedValue);
 	}
+	
+	@Test
+	public void test_decoder_jwt() {
+		// Valid JWT (header: {"alg":"HS256","typ":"JWT"}, payload: {"sub":"1234567890","name":"John Doe","iat":1516239022})
+		// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+		testDecoder(
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+				"{\n"
+				+ "  \"alg\" : \"HS256\",\n"
+				+ "  \"typ\" : \"JWT\"\n"
+				+ "}\n"
+				+ "{\n"
+				+ "  \"sub\" : \"1234567890\",\n"
+				+ "  \"name\" : \"John Doe\",\n"
+				+ "  \"iat\" : 1516239022\n"
+				+ "}"
+				);
+		
+		// JWT with empty signature
+		testDecoder(
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.",
+				"{\n"
+				+ "  \"alg\" : \"HS256\",\n"
+				+ "  \"typ\" : \"JWT\"\n"
+				+ "}\n"
+				+ "{\n"
+				+ "  \"sub\" : \"1234567890\",\n"
+				+ "  \"name\" : \"John Doe\",\n"
+				+ "  \"iat\" : 1516239022\n"
+				+ "}"
+				);
+		
+		// Two dots but header is not valid JSON object (array)
+		testDecoder("W10.W10.abc", null);
+	}
  }
  

@@ -103,3 +103,68 @@
 <p>解码后的结果如下。</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) 是一种使用 Base64url 编码将 JSON 数据紧凑表示的令牌格式。它在 Web 应用程序的认证和授权中被广泛使用，并在 RFC 7519 中标准化。</p>
+
+<p>JWT 由三个通过点 (.) 分隔的元素组成。</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>各元素的作用如下。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>元素</th><th>说明</th></tr>
+		<tr><td>Header</td><td>包含令牌类型 (typ) 和签名算法 (alg) 等元数据的 JSON 对象</td></tr>
+		<tr><td>Payload</td><td>包含用户 ID 和过期时间等信息的 JSON 对象</td></tr>
+		<tr><td>Signature</td><td>用于检测头部和载荷是否被篡改的签名数据</td></tr>
+	</table>
+</div>
+
+<p>头部和载荷分别进行 Base64url 编码。与标准 Base64 相比，Base64url 将"+"替换为"-"，将"/"替换为"_"，并省略填充"="(RFC 4648)。这使得它们可以安全地包含在 URL 和 HTTP 头部中。</p>
+
+<p>例如，解码以下 JWT 可以分别获取头部和载荷的 JSON 数据。</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>头部和载荷中包含的主要字段（声明）如下。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>字段</th><th>名称</th><th>说明</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>用于签名或加密的算法（如 HS256、RS256、ES256）</td></tr>
+		<tr><td>typ</td><td>Type</td><td>令牌类型（通常为 "JWT"）</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>载荷的内容类型（嵌套 JWT 时为 "JWT"）</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>用于签名验证的密钥标识符</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>用于签名验证的 JWK Set 参考 URL</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>用于签名验证的 X.509 证书链参考 URL</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>用于签名验证的 X.509 证书的 SHA-1 指纹</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>字段</th><th>名称</th><th>说明</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>令牌的签发者</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>令牌的主体（如用户 ID）</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>令牌的接收方</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>令牌的过期时间（Unix 时间戳）</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>令牌生效时间（Unix 时间戳）</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>令牌的签发时间（Unix 时间戳）</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>令牌的唯一标识符</td></tr>
+	</table>
+</div>

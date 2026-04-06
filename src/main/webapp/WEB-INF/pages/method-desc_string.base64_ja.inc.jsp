@@ -96,10 +96,75 @@
 
 
 <h4>EメールのMIMEメッセージヘッダー型式 (RFC 2047)</h4>
-<p>DenCodeでは、以下のようなMIMEメッセージヘッダー型式（RFC 2047）のデコードもサポートします。この型式は、Eメールの件名や宛先などにASCII文字以外が含まれる場合に使用されます。</p>
+<p>DenCodeでは、以下のようなMIMEメッセージヘッダー型式 (RFC 2047) のデコードもサポートします。この型式は、Eメールの件名や宛先などにASCII文字以外が含まれる場合に使用されます。</p>
 
 <pre>Subject: =?UTF-8?B?44K144Oz44OX44Or?=</pre>
 
 <p>デコードの後の結果は以下のとおりです。</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) は、JSON形式のデータをBase64urlエンコードしてコンパクトに表現するトークン形式です。主にWebアプリケーションにおける認証・認可の仕組みとして広く使用されており、RFC 7519で標準化されています。</p>
+
+<p>JWTは、ドット (.) で区切られた3つの要素から構成されます。</p>
+
+<pre>&lt;ヘッダー&gt;.&lt;ペイロード&gt;.&lt;署名&gt;</pre>
+
+<p>各要素の役割は以下のとおりです。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>要素</th><th>説明</th></tr>
+		<tr><td>ヘッダー (Header)</td><td>トークンの種類 (typ) や署名アルゴリズム (alg) などのメタ情報を含むJSONオブジェクト</td></tr>
+		<tr><td>ペイロード (Payload)</td><td>ユーザーIDや有効期限などの情報を含むJSONオブジェクト</td></tr>
+		<tr><td>署名 (Signature)</td><td>ヘッダーとペイロードの改ざんを検出するための署名データ</td></tr>
+	</table>
+</div>
+
+<p>ヘッダーとペイロードはそれぞれBase64urlエンコードされています。Base64urlは、標準のBase64と比べて、「+」を「-」に、「/」を「_」に置き換え、パディングの「=」を省略した形式です (RFC 4648)。これにより、URLやHTTPヘッダーに安全に含めることができます。</p>
+
+<p>例えば、以下のJWTをデコードすると、ヘッダーとペイロードをそれぞれJSONとして取得できます。</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>ヘッダーやペイロードに含まれる主なフィールド (クレーム) は以下のとおりです。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>フィールド</th><th>名称</th><th>説明</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>署名や暗号化に使用するアルゴリズム (HS256, RS256, ES256 など)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>トークンの種類 (通常は "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>ペイロードのコンテンツタイプ (ネストされたJWTの場合は "JWT")</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>署名検証に使用する鍵の識別子</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>署名検証に使用するJWK Setの参照先URL</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>署名検証に使用するX.509証明書チェーンの参照先URL</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>署名検証に使用するX.509証明書のSHA-1サムプリント</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>フィールド</th><th>名称</th><th>説明</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>トークンの発行者</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>トークンの主体 (ユーザーIDなど)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>トークンの受信者</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>トークンの有効期限 (UNIXタイムスタンプ)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>トークンの有効開始日時 (UNIXタイムスタンプ)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>トークンの発行日時 (UNIXタイムスタンプ)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>トークンの一意な識別子</td></tr>
+	</table>
+</div>

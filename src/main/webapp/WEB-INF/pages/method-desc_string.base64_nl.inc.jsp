@@ -103,3 +103,68 @@
 <p>Het resultaat na decodering is als volgt:</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) is een tokenformaat dat JSON-gegevens compact weergeeft met behulp van Base64url-codering. Het wordt veel gebruikt voor authenticatie en autorisatie in webapplicaties en is gestandaardiseerd in RFC 7519.</p>
+
+<p>Een JWT bestaat uit drie elementen gescheiden door punten (.).</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>De rol van elk element is als volgt.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Element</th><th>Beschrijving</th></tr>
+		<tr><td>Header</td><td>Een JSON-object met metadata zoals het tokentype (typ) en het ondertekeningsalgoritme (alg)</td></tr>
+		<tr><td>Payload</td><td>Een JSON-object met informatie zoals gebruikers-ID en verloopdatum</td></tr>
+		<tr><td>Signature</td><td>Handtekeninggegevens die worden gebruikt om manipulatie van de header en payload te detecteren</td></tr>
+	</table>
+</div>
+
+<p>De header en payload zijn elk Base64url-gecodeerd. Base64url vervangt "+" door "-" en "/" door "_", en laat de opvulling "=" weg in vergelijking met standaard Base64 (RFC 4648). Hierdoor kunnen ze veilig worden opgenomen in URL's en HTTP-headers.</p>
+
+<p>Het decoderen van de volgende JWT levert bijvoorbeeld de header en payload op als JSON.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>De belangrijkste velden (claims) in de header en payload zijn als volgt.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Veld</th><th>Naam</th><th>Beschrijving</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>Algoritme dat wordt gebruikt voor ondertekening of versleuteling (bijv. HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>Tokentype (meestal "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>Inhoudstype van de payload ("JWT" voor geneste JWT's)</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>Identificatie van de sleutel die wordt gebruikt voor handtekeningverificatie</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>URL van de JWK Set die wordt gebruikt voor handtekeningverificatie</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>URL van de X.509-certificaatketen die wordt gebruikt voor handtekeningverificatie</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>SHA-1-vingerafdruk van het X.509-certificaat dat wordt gebruikt voor handtekeningverificatie</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Veld</th><th>Naam</th><th>Beschrijving</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>Uitgever van het token</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>Onderwerp van het token (bijv. gebruikers-ID)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>Ontvanger van het token</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>Vervaltijd van het token (Unix-tijdstempel)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>Tijdstip waarvoor het token niet geldig is (Unix-tijdstempel)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>Tijdstip van uitgifte van het token (Unix-tijdstempel)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>Unieke identificatie van het token</td></tr>
+	</table>
+</div>

@@ -103,3 +103,68 @@
 <p>O resultado após a decodificação é o seguinte:</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) é um formato de token que representa dados JSON de forma compacta usando codificação Base64url. É amplamente utilizado para autenticação e autorização em aplicações web e é padronizado na RFC 7519.</p>
+
+<p>Um JWT é composto por três elementos separados por pontos (.).</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>O papel de cada elemento é o seguinte.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Elemento</th><th>Descrição</th></tr>
+		<tr><td>Header</td><td>Um objeto JSON contendo metadados como o tipo de token (typ) e o algoritmo de assinatura (alg)</td></tr>
+		<tr><td>Payload</td><td>Um objeto JSON contendo informações como ID do usuário e tempo de expiração</td></tr>
+		<tr><td>Signature</td><td>Dados de assinatura utilizados para detectar adulteração do cabeçalho e da carga útil</td></tr>
+	</table>
+</div>
+
+<p>O cabeçalho e a carga útil são codificados em Base64url. O Base64url substitui "+" por "-" e "/" por "_", e omite o preenchimento "=" em comparação com o Base64 padrão (RFC 4648). Isso permite incluí-los com segurança em URLs e cabeçalhos HTTP.</p>
+
+<p>Por exemplo, ao decodificar o seguinte JWT, obtém-se o cabeçalho e a carga útil em formato JSON.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>Os principais campos (claims) contidos no cabeçalho e na carga útil são os seguintes.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Campo</th><th>Nome</th><th>Descrição</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>Algoritmo utilizado para assinatura ou criptografia (ex.: HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>Tipo de token (geralmente "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>Tipo de conteúdo da carga útil ("JWT" para JWTs aninhados)</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>Identificador da chave utilizada para verificação de assinatura</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>URL do conjunto JWK utilizado para verificação de assinatura</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>URL da cadeia de certificados X.509 utilizada para verificação de assinatura</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>Impressão digital SHA-1 do certificado X.509 utilizado para verificação de assinatura</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Campo</th><th>Nome</th><th>Descrição</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>Emissor do token</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>Sujeito do token (ex.: ID do usuário)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>Destinatário do token</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>Tempo de expiração do token (timestamp Unix)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>Tempo antes do qual o token não é válido (timestamp Unix)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>Tempo de emissão do token (timestamp Unix)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>Identificador único do token</td></tr>
+	</table>
+</div>

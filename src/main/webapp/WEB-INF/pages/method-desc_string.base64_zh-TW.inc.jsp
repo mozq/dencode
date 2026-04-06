@@ -103,3 +103,68 @@
 <p>解碼後的結果如下。</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) 是一種使用 Base64url 編碼將 JSON 資料緊湊表示的權杖格式。它在網頁應用程式的認證和授權中被廣泛使用，並在 RFC 7519 中標準化。</p>
+
+<p>JWT 由三個以點 (.) 分隔的元素組成。</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>各元素的角色如下。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>元素</th><th>說明</th></tr>
+		<tr><td>Header</td><td>包含權杖類型 (typ) 和簽章演算法 (alg) 等中繼資料的 JSON 物件</td></tr>
+		<tr><td>Payload</td><td>包含使用者 ID 和到期時間等資訊的 JSON 物件</td></tr>
+		<tr><td>Signature</td><td>用於偵測標頭和酬載是否被竄改的簽章資料</td></tr>
+	</table>
+</div>
+
+<p>標頭和酬載分別以 Base64url 編碼。與標準 Base64 相比，Base64url 將「+」替換為「-」，將「/」替換為「_」，並省略填充「=」(RFC 4648)。這使得它們可以安全地包含在 URL 和 HTTP 標頭中。</p>
+
+<p>例如，解碼以下 JWT 可以分別取得標頭和酬載的 JSON 資料。</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>標頭和酬載中包含的主要欄位（宣告）如下。</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>欄位</th><th>名稱</th><th>說明</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>用於簽章或加密的演算法（如 HS256、RS256、ES256）</td></tr>
+		<tr><td>typ</td><td>Type</td><td>權杖類型（通常為「JWT」）</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>酬載的內容類型（巢狀 JWT 時為「JWT」）</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>用於簽章驗證的金鑰識別碼</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>用於簽章驗證的 JWK Set 參考 URL</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>用於簽章驗證的 X.509 憑證鏈參考 URL</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>用於簽章驗證的 X.509 憑證的 SHA-1 指紋</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>欄位</th><th>名稱</th><th>說明</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>權杖的簽發者</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>權杖的主體（如使用者 ID）</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>權杖的接收方</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>權杖的到期時間（Unix 時間戳記）</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>權杖生效時間（Unix 時間戳記）</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>權杖的簽發時間（Unix 時間戳記）</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>權杖的唯一識別碼</td></tr>
+	</table>
+</div>

@@ -103,3 +103,68 @@
 <p>디코딩 후의 결과는 다음과 같습니다.</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT)은 Base64url 인코딩을 사용하여 JSON 데이터를 간결하게 표현하는 토큰 형식입니다. 웹 애플리케이션에서의 인증 및 인가에 널리 사용되며, RFC 7519에서 표준화되어 있습니다.</p>
+
+<p>JWT는 점 (.)으로 구분된 세 가지 요소로 구성됩니다.</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>각 요소의 역할은 다음과 같습니다.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>요소</th><th>설명</th></tr>
+		<tr><td>Header</td><td>토큰 유형 (typ) 및 서명 알고리즘 (alg) 등의 메타데이터를 포함하는 JSON 객체</td></tr>
+		<tr><td>Payload</td><td>사용자 ID 및 만료 시간 등의 정보를 포함하는 JSON 객체</td></tr>
+		<tr><td>Signature</td><td>헤더와 페이로드의 변조를 감지하기 위한 서명 데이터</td></tr>
+	</table>
+</div>
+
+<p>헤더와 페이로드는 각각 Base64url로 인코딩됩니다. Base64url은 표준 Base64와 비교하여 "+"를 "-"로, "/"를 "_"로 대체하고, 패딩 "="를 생략합니다 (RFC 4648). 이를 통해 URL 및 HTTP 헤더에 안전하게 포함할 수 있습니다.</p>
+
+<p>예를 들어, 다음 JWT를 디코딩하면 헤더와 페이로드를 JSON으로 얻을 수 있습니다.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>헤더와 페이로드에 포함된 주요 필드 (클레임)는 다음과 같습니다.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>필드</th><th>명칭</th><th>설명</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>서명 또는 암호화에 사용되는 알고리즘 (예: HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>토큰 유형 (일반적으로 "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>페이로드의 콘텐츠 유형 (중첩된 JWT의 경우 "JWT")</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>서명 검증에 사용되는 키의 식별자</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>서명 검증에 사용되는 JWK Set의 참조 URL</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>서명 검증에 사용되는 X.509 인증서 체인의 참조 URL</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>서명 검증에 사용되는 X.509 인증서의 SHA-1 지문</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>필드</th><th>명칭</th><th>설명</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>토큰 발급자</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>토큰의 주체 (예: 사용자 ID)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>토큰 수신자</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>토큰 만료 시간 (Unix 타임스탬프)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>토큰이 유효하지 않은 시작 시간 (Unix 타임스탬프)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>토큰 발급 시간 (Unix 타임스탬프)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>토큰의 고유 식별자</td></tr>
+	</table>
+</div>

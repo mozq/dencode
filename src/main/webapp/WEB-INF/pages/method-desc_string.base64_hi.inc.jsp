@@ -103,3 +103,68 @@
 <p>डिकोडिंग के बाद परिणाम इस प्रकार है।</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) एक टोकन प्रारूप है जो Base64url एन्कोडिंग का उपयोग करके JSON डेटा को संक्षिप्त रूप में प्रस्तुत करता है। यह वेब अनुप्रयोगों में प्रमाणीकरण और प्राधिकरण के लिए व्यापक रूप से उपयोग किया जाता है और RFC 7519 में मानकीकृत है।</p>
+
+<p>एक JWT तीन तत्वों से बना होता है जो डॉट (.) द्वारा अलग किए जाते हैं।</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>प्रत्येक तत्व की भूमिका इस प्रकार है।</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>तत्व</th><th>विवरण</th></tr>
+		<tr><td>Header</td><td>टोकन प्रकार (typ) और हस्ताक्षर एल्गोरिथ्म (alg) जैसी मेटाडेटा जानकारी वाला JSON ऑब्जेक्ट</td></tr>
+		<tr><td>Payload</td><td>उपयोगकर्ता ID और समाप्ति समय जैसी जानकारी वाला JSON ऑब्जेक्ट</td></tr>
+		<tr><td>Signature</td><td>हेडर और पेलोड की छेड़छाड़ का पता लगाने के लिए उपयोग किया जाने वाला हस्ताक्षर डेटा</td></tr>
+	</table>
+</div>
+
+<p>हेडर और पेलोड प्रत्येक Base64url एन्कोडेड होते हैं। Base64url मानक Base64 की तुलना में "+" को "-" से और "/" को "_" से बदलता है, और पैडिंग "=" को छोड़ देता है (RFC 4648)। इससे उन्हें URL और HTTP हेडर में सुरक्षित रूप से शामिल किया जा सकता है।</p>
+
+<p>उदाहरण के लिए, निम्नलिखित JWT को डिकोड करने पर हेडर और पेलोड JSON के रूप में प्राप्त होते हैं।</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>हेडर और पेलोड में शामिल मुख्य फ़ील्ड (क्लेम) निम्नलिखित हैं।</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>फ़ील्ड</th><th>नाम</th><th>विवरण</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>हस्ताक्षर या एन्क्रिप्शन के लिए उपयोग किया जाने वाला एल्गोरिथ्म (जैसे HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>टोकन का प्रकार (आमतौर पर "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>पेलोड का कंटेंट प्रकार (नेस्टेड JWT के लिए "JWT")</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>हस्ताक्षर सत्यापन के लिए उपयोग की जाने वाली कुंजी का पहचानकर्ता</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>हस्ताक्षर सत्यापन के लिए उपयोग किए जाने वाले JWK सेट का संदर्भ URL</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>हस्ताक्षर सत्यापन के लिए उपयोग की जाने वाली X.509 प्रमाणपत्र श्रृंखला का संदर्भ URL</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>हस्ताक्षर सत्यापन के लिए उपयोग किए जाने वाले X.509 प्रमाणपत्र का SHA-1 थंबप्रिंट</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>फ़ील्ड</th><th>नाम</th><th>विवरण</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>टोकन का जारीकर्ता</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>टोकन का विषय (जैसे उपयोगकर्ता ID)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>टोकन का प्राप्तकर्ता</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>टोकन की समाप्ति समय (Unix टाइमस्टैम्प)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>जिस समय से पहले टोकन मान्य नहीं है (Unix टाइमस्टैम्प)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>टोकन जारी होने का समय (Unix टाइमस्टैम्प)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>टोकन का अद्वितीय पहचानकर्ता</td></tr>
+	</table>
+</div>

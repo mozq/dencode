@@ -103,3 +103,68 @@
 <p>Hasil setelah dekode adalah sebagai berikut.</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) adalah format token yang merepresentasikan data JSON secara ringkas menggunakan encoding Base64url. Format ini banyak digunakan untuk autentikasi dan otorisasi dalam aplikasi web dan telah distandarkan dalam RFC 7519.</p>
+
+<p>JWT terdiri dari tiga elemen yang dipisahkan oleh titik (.).</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>Peran masing-masing elemen adalah sebagai berikut.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Elemen</th><th>Deskripsi</th></tr>
+		<tr><td>Header</td><td>Objek JSON yang berisi metadata seperti jenis token (typ) dan algoritma tanda tangan (alg)</td></tr>
+		<tr><td>Payload</td><td>Objek JSON yang berisi informasi seperti ID pengguna dan waktu kedaluwarsa</td></tr>
+		<tr><td>Signature</td><td>Data tanda tangan yang digunakan untuk mendeteksi pemalsuan header dan payload</td></tr>
+	</table>
+</div>
+
+<p>Header dan payload masing-masing dienkode dalam Base64url. Base64url mengganti "+" dengan "-" dan "/" dengan "_", serta menghilangkan padding "=" dibandingkan dengan Base64 standar (RFC 4648). Hal ini memungkinkan penyertaan yang aman dalam URL dan header HTTP.</p>
+
+<p>Misalnya, mendekode JWT berikut menghasilkan header dan payload dalam format JSON.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>Field (klaim) utama yang terdapat dalam header dan payload adalah sebagai berikut.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Field</th><th>Nama</th><th>Deskripsi</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>Algoritma yang digunakan untuk penandatanganan atau enkripsi (mis. HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>Jenis token (biasanya "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>Tipe konten payload ("JWT" untuk JWT bersarang)</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>Pengidentifikasi kunci yang digunakan untuk verifikasi tanda tangan</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>URL yang merujuk ke JWK Set yang digunakan untuk verifikasi tanda tangan</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>URL yang merujuk ke rantai sertifikat X.509 yang digunakan untuk verifikasi tanda tangan</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>Sidik jari SHA-1 dari sertifikat X.509 yang digunakan untuk verifikasi tanda tangan</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Field</th><th>Nama</th><th>Deskripsi</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>Penerbit token</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>Subjek token (mis. ID pengguna)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>Penerima token</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>Waktu kedaluwarsa token (Unix timestamp)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>Waktu sebelum token tidak valid (Unix timestamp)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>Waktu penerbitan token (Unix timestamp)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>Pengidentifikasi unik token</td></tr>
+	</table>
+</div>

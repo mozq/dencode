@@ -103,3 +103,68 @@
 <p>Kết quả sau khi giải mã như sau:</p>
 
 <pre>Subject: サンプル</pre>
+
+
+<h4>JSON Web Token (RFC 7519)</h4>
+<p>JSON Web Token (JWT) là một định dạng token biểu diễn dữ liệu JSON một cách gọn nhẹ bằng mã hóa Base64url. Nó được sử dụng rộng rãi cho xác thực và ủy quyền trong các ứng dụng web và được chuẩn hóa trong RFC 7519.</p>
+
+<p>JWT bao gồm ba phần tử được phân tách bởi dấu chấm (.).</p>
+
+<pre>&lt;Header&gt;.&lt;Payload&gt;.&lt;Signature&gt;</pre>
+
+<p>Vai trò của mỗi phần tử như sau.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Phần tử</th><th>Mô tả</th></tr>
+		<tr><td>Header</td><td>Đối tượng JSON chứa siêu dữ liệu như loại token (typ) và thuật toán ký (alg)</td></tr>
+		<tr><td>Payload</td><td>Đối tượng JSON chứa thông tin như ID người dùng và thời gian hết hạn</td></tr>
+		<tr><td>Signature</td><td>Dữ liệu chữ ký được sử dụng để phát hiện giả mạo header và payload</td></tr>
+	</table>
+</div>
+
+<p>Header và payload đều được mã hóa Base64url. Base64url thay thế "+" bằng "-" và "/" bằng "_", đồng thời bỏ qua phần đệm "=" so với Base64 tiêu chuẩn (RFC 4648). Điều này cho phép đưa chúng vào URL và header HTTP một cách an toàn.</p>
+
+<p>Ví dụ, giải mã JWT sau đây sẽ cho header và payload dưới dạng JSON.</p>
+
+<pre>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+
+<pre>
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+</pre>
+
+<p>Các trường (claim) chính trong header và payload như sau.</p>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Trường</th><th>Tên</th><th>Mô tả</th></tr>
+		<tr><td>alg</td><td>Algorithm</td><td>Thuật toán được sử dụng để ký hoặc mã hóa (ví dụ: HS256, RS256, ES256)</td></tr>
+		<tr><td>typ</td><td>Type</td><td>Loại token (thường là "JWT")</td></tr>
+		<tr><td>cty</td><td>Content Type</td><td>Loại nội dung của payload ("JWT" cho JWT lồng nhau)</td></tr>
+		<tr><td>kid</td><td>Key ID</td><td>Mã định danh của khóa được sử dụng để xác minh chữ ký</td></tr>
+		<tr><td>jku</td><td>JWK Set URL</td><td>URL tham chiếu JWK Set được sử dụng để xác minh chữ ký</td></tr>
+		<tr><td>x5u</td><td>X.509 URL</td><td>URL tham chiếu chuỗi chứng chỉ X.509 được sử dụng để xác minh chữ ký</td></tr>
+		<tr><td>x5t</td><td>X.509 Certificate SHA-1 Thumbprint</td><td>Dấu vân tay SHA-1 của chứng chỉ X.509 được sử dụng để xác minh chữ ký</td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<tr><th>Trường</th><th>Tên</th><th>Mô tả</th></tr>
+		<tr><td>iss</td><td>Issuer</td><td>Tổ chức phát hành token</td></tr>
+		<tr><td>sub</td><td>Subject</td><td>Chủ thể của token (ví dụ: ID người dùng)</td></tr>
+		<tr><td>aud</td><td>Audience</td><td>Người nhận token</td></tr>
+		<tr><td>exp</td><td>Expiration Time</td><td>Thời gian hết hạn của token (Unix timestamp)</td></tr>
+		<tr><td>nbf</td><td>Not Before</td><td>Thời gian trước đó token không hợp lệ (Unix timestamp)</td></tr>
+		<tr><td>iat</td><td>Issued At</td><td>Thời gian phát hành token (Unix timestamp)</td></tr>
+		<tr><td>jti</td><td>JWT ID</td><td>Mã định danh duy nhất của token</td></tr>
+	</table>
+</div>

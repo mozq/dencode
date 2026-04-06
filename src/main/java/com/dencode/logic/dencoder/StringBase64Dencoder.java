@@ -19,6 +19,7 @@ package com.dencode.logic.dencoder;
 
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Base64;
 import java.util.Base64.Encoder;
@@ -28,6 +29,11 @@ import java.util.regex.Pattern;
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectWriter;
+import tools.jackson.databind.json.JsonMapper;
 
 @Dencoder(type="string", method="string.base64", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
 public class StringBase64Dencoder {
@@ -54,6 +60,9 @@ public class StringBase64Dencoder {
 	
 	private static final Pattern RFC2047_SPACE = Pattern.compile("\\?=\\s+=\\?");
 	private static final Pattern RFC2047_BASE64 = Pattern.compile("=\\?(.+?)(?:\\*.+?)?\\?B\\?(.+?)\\?=", Pattern.CASE_INSENSITIVE); // Also supports RFC 2231
+	
+	private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
+	private static final ObjectWriter JSON_WRITER = JSON_MAPPER.writerWithDefaultPrettyPrinter();
 	
 	private StringBase64Dencoder() {
 		// NOP
@@ -84,61 +93,101 @@ public class StringBase64Dencoder {
 			return null;
 		}
 		
-		if (val.contains("=?") && val.contains("?=")) {
+		if (val.contains("=?")) {
 			// RFC 2047
-			
-			val = RFC2047_SPACE.matcher(val).replaceAll("?==?");
-			
-			StringBuilder sb = new StringBuilder(val.length());
-			
-			Matcher m = RFC2047_BASE64.matcher(val);
-			if (!m.find()) {
-				return null;
-			}
-			
-			do {
-				Charset cs;
-				try {
-					cs = Charset.forName(m.group(1));
-				} catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-					return null;
-				}
-				
-				String v = m.group(2);
-				
-				String decodedValue = decode(v, cs);
-				if (decodedValue == null) {
-					return null;
-				}
-				
-				m.appendReplacement(sb, "");
-				sb.append(decodedValue);
-			} while (m.find());
-			m.appendTail(sb);
-			
-			return sb.toString();
+			return decodeRfc2047(val);
+		} else if (val.contains(".")) {
+			// JWT (JSON Web Token)
+			return decodeJwt(val);
 		} else {
-			return decode(val, charset);
+			return decode(val, 0, val.length(), charset);
 		}
 	}
 	
-	private static String decode(String val, Charset charset) {
-		int len = val.length();
+	private static String decodeRfc2047(String val) {
+		val = RFC2047_SPACE.matcher(val).replaceAll("?==?");
+		
+		StringBuilder sb = new StringBuilder(val.length());
+		
+		Matcher m = RFC2047_BASE64.matcher(val);
+		if (!m.find()) {
+			return null;
+		}
+		
+		do {
+			Charset cs;
+			try {
+				cs = Charset.forName(m.group(1));
+			} catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
+				return null;
+			}
+			
+			String v = m.group(2);
+			
+			String decodedValue = decode(v, 0, v.length(), cs);
+			if (decodedValue == null) {
+				return null;
+			}
+			
+			m.appendReplacement(sb, "");
+			sb.append(decodedValue);
+		} while (m.find());
+		m.appendTail(sb);
+		
+		return sb.toString();
+	}
+	
+	private static String decodeJwt(String val) {
+		int dot1 = val.indexOf('.');
+		if (dot1 < 0) {
+			return null;
+		}
+		
+		int dot2 = val.indexOf('.', dot1 + 1);
+		if (dot2 < 0) {
+			return null;
+		}
+		
+		try {
+			String headerJson = decode(val, 0, dot1, StandardCharsets.UTF_8);
+			String payloadJson = decode(val, dot1 + 1, dot2, StandardCharsets.UTF_8);
+			
+			if (headerJson == null || payloadJson == null) {
+				return null;
+			}
+			
+			JsonNode headerNode = JSON_MAPPER.readTree(headerJson);
+			JsonNode payloadNode = JSON_MAPPER.readTree(payloadJson);
+			
+			if (!headerNode.isObject() || !payloadNode.isObject()) {
+				return null;
+			}
+			
+			return JSON_WRITER.writeValueAsString(headerNode) +
+					"\n" +
+					JSON_WRITER.writeValueAsString(payloadNode);
+		} catch (JacksonException e) {
+			return null;
+		}
+	}
+	
+	private static String decode(String val, int startIdx, int endIdx, Charset charset) {
+		int lastIdx = endIdx;
 		
 		// Ignore trailing padding and white-spaces
-		for (int i = len - 1; 0 <= i; i--) {
+		for (int i = lastIdx - 1; startIdx <= i; i--) {
 			char ch = val.charAt(i);
 			if (ch != '=' && ch != ' ' && ch != '\t' && ch != '\r' && ch != '\n') {
-				len = i + 1;
+				lastIdx = i + 1;
 				break;
 			}
 		}
 		
-		byte[] binBuf = new byte[len * 3 / 4]; // Max decoded size
+		byte[] binBuf = new byte[(lastIdx - startIdx) * 3 / 4]; // Max decoded size
 		int binBufIdx = 0;
 		int bitsBuf = 0;
 		int bitCount = 0;
-		for (int i = 0; i < len; i++) {
+		for (int i = startIdx; i < lastIdx; i++) {
 			char ch = val.charAt(i);
 			
 			if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') {
