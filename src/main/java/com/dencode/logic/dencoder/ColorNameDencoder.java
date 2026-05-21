@@ -21,7 +21,8 @@ import java.util.List;
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
-import com.dencode.logic.util.ColorNameUtils;
+import com.dencode.logic.model.color.Color;
+import com.dencode.logic.model.color.ColorSpace;
 
 @Dencoder(type="color", method="color.name", hasEncoder=true, hasDecoder=false)
 public class ColorNameDencoder {
@@ -37,13 +38,13 @@ public class ColorNameDencoder {
 	}
 	
 	
-	private static String encColorName(List<double[]> vals) {
-		return DencodeUtils.dencodeLines(vals, (rgba) -> {
-			if (rgba == null) {
+	private static String encColorName(List<Color> vals) {
+		return DencodeUtils.dencodeLines(vals, (color) -> {
+			if (color == null) {
 				return null;
 			}
 			
-			return ColorNameUtils.toName(rgba);
+			return ColorSpace.RGB_NAME.format(color.rgb(), color.alpha());
 		});
 	}
 }

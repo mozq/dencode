@@ -16,14 +16,13 @@
  */
 package com.dencode.logic.dencoder;
 
-import static com.dencode.logic.dencoder.DencodeUtils.appendRoundString;
-
-import java.math.RoundingMode;
 import java.util.List;
 
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
+import com.dencode.logic.model.color.Color;
+import com.dencode.logic.model.color.ColorSpace;
 
 @Dencoder(type="color", method="color.oklch", hasEncoder=true, hasDecoder=false)
 public class ColorOklchDencoder {
@@ -37,72 +36,13 @@ public class ColorOklchDencoder {
 		return encColorOklch(cond.valueAsColors());
 	}
 	
-	private static String encColorOklch(List<double[]> vals) {
-		return DencodeUtils.dencodeLines(vals, (rgba) -> {
-			if (rgba == null) {
+	private static String encColorOklch(List<Color> vals) {
+		return DencodeUtils.dencodeLines(vals, (color) -> {
+			if (color == null) {
 				return null;
 			}
 			
-			double r = rgba[0];
-			double g = rgba[1];
-			double b = rgba[2];
-			double a = rgba[3];
-			
-			// sRGB to Linear sRGB
-			double lr = toLinearRgb(r);
-			double lg = toLinearRgb(g);
-			double lb = toLinearRgb(b);
-			
-			// Linear sRGB to LMS
-			double ll = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb;
-			double lm = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb;
-			double ls = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb;
-			
-			// Non-linear LMS
-			double l = Math.cbrt(ll);
-			double m = Math.cbrt(lm);
-			double s = Math.cbrt(ls);
-			
-			// LMS to Oklab
-			double ol = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s;
-			double oa = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s;
-			double ob = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s;
-			
-			// Oklab to Oklch
-			double oc = Math.sqrt(oa * oa + ob * ob);
-			double oh = Math.atan2(ob, oa) * 180.0 / Math.PI;
-			if (oh < 0.0) {
-				oh += 360.0;
-			}
-			if (Double.isNaN(oh)) {
-				oh = 0.0;
-			}
-			
-			boolean hasAlpha = (Double.compare(a, 1.0) != 0);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("oklch(");
-			appendRoundString(sb, ol * 100.0, 2, RoundingMode.HALF_UP);
-			sb.append("% ");
-			appendRoundString(sb, oc, 4, RoundingMode.HALF_UP);
-			sb.append(' ');
-			appendRoundString(sb, oh, 2, RoundingMode.HALF_UP);
-			
-			if (hasAlpha) {
-				sb.append(" / ");
-				appendRoundString(sb, a, 2, RoundingMode.HALF_UP);
-			}
-			sb.append(')');
-			
-			return sb.toString();
+			return ColorSpace.OKLCH.convert(color).toString();
 		});
-	}
-	
-	private static double toLinearRgb(double c) {
-		if (0.04045 <= c) {
-			return Math.pow((c + 0.055) / 1.055, 2.4);
-		} else {
-			return c / 12.92;
-		}
 	}
 }

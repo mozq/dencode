@@ -286,22 +286,6 @@ public class DencodeUtils {
 		return sb.toString();
 	}
 	
-	protected static void appendRoundString(StringBuilder sb, double d, int scale, RoundingMode roundingMode) {
-		int i = (int) d;
-		if (d == (double) i) {
-			sb.append(i);
-		} else {
-			BigDecimal bd = BigDecimal.valueOf(d).setScale(scale, roundingMode);
-			double d2 = bd.doubleValue();
-			int i2 = (int) d2;
-			if (d2 == (double) i2) {
-				sb.append(i2);
-			} else {
-				sb.append(d2);
-			}
-		}
-	}
-	
 	protected static char numToDigit(int n, boolean upperCase) {
 		if (n < 0 || N_ARY_DIGITS_UPPER.length <= n) {
 			throw new IllegalArgumentException("Unsupported number: " + n);

@@ -16,17 +16,20 @@
  */
 package com.dencode.logic.dencoder;
 
-import static com.dencode.logic.dencoder.DencodeUtils.appendRoundString;
-
-import java.math.RoundingMode;
 import java.util.List;
 
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
+import com.dencode.logic.model.color.Color;
+import com.dencode.logic.model.color.ColorSpace;
+import com.dencode.logic.model.color.ColorSpaceRgb;
 
 @Dencoder(type="color", method="color.rgb", hasEncoder=true, hasDecoder=false)
 public class ColorRGBDencoder {
+	
+	private static final ColorSpace RGB_HEX = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX);
+	private static final ColorSpace RGB_NUMBER = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_NUMBER);
 	
 	private ColorRGBDencoder() {
 		// NOP
@@ -47,95 +50,29 @@ public class ColorRGBDencoder {
 	}
 	
 	
-	private static String encColorRGBHex(List<double[]> vals) {
-		return DencodeUtils.dencodeLines(vals, (rgba) -> {
-			if (rgba == null) {
+	private static String encColorRGBHex(List<Color> vals) {
+		return DencodeUtils.dencodeLines(vals, (color) -> {
+			if (color == null) {
 				return null;
 			}
 			
-			double r = rgba[0];
-			double g = rgba[1];
-			double b = rgba[2];
-			double a = rgba[3];
-			
-			int r8 = (int)(r * 255.0);
-			int g8 = (int)(g * 255.0);
-			int b8 = (int)(b * 255.0);
-			int a8 = (int)(a * 255.0);
-			
-			boolean hasAlpha = (Double.compare(a, 1.0) != 0);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append('#');
-			
-			if (r8 <= 0xf) {
-				sb.append('0');
-			}
-			sb.append(Integer.toHexString(r8));
-			
-			if (g8 <= 0xf) {
-				sb.append('0');
-			}
-			sb.append(Integer.toHexString(g8));
-			
-			if (b8 <= 0xf) {
-				sb.append('0');
-			}
-			sb.append(Integer.toHexString(b8));
-			
-			if (hasAlpha) {
-				if (a8 <= 0xf) {
-					sb.append('0');
-				}
-				sb.append(Integer.toHexString(a8));
-			}
-			
-			return sb.toString();
+			return RGB_HEX.convert(color).toString();
 		});
 	}
 	
-	private static String encColorRGBFn(List<double[]> vals, String notation) {
-		return DencodeUtils.dencodeLines(vals, (rgba) -> {
-			if (rgba == null) {
+	private static String encColorRGBFn(List<Color> vals, String notation) {
+		return DencodeUtils.dencodeLines(vals, (color) -> {
+			if (color == null) {
 				return null;
 			}
 			
-			double r = rgba[0];
-			double g = rgba[1];
-			double b = rgba[2];
-			double a = rgba[3];
-			
-			boolean hasAlpha = (Double.compare(a, 1.0) != 0);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("rgb(");
-			
 			if (notation.equals("number")) {
 				// number
-				appendRoundString(sb, r * 255.0, 0, RoundingMode.HALF_UP);
-				sb.append(' ');
-				appendRoundString(sb, g * 255.0, 0, RoundingMode.HALF_UP);
-				sb.append(' ');
-				appendRoundString(sb, b * 255.0, 0, RoundingMode.HALF_UP);
+				return RGB_NUMBER.convert(color).toString();
 			} else {
 				// percentage
-				appendRoundString(sb, r * 100.0, 2, RoundingMode.HALF_UP);
-				sb.append('%');
-				sb.append(' ');
-				appendRoundString(sb, g * 100.0, 2, RoundingMode.HALF_UP);
-				sb.append('%');
-				sb.append(' ');
-				appendRoundString(sb, b * 100.0, 2, RoundingMode.HALF_UP);
-				sb.append('%');
+				return ColorSpace.RGB.convert(color).toString();
 			}
-			
-			if (hasAlpha) {
-				sb.append(" / ");
-				appendRoundString(sb, a, 2, RoundingMode.HALF_UP);
-			}
-			sb.append(')');
-			
-			return sb.toString();
 		});
 	}
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.dencode.logic.model.color.Color;
 import com.dencode.logic.parser.ColorParser;
 import com.dencode.logic.parser.DateParser;
 import com.dencode.logic.parser.NumberParser;
@@ -58,10 +59,10 @@ public class DencodeCondition {
 	private List<ZonedDateTime> datesValue;
 	
 	private boolean colorValueParsed;
-	private double[] colorValue;
+	private Color colorValue;
 	
 	private boolean colorsValueParsed;
-	private List<double[]> colorsValue;
+	private List<Color> colorsValue;
 	
 	private Map<String, String> options;
 	
@@ -181,7 +182,7 @@ public class DencodeCondition {
 		return this.datesValue;
 	}
 	
-	public double[] valueAsColor() {
+	public Color valueAsColor() {
 		if (!this.colorValueParsed) {
 			this.colorValue = ColorParser.parseColor(value());
 			this.colorValueParsed = true;
@@ -189,7 +190,7 @@ public class DencodeCondition {
 		return this.colorValue;
 	}
 	
-	public List<double[]> valueAsColors() {
+	public List<Color> valueAsColors() {
 		if (!this.colorsValueParsed) {
 			this.colorsValue = valueAsParsedLines((val) -> ColorParser.parseColor(val));
 			this.colorsValueParsed = true;
