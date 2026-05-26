@@ -16,12 +16,12 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorSpaceCmyk extends AbstractColorSpaceRgb {
 	private static final Pattern COLOR_PATTERN_CMYK = Pattern.compile("^(?:device-)?cmyka?\\s*\\(\\s*(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
+	private static final ColorFormatter FORMATTER = ColorFormatters.functionPercentage("device-cmyk", 2);
 
 	protected ColorSpaceCmyk() {
 	}
@@ -95,31 +95,7 @@ public class ColorSpaceCmyk extends AbstractColorSpaceRgb {
 
 	@Override
 	protected String defaultFormat(double[] components, double alpha) {
-		double c = components[0];
-		double m = components[1];
-		double y = components[2];
-		double k = components[3];
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("device-cmyk(");
-		appendRoundString(sb, c * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		sb.append(' ');
-		appendRoundString(sb, m * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		sb.append(' ');
-		appendRoundString(sb, y * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		sb.append(' ');
-		appendRoundString(sb, k * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		if (alpha < 1.0) {
-			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-		}
-		sb.append(')');
-
-		return sb.toString();
+		return FORMATTER.format(components, alpha);
 	}
 
 	@Override

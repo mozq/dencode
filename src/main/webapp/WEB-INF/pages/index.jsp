@@ -1543,14 +1543,36 @@
 					<c:if test="${types.contains('color')}">
 						<tbody>
 							<c:if test="${methods.contains('color.name')}"><tr data-dencode-method="color.name"><th>${dc:h(msg['color.name.func.encColorName'])}</th><td><span id="encColorName" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRGBHex'])}</th><td><span id="encColorRGBHex" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRGBHex'])}</th><td><span id="encColorRGBHex" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['color.rgb.hex-notation'])}</span>
+										<select name="color.rgb.hex-notation" class="dencode-option form-select">
+											<option value="rrggbbaa">#RRGGBB(AA)</option>
+											<option value="aarrggbb">0xAARRGGBB</option>
+										</select>
+									</div>
+								</div>
+							</td></tr></c:if>
 							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRGBFn'])}</th><td><span id="encColorRGBFn" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['color.rgb.color-space'])}</span>
+										<select name="color.rgb.color-space" class="dencode-option form-select">
+											<option value="rgb">sRGB - rgb(...)</option>
+											<option value="srgb">sRGB - color(srgb ...)</option>
+											<option value="srgb-linear">Linear sRGB - color(srgb-linear ...)</option>
+											<option value="display-p3">Display P3 - color(display-p3 ...)</option>
+											<option value="a98-rgb">Adobe RGB (1998) - color(a98-rgb ...)</option>
+											<option value="prophoto-rgb">ProPhoto RGB - color(prophoto-rgb ...)</option>
+											<option value="rec2020">Rec. 2020 - color(rec2020 ...)</option>
+										</select>
+									</div>
+									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['color.rgb.notation'])}</span>
 										<select name="color.rgb.notation" class="dencode-option form-select">
-											<option value="percentage">${dc:h(msg['color.rgb.notation.percentage'])}</option>
 											<option value="number">${dc:h(msg['color.rgb.notation.number'])}</option>
+											<option value="percentage">${dc:h(msg['color.rgb.notation.percentage'])}</option>
 										</select>
 									</div>
 								</div>
@@ -1562,7 +1584,22 @@
 							<c:if test="${methods.contains('color.lch')}"><tr data-dencode-method="color.lch"><th>${dc:h(msg['color.lch.func.encColorLch'])}</th><td><span id="encColorLch" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.oklab')}"><tr data-dencode-method="color.oklab"><th>${dc:h(msg['color.oklab.func.encColorOklab'])}</th><td><span id="encColorOklab" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.oklch')}"><tr data-dencode-method="color.oklch"><th>${dc:h(msg['color.oklch.func.encColorOklch'])}</th><td><span id="encColorOklch" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCMYKFn'])}</th><td><span id="encColorCMYKFn" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCMYKFn'])}</th><td><span id="encColorCMYKFn" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['color.cmyk.profile'])}</span>
+										<select name="color.cmyk.profile" class="dencode-option form-select">
+											<option value="naive">Naive CMYK</option>
+											<option value="swop-v2">U.S. Web Coated (SWOP) v2 (Approx.)</option>
+											<option value="swop2013-c3">CRPC5 - SWOP 2013 C3</option>
+											<option value="gracol2013">CRPC6 - GRACoL 2013</option>
+											<option value="fogra39">FOGRA39 - Coated Fogra39L VIGC 300</option>
+											<option value="fogra51">FOGRA51 - Coated (Approx.)</option>
+											<option value="fogra52">FOGRA52 - Uncoated (Approx.)</option>
+										</select>
+									</div>
+								</div>
+							</td></tr></c:if>
 						</tbody>
 					</c:if>
 					<c:if test="${types.contains('cipher')}">

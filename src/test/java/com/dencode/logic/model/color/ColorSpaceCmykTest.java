@@ -61,13 +61,13 @@ public class ColorSpaceCmykTest {
 	public void testParseColor_formatVariations() {
 		testParseColor("cmyk(0% 100% 100% 0%)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // alias
 		testParseColor("cmyk(0%, 100%, 100%, 0%)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // alias comma separated
-		testParseColor("device-cmyk(0, 100%, 100%, 0)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // comma separated
-		testParseColor("device-cmyk(0 1 1 0)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // ratios
+		testParseColor("device-cmyk(0%, 100%, 100%, 0%)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // comma separated
+		testParseColor("device-cmyk(0 1 1 0)", new double[]{0.0, 1.0, 1.0, 0.0}, 1.0); // ratio compatibility
 	}
 
 	@Test
 	public void testParseColor_alpha() {
-		testParseColor("device-cmyk(0 100% 100% 0 / 50%)", new double[]{0.0, 1.0, 1.0, 0.0}, 0.5); // alpha slash
+		testParseColor("device-cmyk(0% 100% 100% 0% / 50%)", new double[]{0.0, 1.0, 1.0, 0.0}, 0.5); // alpha slash
 		testParseColor("device-cmyk(0%, 100%, 100%, 0%, 0.5)", new double[]{0.0, 1.0, 1.0, 0.0}, 0.5); // alpha comma
 	}
 

@@ -266,7 +266,7 @@ public class ColorSpaceRgbName extends AbstractColorSpaceRgb {
 				sb.append("rgb(from ");
 				sb.append(name);
 				sb.append(" r g b / ");
-				appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+				ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 				sb.append(")");
 				return sb.toString();
 			} else {

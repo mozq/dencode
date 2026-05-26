@@ -550,6 +550,11 @@ footer a, footer a:link, footer a:visited, footer a:hover, footer a:active {
 	vertical-align: inherit;
 }
 
+.table caption {
+	font-weight: bold;
+	text-align: left;
+}
+
 .table th,
 .table td {
 	padding: 0.25rem 0.5rem;

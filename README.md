@@ -102,6 +102,11 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [RGB Color](https://dencode.com/color/rgb)
     - [HSL Color](https://dencode.com/color/hsl)
     - [HSV Color](https://dencode.com/color/hsv)
+    - [HWB Color](https://dencode.com/color/hwb)
+    - [Lab Color](https://dencode.com/color/lab)
+    - [LCH Color](https://dencode.com/color/lch)
+    - [Oklab Color](https://dencode.com/color/oklab)
+    - [Oklch Color](https://dencode.com/color/oklch)
     - [CMYK Color](https://dencode.com/color/cmyk)
 - [Cipher](https://dencode.com/cipher)
     - [Caesar Cipher](https://dencode.com/cipher/caesar)
@@ -165,6 +170,20 @@ If you want to add a new encoder or decoder, please add or modify the following 
     - /src/main/resources/messages_*.properties [Required]
 - Add description files
     - /src/main/webapp/WEB-INF/pages/method-desc_\*.\*_*.inc.jsp [Optional]
+
+## Third-party color profiles
+DenCode includes third-party ICC color profiles for some CMYK color conversions.
+These profile files are licensed separately from DenCode's Apache License 2.0
+source code, and are redistributed without modification with their notices or
+license terms.
+
+- `Coated_Fogra39L_VIGC_300.icc` / `Coated Fogra39L VIGC 300` is provided by
+  VIGC with permission of X-Rite, Inc. See
+  `THIRD-PARTY-NOTICES/Coated_Fogra39L_VIGC_300.txt`.
+- `GRACoL2013_CRPC6.icc` is provided by Idealliance with permission of
+  X-Rite, Inc. See `THIRD-PARTY-NOTICES/GRACoL2013_CRPC6.txt`.
+- `SWOP2013C3_CRPC5.icc` is provided by Idealliance with permission of
+  X-Rite, Inc. See `THIRD-PARTY-NOTICES/SWOP2013C3_CRPC5.txt`.
 
 ## Client applications
 - Windows: [DenCode plugin for PowerToys Run](https://github.com/hlaueriksson/Community.PowerToys.Run.Plugins#dencode) by [Henrik Lau Eriksson](https://github.com/hlaueriksson)

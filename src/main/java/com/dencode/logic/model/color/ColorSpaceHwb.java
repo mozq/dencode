@@ -16,11 +16,12 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorSpaceHwb extends AbstractColorSpaceRgb {
+	private static final ColorFormatter FORMATTER = ColorFormatters.functionHuePercentage("hwb", 2, 2);
+
 	private static final Pattern COLOR_PATTERN_HWB = Pattern.compile("^hwba?\\s*\\(\\s*([\\+\\-]?[0-9\\.]+)(?:deg)?(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 
 	protected ColorSpaceHwb() {
@@ -82,25 +83,7 @@ public class ColorSpaceHwb extends AbstractColorSpaceRgb {
 
 	@Override
 	protected String defaultFormat(double[] components, double alpha) {
-		double h = components[0];
-		double w = components[1];
-		double bl = components[2];
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("hwb(");
-		appendRoundString(sb, h, 2, RoundingMode.HALF_UP);
-		sb.append("deg ");
-		appendRoundString(sb, w * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append("% ");
-		appendRoundString(sb, bl * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append("%");
-		if (alpha < 1.0) {
-			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-		}
-		sb.append(')');
-
-		return sb.toString();
+		return FORMATTER.format(components, alpha);
 	}
 
 	@Override

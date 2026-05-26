@@ -1,0 +1,16 @@
+SWOP 2013 C3 CRPC5
+
+Source: https://registry.color.org/profile-registry/SWOP2013C3_CRPC5
+File: SWOP2013C3_CRPC5.icc
+Description: SWOP2013C3_CRPC5, based on CGATS21-2-CRPC5.
+Provider: Idealliance
+Copyright: X-Rite, Inc.
+
+License notice:
+This profile is made available by IDEAlliance, with permission of X-Rite, Inc.,
+and may be used, embedded, exchanged, and shared without restriction. It may not
+be altered, or sold without written permission of IDEAlliance.
+
+Notice:
+Obtained from the ICC Profile Registry.
+Included without modification.

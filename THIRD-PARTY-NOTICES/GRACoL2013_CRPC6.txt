@@ -1,0 +1,16 @@
+GRACoL 2013 CRPC6
+
+Source: https://registry.color.org/profile-registry/GRACoL2013_CRPC6
+File: GRACoL2013_CRPC6.icc
+Description: GRACoL2013_CRPC6
+Provider: Idealliance
+Copyright: X-Rite, Inc
+
+License notice:
+This profile is made available by IDEAlliance, with permission of X-Rite, Inc.,
+and may be used, embedded, exchanged, and shared without restriction. It may not
+be altered, or sold without written permission of IDEAlliance.
+
+Notice:
+Obtained from the ICC Profile Registry.
+Included without modification.

@@ -87,9 +87,35 @@ public class ColorCMYKDencoderTest {
 		testDencoder("x", null);
 	}
 
+	@Test
+	public void test_profile() {
+		testDencoder("red", "naive", "device-cmyk(0% 100% 100% 0%)");
+		testDencoder("red", "swop-v2", "color(--swop-v2 0% 98.28% 100% 0%)");
+		testDencoder("red", "swop2013-c3", "color(--swop2013-c3 0% 94.7% 100% 0%)");
+		testDencoder("red", "gracol2013", "color(--gracol2013 0% 93.17% 99.88% 0%)");
+		testDencoder("red", "fogra39", "color(--fogra39 0% 92.77% 99.95% 0%)");
+		testDencoder("red", "fogra51", "color(--fogra51 0% 97.13% 100% 0%)");
+		testDencoder("red", "fogra52", "color(--fogra52 0% 97.67% 100% 0%)");
+	}
+
+	@Test
+	public void test_unknownProfile_fallsBackToNaive() {
+		testDencoder("red", "unknown", "device-cmyk(0% 100% 100% 0%)");
+	}
+
 	private void testDencoder(String val, String exp) {
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<>(0));
 		String encStr = ColorCMYKDencoder.encColorCMYKFn(cond);
 		assertEquals(exp, encStr);
 	}
+
+	private void testDencoder(String val, String profile, String exp) {
+		HashMap<String, String> options = new HashMap<>();
+		options.put("color.cmyk.profile", profile);
+
+		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, options);
+		String encStr = ColorCMYKDencoder.encColorCMYKFn(cond);
+		assertEquals(exp, encStr);
+	}
+
 }

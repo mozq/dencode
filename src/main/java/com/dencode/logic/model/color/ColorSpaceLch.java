@@ -89,15 +89,15 @@ public class ColorSpaceLch extends AbstractColorSpaceXyz {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("lch(");
-		appendRoundString(sb, l, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, l, 2, RoundingMode.HALF_UP);
 		sb.append("% ");
-		appendRoundString(sb, c, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, c, 4, RoundingMode.HALF_UP);
 		sb.append(' ');
-		appendRoundString(sb, h, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, h, 2, RoundingMode.HALF_UP);
 		sb.append("deg");
 		if (alpha < 1.0) {
 			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+			ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 		}
 		sb.append(')');
 

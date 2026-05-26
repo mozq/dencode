@@ -16,11 +16,12 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorSpaceXyzD50 extends AbstractColorSpaceXyz {
+
+	private static final ColorFormatter FORMATTER = ColorFormatters.functionRatio("color", 5, "xyz-d50");
 
 	private static final Pattern COLOR_PATTERN_XYZ = Pattern.compile("^color\\s*\\(\\s*(xyz-d50)\\s+([\\+\\-]?[0-9\\.]+%?)\\s+([\\+\\-]?[0-9\\.]+%?)\\s+([\\+\\-]?[0-9\\.]+%?)(?:\\s*/\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 
@@ -60,24 +61,7 @@ public class ColorSpaceXyzD50 extends AbstractColorSpaceXyz {
 
 	@Override
 	protected String defaultFormat(double[] components, double alpha) {
-		double x = components[0];
-		double y = components[1];
-		double z = components[2];
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("color(xyz-d50 ");
-		appendRoundString(sb, x, 5, RoundingMode.HALF_UP);
-		sb.append(' ');
-		appendRoundString(sb, y, 5, RoundingMode.HALF_UP);
-		sb.append(' ');
-		appendRoundString(sb, z, 5, RoundingMode.HALF_UP);
-		if (alpha < 1.0) {
-			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-		}
-		sb.append(')');
-
-		return sb.toString();
+		return FORMATTER.format(components, alpha);
 	}
 
 	@Override

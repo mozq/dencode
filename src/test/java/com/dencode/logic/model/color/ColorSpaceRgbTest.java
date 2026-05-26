@@ -124,21 +124,21 @@ public class ColorSpaceRgbTest {
 	}
 
 	@Test
-	public void testFormat_default_percentage() {
+	public void testFormat_default_number() {
 		String s = ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, 1.0);
-		assertEquals("rgb(100% 0% 0%)", s);
+		assertEquals("rgb(255 0 0)", s);
 	}
 
 	@Test
-	public void testFormat_default_percentage_alpha() {
+	public void testFormat_default_number_alpha() {
 		String s = ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, 0.5);
-		assertEquals("rgb(100% 0% 0% / 0.5)", s);
+		assertEquals("rgb(255 0 0 / 0.5)", s);
 	}
 
 	@Test
 	public void testFormat_alphaClamped() {
-		assertEquals("rgb(100% 0% 0%)", ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, 1.2));
-		assertEquals("rgb(100% 0% 0% / 0)", ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, -0.2));
+		assertEquals("rgb(255 0 0)", ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, 1.2));
+		assertEquals("rgb(255 0 0 / 0)", ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, -0.2));
 	}
 
 	@Test
@@ -148,8 +148,32 @@ public class ColorSpaceRgbTest {
 	}
 
 	@Test
+	public void testFormat_withFormatterConstants() {
+		assertEquals("rgb(255 0 0)", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_NUMBER).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("rgb(100% 0% 0%)", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_PERCENTAGE).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("color(srgb 1 0 0)", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_RATIO).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("color(srgb 100% 0% 0%)", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_PERCENTAGE).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("#ff0000", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_RGBA).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("0xffff0000", ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_ARGB).format(new double[]{1.0, 0.0, 0.0}, 1.0));
+	}
+
+	@Test
+	public void testFormat_withFormatter_colorSrgbRatio() {
+		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_RATIO);
+		assertEquals("color(srgb 1 0 0)", cs.format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("color(srgb 1 0 0 / 0.5)", cs.format(new double[]{1.0, 0.0, 0.0}, 0.5));
+	}
+
+	@Test
+	public void testFormat_withFormatter_colorSrgbPercentage() {
+		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_PERCENTAGE);
+		assertEquals("color(srgb 100% 0% 0%)", cs.format(new double[]{1.0, 0.0, 0.0}, 1.0));
+		assertEquals("color(srgb 100% 0% 0% / 0.5)", cs.format(new double[]{1.0, 0.0, 0.0}, 0.5));
+	}
+
+	@Test
 	public void testFormat_withFormatter_hex() {
-		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX);
+		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_RGBA);
 		assertEquals("#ff0000", cs.format(new double[]{1.0, 0.0, 0.0}, 1.0));
 
 		String sAlpha = cs.format(new double[]{1.0, 0.0, 0.0}, 0.5);
@@ -175,7 +199,7 @@ public class ColorSpaceRgbTest {
 	@Test
 	public void testFormat_hex_outOfGamut_clamped() {
 		// FORMATTER_HEX can only express 0x00-0xff; out-of-gamut must be clamped
-		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX);
+		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_RGBA);
 		String s = cs.format(new double[]{1.5, -0.2, 0.0}, 1.0);
 		// R clamped to ff, G clamped to 00
 		assertEquals("#ff0000", s);
@@ -184,7 +208,8 @@ public class ColorSpaceRgbTest {
 	@Test
 	public void testFormat_percentage_outOfGamut_preserved() {
 		// FORMATTER_PERCENTAGE (CSS Color 4 syntax) can express any value — no clamping
-		String s = ColorSpace.RGB.format(new double[]{1.5, -0.2, 0.0}, 1.0);
+		ColorSpace cs = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_PERCENTAGE);
+		String s = cs.format(new double[]{1.5, -0.2, 0.0}, 1.0);
 		// 1.5 * 100 = 150%, -0.2 * 100 = -20%  (preserved as-is)
 		assertEquals("rgb(150% -20% 0%)", s);
 	}
@@ -212,12 +237,12 @@ public class ColorSpaceRgbTest {
 
 	@Test
 	public void testWith_doesNotMutateOriginal() {
-		ColorSpace cs1 = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_NUMBER);
-		// original should still use default (percentage) formatter
+		ColorSpace cs1 = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_PERCENTAGE);
+		// original should still use default (number) formatter
 		String original = ColorSpace.RGB.format(new double[]{1.0, 0.0, 0.0}, 1.0);
-		assertTrue(original.contains("%"), "Original formatter should be percentage");
+		assertFalse(original.contains("%"), "Original formatter should NOT use percentage");
 		String custom = cs1.format(new double[]{1.0, 0.0, 0.0}, 1.0);
-		assertFalse(custom.contains("%"), "Custom formatter should NOT use percentage");
+		assertTrue(custom.contains("%"), "Custom formatter should be percentage");
 	}
 
 	private void testParseColor(String val, double[] expComponents, double expAlpha) {

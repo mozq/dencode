@@ -1,1 +1,4 @@
-eciCMYK_v2.icc, eciCMYK v2 (FOGRA59), Copyright © ECI (European Color Initiative), https://eci.org/doku.php_id=en_downloads.html
+File, Name, Provider, Copyright, Source
+Coated_Fogra39L_VIGC_300.icc, Coated Fogra39L VIGC 300, VIGC, X-Rite, Inc., https://registry.color.org/profile-registry/Coated_Fogra39L_VIGC_300
+GRACoL2013_CRPC6.icc, GRACoL 2013 CRPC6, Idealliance, X-Rite, Inc., https://registry.color.org/profile-registry/GRACoL2013_CRPC6
+SWOP2013C3_CRPC5.icc, SWOP 2013 C3 CRPC5, Idealliance, X-Rite, Inc., https://registry.color.org/profile-registry/SWOP2013C3_CRPC5

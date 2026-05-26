@@ -16,14 +16,21 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class ColorSpace implements Cloneable {
+	private static final Map<Class<? extends ColorSpace>, ColorSpace> INSTANCES = new ConcurrentHashMap<>();
 
 	public static final ColorSpace RGB = new ColorSpaceRgb();
 	public static final ColorSpace RGB_NAME = new ColorSpaceRgbName();
+	public static final ColorSpace SRGB_LINEAR = new ColorSpaceSrgbLinear();
+	public static final ColorSpace A98_RGB = new ColorSpaceA98Rgb();
+	public static final ColorSpace DISPLAY_P3 = new ColorSpaceDisplayP3();
+	public static final ColorSpace PROPHOTO_RGB = new ColorSpaceProphotoRgb();
+	public static final ColorSpace REC2020 = new ColorSpaceRec2020();
 	public static final ColorSpace XYZ = new ColorSpaceXyz();
 	public static final ColorSpace XYZ_D50 = new ColorSpaceXyzD50();
 	public static final ColorSpace HSL = new ColorSpaceHsl();
@@ -35,7 +42,6 @@ public abstract class ColorSpace implements Cloneable {
 	public static final ColorSpace OKLCH = new ColorSpaceOklch();
 	public static final ColorSpace CMY = new ColorSpaceCmy();
 	public static final ColorSpace CMYK = new ColorSpaceCmyk();
-	public static final ColorSpace CMYK_ECI = new ColorSpaceCmykEci();
 
 	// CSS Color 4 lin_sRGB()/gam_sRGB() transfer function constants.
 	private static final double SRGB_TRANSFER_ALPHA = 1.055;
@@ -95,6 +101,22 @@ public abstract class ColorSpace implements Cloneable {
 
 
 	protected ColorFormatter formatter = null;
+
+
+	public static <T extends ColorSpace> T of(Class<T> colorSpaceClass) {
+		ColorSpace colorSpace = INSTANCES.computeIfAbsent(colorSpaceClass, ColorSpace::newInstance);
+		return colorSpaceClass.cast(colorSpace);
+	}
+
+	private static ColorSpace newInstance(Class<? extends ColorSpace> colorSpaceClass) {
+		try {
+			Constructor<? extends ColorSpace> constructor = colorSpaceClass.getDeclaredConstructor();
+			constructor.setAccessible(true);
+			return constructor.newInstance();
+		} catch (ReflectiveOperationException e) {
+			throw new IllegalArgumentException("Cannot instantiate color space: " + colorSpaceClass.getName(), e);
+		}
+	}
 
 
 	public abstract Color convert(Color color);
@@ -290,14 +312,4 @@ public abstract class ColorSpace implements Cloneable {
 		}
 	}
 
-	protected static void appendRoundString(StringBuilder sb, double d, int scale, RoundingMode roundingMode) {
-		double ri = Math.rint(d);
-		if (d == ri) {
-			// Fast path for integer values: avoid BigDecimal allocation in common formatted output.
-			sb.append((long)ri);
-		} else {
-			BigDecimal bd = BigDecimal.valueOf(d).setScale(scale, roundingMode);
-			sb.append(bd.stripTrailingZeros().toPlainString());
-		}
-	}
 }

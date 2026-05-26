@@ -16,11 +16,12 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorSpaceHsv extends AbstractColorSpaceRgb {
+	private static final ColorFormatter FORMATTER = ColorFormatters.functionHuePercentage("hsv", 2, 2);
+
 	private static final Pattern COLOR_PATTERN_HSV = Pattern.compile("^hs[vb]a?\\s*\\(\\s*(\\+?[0-9\\.]+)(?:deg)?(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)(\\+?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 
 	protected ColorSpaceHsv() {
@@ -106,26 +107,7 @@ public class ColorSpaceHsv extends AbstractColorSpaceRgb {
 
 	@Override
 	protected String defaultFormat(double[] components, double alpha) {
-		double h = components[0];
-		double s = components[1];
-		double v = components[2];
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("hsv(");
-		appendRoundString(sb, h, 2, RoundingMode.HALF_UP);
-		sb.append("deg ");
-		appendRoundString(sb, s * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		sb.append(' ');
-		appendRoundString(sb, v * 100.0, 2, RoundingMode.HALF_UP);
-		sb.append('%');
-		if (alpha < 1.0) {
-			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-		}
-		sb.append(')');
-
-		return sb.toString();
+		return FORMATTER.format(components, alpha);
 	}
 
 	@Override

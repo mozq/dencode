@@ -130,14 +130,14 @@ public class ColorSpaceLab extends AbstractColorSpaceXyz {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("lab(");
-		appendRoundString(sb, l, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, l, 2, RoundingMode.HALF_UP);
 		sb.append("% ");
-		appendRoundString(sb, a, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, a, 4, RoundingMode.HALF_UP);
 		sb.append(' ');
-		appendRoundString(sb, b, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, b, 4, RoundingMode.HALF_UP);
 		if (alpha < 1.0) {
 			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+			ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 		}
 		sb.append(')');
 

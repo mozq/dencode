@@ -16,7 +16,6 @@
  */
 package com.dencode.logic.model.color;
 
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,63 +28,12 @@ public class ColorSpaceRgb extends AbstractColorSpaceRgb {
 	private static final Pattern COLOR_PATTERN_RGB_BARE = Pattern.compile("^([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*,\\s*|\\s+)([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?$");
 	private static final Pattern COLOR_PATTERN_GRAY = Pattern.compile("^graya?\\s*\\(\\s*([\\+\\-]?[0-9\\.]+%?)(?:\\s*[,/]\\s*(\\+?[0-9\\.]+%?))?\\s*\\)$");
 
-	public static final ColorFormatter FORMATTER_PERCENTAGE = new ColorFormatter() {
-		@Override
-		public String format(double[] components, double alpha) {
-			double r = components[0];
-			double g = components[1];
-			double b = components[2];
+	public static final ColorFormatter FORMATTER_NUMBER = ColorFormatters.functionNumber255("rgb", 0);
+	public static final ColorFormatter FORMATTER_PERCENTAGE = ColorFormatters.functionPercentage("rgb", 2);
+	public static final ColorFormatter FORMATTER_COLOR_SRGB_RATIO = ColorFormatters.functionRatio("color", 5, "srgb");
+	public static final ColorFormatter FORMATTER_COLOR_SRGB_PERCENTAGE = ColorFormatters.functionPercentage("color", 2, "srgb");
 
-			StringBuilder sb = new StringBuilder();
-			sb.append("rgb(");
-			appendRoundString(sb, r * 100.0, 2, RoundingMode.HALF_UP);
-			sb.append('%');
-			sb.append(' ');
-			appendRoundString(sb, g * 100.0, 2, RoundingMode.HALF_UP);
-			sb.append('%');
-			sb.append(' ');
-			appendRoundString(sb, b * 100.0, 2, RoundingMode.HALF_UP);
-			sb.append('%');
-			if (alpha < 1.0) {
-				sb.append(" / ");
-				appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-			}
-			sb.append(')');
-
-			return sb.toString();
-		}
-	};
-
-	public static final ColorFormatter FORMATTER_NUMBER = new ColorFormatter() {
-		@Override
-		public String format(double[] components, double alpha) {
-			double r = components[0];
-			double g = components[1];
-			double b = components[2];
-
-			// Clamp to sRGB gamut: rgb(N N N) can only express 0-255
-			r = clamp01(r);
-			g = clamp01(g);
-			b = clamp01(b);
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("rgb(");
-			appendRoundString(sb, r * 255.0, 0, RoundingMode.HALF_UP);
-			sb.append(' ');
-			appendRoundString(sb, g * 255.0, 0, RoundingMode.HALF_UP);
-			sb.append(' ');
-			appendRoundString(sb, b * 255.0, 0, RoundingMode.HALF_UP);
-			if (alpha < 1.0) {
-				sb.append(" / ");
-				appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
-			}
-			sb.append(')');
-
-			return sb.toString();
-		}
-	};
-
-	public static final ColorFormatter FORMATTER_HEX = new ColorFormatter() {
+	public static final ColorFormatter FORMATTER_HEX_RGBA = new ColorFormatter() {
 		@Override
 		public String format(double[] components, double alpha) {
 			double r = components[0];
@@ -321,7 +269,7 @@ public class ColorSpaceRgb extends AbstractColorSpaceRgb {
 
 	@Override
 	protected String defaultFormat(double[] components, double alpha) {
-		return FORMATTER_PERCENTAGE.format(components, alpha);
+		return FORMATTER_NUMBER.format(components, alpha);
 	}
 
 	@Override
@@ -343,4 +291,5 @@ public class ColorSpaceRgb extends AbstractColorSpaceRgb {
 		}
 		sb.append(Integer.toHexString(value));
 	}
+
 }

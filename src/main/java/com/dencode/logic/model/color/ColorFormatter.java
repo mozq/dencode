@@ -16,6 +16,20 @@
  */
 package com.dencode.logic.model.color;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public interface ColorFormatter {
 	String format(double[] components, double alpha);
+
+	static void appendRoundString(StringBuilder sb, double d, int scale, RoundingMode roundingMode) {
+		double ri = Math.rint(d);
+		if (d == ri) {
+			// Fast path for integer values: avoid BigDecimal allocation in common formatted output.
+			sb.append((long)ri);
+		} else {
+			BigDecimal bd = BigDecimal.valueOf(d).setScale(scale, roundingMode);
+			sb.append(bd.stripTrailingZeros().toPlainString());
+		}
+	}
 }

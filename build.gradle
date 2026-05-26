@@ -74,6 +74,20 @@ war {
     from('.') {
       include 'LICENSE*.txt', 'NOTICE*.txt'
     }
+    from('THIRD-PARTY-NOTICES') {
+      into 'THIRD-PARTY-NOTICES'
+    }
+  }
+}
+
+tasks.named('jar') {
+  metaInf {
+    from('.') {
+      include 'LICENSE*.txt', 'NOTICE*.txt'
+    }
+    from('THIRD-PARTY-NOTICES') {
+      into 'THIRD-PARTY-NOTICES'
+    }
   }
 }
 

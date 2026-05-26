@@ -81,17 +81,17 @@ public class ColorSpaceCmy extends AbstractColorSpaceRgb {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("cmy(");
-		appendRoundString(sb, c * 100.0, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, c * 100.0, 2, RoundingMode.HALF_UP);
 		sb.append('%');
 		sb.append(' ');
-		appendRoundString(sb, m * 100.0, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, m * 100.0, 2, RoundingMode.HALF_UP);
 		sb.append('%');
 		sb.append(' ');
-		appendRoundString(sb, y * 100.0, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, y * 100.0, 2, RoundingMode.HALF_UP);
 		sb.append('%');
 		if (alpha < 1.0) {
 			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+			ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 		}
 		sb.append(')');
 

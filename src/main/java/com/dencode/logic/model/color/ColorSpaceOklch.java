@@ -89,15 +89,15 @@ public class ColorSpaceOklch extends AbstractColorSpaceXyz {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("oklch(");
-		appendRoundString(sb, ol * 100.0, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, ol * 100.0, 2, RoundingMode.HALF_UP);
 		sb.append("% ");
-		appendRoundString(sb, oc, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, oc, 4, RoundingMode.HALF_UP);
 		sb.append(' ');
-		appendRoundString(sb, oh, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, oh, 2, RoundingMode.HALF_UP);
 		sb.append("deg");
 		if (alpha < 1.0) {
 			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+			ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 		}
 		sb.append(')');
 

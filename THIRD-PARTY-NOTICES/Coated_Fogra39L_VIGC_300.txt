@@ -1,0 +1,16 @@
+Coated Fogra39L VIGC 300
+
+Source: https://registry.color.org/profile-registry/Coated_Fogra39L_VIGC_300
+File: Coated_Fogra39L_VIGC_300.icc
+Description: Coated Fogra39L VIGC 300, based on FOGRA39.
+Provider: VIGC
+Copyright: X-Rite, Inc.
+
+License notice:
+This profile is made available by VIGC, with permission of X-rite, and may be
+used, embedded, exchanged, and shared without restriction. It may not be
+altered or sold without written permission of VIGC.
+
+Notice:
+Obtained from the ICC Profile Registry.
+Included without modification.

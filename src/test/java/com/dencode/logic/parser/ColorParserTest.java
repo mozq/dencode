@@ -20,8 +20,6 @@ public class ColorParserTest {
 		assertArrayEquals(expected, new double[] {actual.rgb()[0], actual.rgb()[1], actual.rgb()[2], actual.alpha()}, delta);
 	}
 	
-	// ========== Name ==========
-	
 	@Test
 	public void testParseColor_Name() {
 		assertColorRgb(new double[]{1.0, 0.0, 0.0, 1.0}, ColorParser.parseColor("red"), DELTA);
@@ -33,8 +31,6 @@ public class ColorParserTest {
 		assertColorRgb(new double[]{0.0, 0.0, 0.0, 1.0}, ColorParser.parseColor("black"), DELTA);
 		assertColorRgb(new double[]{1.0, 1.0, 1.0, 1.0}, ColorParser.parseColor("white"), DELTA);
 	}
-	
-	// ========== RGB Hex ==========
 	
 	@Test
 	public void testParseColor_RgbHex() {
@@ -69,8 +65,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("f00"));
 	}
 	
-	// ========== RGB ==========
-	
 	@Test
 	public void testParseColor_Rgb() {
 		// Comma-separated
@@ -104,8 +98,61 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("rgb()"));
 		assertNull(ColorParser.parseColor("rgb(255, 0)"));
 	}
-	
-	// ========== HSL ==========
+
+	@Test
+	public void testParseColor_SrgbLinear() {
+		assertColorRgb(new double[]{1.0, 0.0, 0.0, 1.0}, ColorParser.parseColor("color(srgb-linear 1 0 0)"), DELTA); // red
+		assertColorRgb(new double[]{0.0, 1.0, 0.0, 1.0}, ColorParser.parseColor("color(srgb-linear 0 1 0)"), DELTA); // green
+		assertColorRgb(new double[]{0.0, 0.0, 1.0, 1.0}, ColorParser.parseColor("color(srgb-linear 0 0 1)"), DELTA); // blue
+		assertColorRgb(new double[]{0.735, 0.537, 0.881, 1.0}, ColorParser.parseColor("color(srgb-linear 0.5 0.25 0.75)"), DELTA);
+		assertColorRgb(new double[]{1.0, 0.0, 0.0, 0.5}, ColorParser.parseColor("color(srgb-linear 100% 0% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(srgb-linear)"));
+	}
+
+	@Test
+	public void testParseColor_A98Rgb() {
+		assertColorRgb(new double[]{1.158, 0.0, 0.0, 1.0}, ColorParser.parseColor("color(a98-rgb 1 0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.664, 1.0, -0.229, 1.0}, ColorParser.parseColor("color(a98-rgb 0 1 0)"), DELTA); // green
+		assertColorRgb(new double[]{0.0, 0.0, 1.019, 1.0}, ColorParser.parseColor("color(a98-rgb 0 0 1)"), DELTA); // blue
+		assertColorRgb(new double[]{1.0, 1.0, 1.0, 1.0}, ColorParser.parseColor("color(a98-rgb 1 1 1)"), DELTA); // white
+		assertColorRgb(new double[]{1.158, 0.0, 0.0, 0.5}, ColorParser.parseColor("color(a98-rgb 100% 0% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(a98-rgb)"));
+	}
+
+	@Test
+	public void testParseColor_DisplayP3() {
+		assertColorRgb(new double[]{1.093, -0.227, -0.150, 1.0}, ColorParser.parseColor("color(display-p3 1 0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.512, 1.018, -0.311, 1.0}, ColorParser.parseColor("color(display-p3 0 1 0)"), DELTA); // green
+		assertColorRgb(new double[]{0.0, 0.0, 1.042, 1.0}, ColorParser.parseColor("color(display-p3 0 0 1)"), DELTA); // blue
+		assertColorRgb(new double[]{1.0, 1.0, 1.0, 1.0}, ColorParser.parseColor("color(display-p3 1 1 1)"), DELTA); // white
+		assertColorRgb(new double[]{1.093, -0.227, -0.150, 0.5}, ColorParser.parseColor("color(display-p3 100% 0% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(display-p3)"));
+	}
+
+	@Test
+	public void testParseColor_ProphotoRgb() {
+		assertColorRgb(new double[]{1.363, -0.516, -0.090, 1.0}, ColorParser.parseColor("color(prophoto-rgb 1 0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.869, 1.096, -0.428, 1.0}, ColorParser.parseColor("color(prophoto-rgb 0 1 0)"), DELTA); // green
+		assertColorRgb(new double[]{-0.590, -0.038, 1.068, 1.0}, ColorParser.parseColor("color(prophoto-rgb 0 0 1)"), DELTA); // blue
+		assertColorRgb(new double[]{1.0, 1.0, 1.0, 1.0}, ColorParser.parseColor("color(prophoto-rgb 1 1 1)"), DELTA); // white
+		assertColorRgb(new double[]{1.363, -0.516, -0.090, 0.5}, ColorParser.parseColor("color(prophoto-rgb 100% 0% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(prophoto-rgb)"));
+	}
+
+	@Test
+	public void testParseColor_Rec2020() {
+		assertColorRgb(new double[]{1.248, -0.388, -0.144, 1.0}, ColorParser.parseColor("color(rec2020 1 0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.790, 1.056, -0.350, 1.0}, ColorParser.parseColor("color(rec2020 0 1 0)"), DELTA); // green
+		assertColorRgb(new double[]{-0.299, -0.089, 1.050, 1.0}, ColorParser.parseColor("color(rec2020 0 0 1)"), DELTA); // blue
+		assertColorRgb(new double[]{1.0, 1.0, 1.0, 1.0}, ColorParser.parseColor("color(rec2020 1 1 1)"), DELTA); // white
+		assertColorRgb(new double[]{1.248, -0.388, -0.144, 0.5}, ColorParser.parseColor("color(rec2020 100% 0% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(rec2020)"));
+	}
 	
 	@Test
 	public void testParseColor_Hsl() {
@@ -136,8 +183,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("hsl(abc)"));
 	}
 	
-	// ========== HSV ==========
-	
 	@Test
 	public void testParseColor_Hsv() {
 		// Comma-separated
@@ -162,8 +207,6 @@ public class ColorParserTest {
 		// Invalid
 		assertNull(ColorParser.parseColor("hsv()"));
 	}
-	
-	// ========== HWB ==========
 	
 	@Test
 	public void testParseColor_Hwb() {
@@ -190,8 +233,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("hwb()"));
 	}
 	
-	// ========== Lab ==========
-	
 	@Test
 	public void testParseColor_Lab() {
 		// Color variations
@@ -216,8 +257,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("lab(50%)"));
 	}
 	
-	// ========== LCH ==========
-	
 	@Test
 	public void testParseColor_Lch() {
 		// Color variations
@@ -241,8 +280,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("lch()"));
 		assertNull(ColorParser.parseColor("lch(50%)"));
 	}
-	
-	// ========== Oklab ==========
 	
 	@Test
 	public void testParseColor_Oklab() {
@@ -270,8 +307,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("oklab()"));
 		assertNull(ColorParser.parseColor("oklab(62.8% 0.2248)"));
 	}
-	
-	// ========== Oklch ==========
 	
 	@Test
 	public void testParseColor_Oklch() {
@@ -303,8 +338,6 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("oklch(62.8% 0.2576)"));
 	}
 	
-	// ========== CMYK ==========
-	
 	@Test
 	public void testParseColor_Cmyk() {
 		// Color variations (comma-separated, device-cmyk)
@@ -333,34 +366,66 @@ public class ColorParserTest {
 		assertNull(ColorParser.parseColor("device-cmyk()"));
 	}
 	
-	// ========== CMYK ECI ==========
-	
 	@Test
-	public void testParseColor_CmykEci() {
-		// Color variations (space-separated, color(--ecicmyk)).
-		// CSS Color 4 extended sRGB conversion preserves out-of-gamut RGB values.
-		assertColorRgb(new double[]{0.900, -0.005, 0.111, 1.0}, ColorParser.parseColor("color(--ecicmyk 0 1.0 1.0 0)"), DELTA); // red
-		assertColorRgb(new double[]{0.194, 0.164, 0.578, 1.0}, ColorParser.parseColor("color(--ecicmyk 1.0 1.0 0 0)"), DELTA); // blue
-		assertColorRgb(new double[]{-0.212, 0.388, 0.171, 1.0}, ColorParser.parseColor("color(--ecicmyk 1.0 0 1.0 0.5)"), DELTA); // green
-		assertColorRgb(new double[]{1.054, 0.957, -0.263, 1.0}, ColorParser.parseColor("color(--ecicmyk 0 0 1.0 0)"), DELTA); // yellow
-		assertColorRgb(new double[]{0.610, 0.151, 0.599, 1.0}, ColorParser.parseColor("color(--ecicmyk 0.5 1.0 0 0)"), DELTA); // purple
-		assertColorRgb(new double[]{-0.484, 0.580, 0.865, 1.0}, ColorParser.parseColor("color(--ecicmyk 1.0 0 0 0)"), DELTA); // cyan
-		assertColorRgb(new double[]{0.147, 0.147, 0.142, 1.0}, ColorParser.parseColor("color(--ecicmyk 0 0 0 1.0)"), DELTA); // black
-		assertColorRgb(new double[]{1.0,   1.0,   1.0,   1.0}, ColorParser.parseColor("color(--ecicmyk 0 0 0 0)"), DELTA); // white
-		
-		// Percentages
-		assertColorRgb(new double[]{0.900, -0.005, 0.111, 1.0}, ColorParser.parseColor("color(--ecicmyk 0% 100% 100% 0%)"), DELTA);
-		
-		// Alpha
-		assertColorRgb(new double[]{0.900, -0.005, 0.111, 0.5}, ColorParser.parseColor("color(--ecicmyk 0 1.0 1.0 0 / 0.5)"), DELTA);
-		assertColorRgb(new double[]{0.900, -0.005, 0.111, 0.5}, ColorParser.parseColor("color(--ecicmyk 0 1.0 1.0 0 / 50%)"), DELTA);
-		
-		// Invalid
-		assertNull(ColorParser.parseColor("color(--ecicmyk)"));
+	public void testParseColor_CmykFogra39() {
+		assertColorRgb(new double[]{0.892, 0.122, 0.145, 1.0}, ColorParser.parseColor("color(--fogra39 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.452, 0.628, 0.892, 1.0}, ColorParser.parseColor("color(--fogra39 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.169, 0.168, 0.164, 1.0}, ColorParser.parseColor("color(--fogra39 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.892, 0.122, 0.145, 0.5}, ColorParser.parseColor("color(--fogra39 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--fogra39)"));
 	}
-	
-	// ========== XYZ ==========
-	
+
+	@Test
+	public void testParseColor_CmykApproxFogra51() {
+		assertColorRgb(new double[]{0.906, 0.138, 0.161, 1.0}, ColorParser.parseColor("color(--fogra51 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.437, 0.639, 0.899, 1.0}, ColorParser.parseColor("color(--fogra51 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.168, 0.168, 0.160, 1.0}, ColorParser.parseColor("color(--fogra51 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.906, 0.138, 0.161, 0.5}, ColorParser.parseColor("color(--fogra51 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--fogra51)"));
+	}
+
+	@Test
+	public void testParseColor_CmykApproxFogra52() {
+		assertColorRgb(new double[]{0.902, 0.331, 0.331, 1.0}, ColorParser.parseColor("color(--fogra52 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.214, 0.658, 0.887, 1.0}, ColorParser.parseColor("color(--fogra52 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.338, 0.327, 0.299, 1.0}, ColorParser.parseColor("color(--fogra52 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.902, 0.331, 0.331, 0.5}, ColorParser.parseColor("color(--fogra52 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--fogra52)"));
+	}
+
+	@Test
+	public void testParseColor_CmykGracol2013() {
+		assertColorRgb(new double[]{0.889, 0.133, 0.140, 1.0}, ColorParser.parseColor("color(--gracol2013 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.446, 0.640, 0.892, 1.0}, ColorParser.parseColor("color(--gracol2013 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.168, 0.168, 0.161, 1.0}, ColorParser.parseColor("color(--gracol2013 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.889, 0.133, 0.140, 0.5}, ColorParser.parseColor("color(--gracol2013 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--gracol2013)"));
+	}
+
+	@Test
+	public void testParseColor_CmykSwopV2() {
+		assertColorRgb(new double[]{0.932, 0.194, 0.219, 1.0}, ColorParser.parseColor("color(--swop-v2 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.467, 0.688, 0.939, 1.0}, ColorParser.parseColor("color(--swop-v2 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.212, 0.208, 0.211, 1.0}, ColorParser.parseColor("color(--swop-v2 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.932, 0.194, 0.219, 0.5}, ColorParser.parseColor("color(--swop-v2 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--swop-v2)"));
+	}
+
+	@Test
+	public void testParseColor_CmykSwop2013C3() {
+		assertColorRgb(new double[]{0.922, 0.188, 0.189, 1.0}, ColorParser.parseColor("color(--swop2013-c3 0 1.0 1.0 0)"), DELTA); // red
+		assertColorRgb(new double[]{-0.443, 0.674, 0.918, 1.0}, ColorParser.parseColor("color(--swop2013-c3 1.0 0 0 0)"), DELTA); // cyan
+		assertColorRgb(new double[]{0.205, 0.203, 0.197, 1.0}, ColorParser.parseColor("color(--swop2013-c3 0 0 0 1.0)"), DELTA); // black
+		assertColorRgb(new double[]{0.922, 0.188, 0.189, 0.5}, ColorParser.parseColor("color(--swop2013-c3 0% 100% 100% 0% / 50%)"), DELTA);
+
+		assertNull(ColorParser.parseColor("color(--swop2013-c3)"));
+	}
+
 	@Test
 	public void testParseColor_Xyz() {
 		// Color variations (space-separated, color(xyz))
@@ -385,8 +450,6 @@ public class ColorParserTest {
 		// Invalid
 		assertNull(ColorParser.parseColor("color(xyz)"));
 	}
-	
-	// ========== Common ==========
 	
 	@Test
 	public void testParseColor_Null() {

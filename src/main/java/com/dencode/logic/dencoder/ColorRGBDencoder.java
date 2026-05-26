@@ -23,56 +23,85 @@ import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 import com.dencode.logic.model.color.Color;
 import com.dencode.logic.model.color.ColorSpace;
+import com.dencode.logic.model.color.ColorSpaceA98Rgb;
+import com.dencode.logic.model.color.ColorSpaceDisplayP3;
+import com.dencode.logic.model.color.ColorSpaceProphotoRgb;
+import com.dencode.logic.model.color.ColorSpaceRec2020;
 import com.dencode.logic.model.color.ColorSpaceRgb;
+import com.dencode.logic.model.color.ColorSpaceSrgbLinear;
 
 @Dencoder(type="color", method="color.rgb", hasEncoder=true, hasDecoder=false)
 public class ColorRGBDencoder {
-	
-	private static final ColorSpace RGB_HEX = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX);
-	private static final ColorSpace RGB_NUMBER = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_NUMBER);
-	
+	private static final ColorSpace RGB_HEX_RGBA = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_RGBA);
+	private static final ColorSpace RGB_HEX_ARGB = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_ARGB);
+	private static final ColorSpace RGB_PERCENTAGE = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_PERCENTAGE);
+	private static final ColorSpace SRGB_RATIO = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_RATIO);
+	private static final ColorSpace SRGB_PERCENTAGE = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_COLOR_SRGB_PERCENTAGE);
+	private static final ColorSpace SRGB_LINEAR_PERCENTAGE = ColorSpace.SRGB_LINEAR.with(ColorSpaceSrgbLinear.FORMATTER_PERCENTAGE);
+	private static final ColorSpace DISPLAY_P3_PERCENTAGE = ColorSpace.DISPLAY_P3.with(ColorSpaceDisplayP3.FORMATTER_PERCENTAGE);
+	private static final ColorSpace A98_RGB_PERCENTAGE = ColorSpace.A98_RGB.with(ColorSpaceA98Rgb.FORMATTER_PERCENTAGE);
+	private static final ColorSpace PROPHOTO_RGB_PERCENTAGE = ColorSpace.PROPHOTO_RGB.with(ColorSpaceProphotoRgb.FORMATTER_PERCENTAGE);
+	private static final ColorSpace REC2020_PERCENTAGE = ColorSpace.REC2020.with(ColorSpaceRec2020.FORMATTER_PERCENTAGE);
+
+
 	private ColorRGBDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encColorRGBHex(DencodeCondition cond) {
-		return encColorRGBHex(cond.valueAsColors());
+		return encColorRGBHex(
+				cond.valueAsColors(),
+				DencodeUtils.getOption(cond.options(), "color.rgb.hex-notation", "rrggbbaa")
+				);
 	}
-	
+
 	@DencoderFunction
 	public static String encColorRGBFn(DencodeCondition cond) {
 		return encColorRGBFn(
 				cond.valueAsColors(),
-				DencodeUtils.getOption(cond.options(), "color.rgb.notation", "percentage")
+				DencodeUtils.getOption(cond.options(), "color.rgb.color-space", "rgb"),
+				DencodeUtils.getOption(cond.options(), "color.rgb.notation", "number")
 				);
 	}
-	
-	
-	private static String encColorRGBHex(List<Color> vals) {
+
+
+	private static String encColorRGBHex(List<Color> vals, String hexNotation) {
+		ColorSpace colorSpace = hexNotation.equals("aarrggbb") ? RGB_HEX_ARGB : RGB_HEX_RGBA;
+
 		return DencodeUtils.dencodeLines(vals, (color) -> {
 			if (color == null) {
 				return null;
 			}
-			
-			return RGB_HEX.convert(color).toString();
+
+			return colorSpace.convert(color).toString();
 		});
 	}
-	
-	private static String encColorRGBFn(List<Color> vals, String notation) {
+
+	private static String encColorRGBFn(List<Color> vals, String colorSpaceId, String notation) {
+		ColorSpace colorSpace = colorSpace(colorSpaceId, notation);
+
 		return DencodeUtils.dencodeLines(vals, (color) -> {
 			if (color == null) {
 				return null;
 			}
-			
-			if (notation.equals("number")) {
-				// number
-				return RGB_NUMBER.convert(color).toString();
-			} else {
-				// percentage
-				return ColorSpace.RGB.convert(color).toString();
-			}
+
+			return colorSpace.convert(color).toString();
 		});
+	}
+
+	private static ColorSpace colorSpace(String colorSpaceId, String notation) {
+		boolean percentage = notation.equals("percentage");
+
+		return switch (colorSpaceId) {
+			case "srgb" -> percentage ? SRGB_PERCENTAGE : SRGB_RATIO;
+			case "srgb-linear" -> percentage ? SRGB_LINEAR_PERCENTAGE : ColorSpace.SRGB_LINEAR;
+			case "display-p3" -> percentage ? DISPLAY_P3_PERCENTAGE : ColorSpace.DISPLAY_P3;
+			case "a98-rgb" -> percentage ? A98_RGB_PERCENTAGE : ColorSpace.A98_RGB;
+			case "prophoto-rgb" -> percentage ? PROPHOTO_RGB_PERCENTAGE : ColorSpace.PROPHOTO_RGB;
+			case "rec2020" -> percentage ? REC2020_PERCENTAGE : ColorSpace.REC2020;
+			default -> percentage ? RGB_PERCENTAGE : ColorSpace.RGB; // rgb
+		};
 	}
 }

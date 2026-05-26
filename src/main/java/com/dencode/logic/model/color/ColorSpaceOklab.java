@@ -107,14 +107,14 @@ public class ColorSpaceOklab extends AbstractColorSpaceXyz {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("oklab(");
-		appendRoundString(sb, ol * 100.0, 2, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, ol * 100.0, 2, RoundingMode.HALF_UP);
 		sb.append("% ");
-		appendRoundString(sb, oa, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, oa, 4, RoundingMode.HALF_UP);
 		sb.append(' ');
-		appendRoundString(sb, ob, 4, RoundingMode.HALF_UP);
+		ColorFormatter.appendRoundString(sb, ob, 4, RoundingMode.HALF_UP);
 		if (alpha < 1.0) {
 			sb.append(" / ");
-			appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
+			ColorFormatter.appendRoundString(sb, alpha, 2, RoundingMode.HALF_UP);
 		}
 		sb.append(')');
 
