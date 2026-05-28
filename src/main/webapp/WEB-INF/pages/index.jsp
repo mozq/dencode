@@ -2379,7 +2379,7 @@
 			<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6871955725174244" data-ad-slot="5289392761" data-ad-format="rectangle" data-full-width-responsive="true"></ins>
 		</div>
 		
-		<c:set var="methodDescIncPagePath" value="method-desc_${method}_${msg['lang']}.inc.jsp" scope="request" />
+		<c:set var="methodDescIncPagePath" value="${type}/method-desc_${method}_${msg['lang']}.inc.jsp" scope="request" />
 		<c:if test="${dc:fileExists(pageContext, '/WEB-INF/pages/' += methodDescIncPagePath)}">
 			<hr />
 			<jsp:include page="${methodDescIncPagePath}" />
