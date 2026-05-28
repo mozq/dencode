@@ -925,7 +925,7 @@ $.onReady(function () {
 		elVLen.setAttribute("data-len-chars", res.textLength);
 		elVLen.setAttribute("data-len-bytes", res.textByteLength);
 		
-		_colors = (res.encColorRGBHex) ? res.encColorRGBHex.split("\n") : null;
+		_colors = (res.encColorRgbHex) ? res.encColorRgbHex.split("\n") : null;
 		setBgColor(elV, _colors, isDarkMode());
 		
 		for (const k in res) {

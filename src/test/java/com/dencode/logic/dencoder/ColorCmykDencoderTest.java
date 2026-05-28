@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.dencode.logic.model.DencodeCondition;
 
-public class ColorCMYKDencoderTest {
+public class ColorCmykDencoderTest {
 
 	@Test
 	public void test_blank() {
@@ -105,7 +105,7 @@ public class ColorCMYKDencoderTest {
 
 	private void testDencoder(String val, String exp) {
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<>(0));
-		String encStr = ColorCMYKDencoder.encColorCMYKFn(cond);
+		String encStr = ColorCmykDencoder.encColorCmyk(cond);
 		assertEquals(exp, encStr);
 	}
 
@@ -114,7 +114,7 @@ public class ColorCMYKDencoderTest {
 		options.put("color.cmyk.profile", profile);
 
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, options);
-		String encStr = ColorCMYKDencoder.encColorCMYKFn(cond);
+		String encStr = ColorCmykDencoder.encColorCmyk(cond);
 		assertEquals(exp, encStr);
 	}
 

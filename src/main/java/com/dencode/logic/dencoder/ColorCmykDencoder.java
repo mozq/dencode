@@ -31,7 +31,7 @@ import com.dencode.logic.model.color.ColorSpaceCmykGracol2013;
 import com.dencode.logic.model.color.ColorSpaceCmykSwop2013C3;
 
 @Dencoder(type="color", method="color.cmyk", hasEncoder=true, hasDecoder=false)
-public class ColorCMYKDencoder {
+public class ColorCmykDencoder {
 	private static final ColorSpace CMYK_FOGRA39 = ColorSpace.of(ColorSpaceCmykFogra39.class);
 	private static final ColorSpace CMYK_GRACOL2013 = ColorSpace.of(ColorSpaceCmykGracol2013.class);
 	private static final ColorSpace CMYK_SWOP2013_C3 = ColorSpace.of(ColorSpaceCmykSwop2013C3.class);
@@ -40,21 +40,21 @@ public class ColorCMYKDencoder {
 	private static final ColorSpace CMYK_APPROX_FOGRA52 = ColorSpace.of(ColorSpaceCmykApproxFogra52.class);
 
 
-	private ColorCMYKDencoder() {
+	private ColorCmykDencoder() {
 		// NOP
 	}
 
 
 	@DencoderFunction
-	public static String encColorCMYKFn(DencodeCondition cond) {
-		return encColorCMYKFn(
+	public static String encColorCmyk(DencodeCondition cond) {
+		return encColorCmyk(
 				cond.valueAsColors(),
 				DencodeUtils.getOption(cond.options(), "color.cmyk.profile", "naive")
 				);
 	}
 
 
-	private static String encColorCMYKFn(List<Color> vals, String profile) {
+	private static String encColorCmyk(List<Color> vals, String profile) {
 		ColorSpace colorSpace = colorSpace(profile);
 
 		return DencodeUtils.dencodeLines(vals, (color) -> {

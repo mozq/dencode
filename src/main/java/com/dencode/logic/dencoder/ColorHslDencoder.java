@@ -25,20 +25,20 @@ import com.dencode.logic.model.color.Color;
 import com.dencode.logic.model.color.ColorSpace;
 
 @Dencoder(type="color", method="color.hsl", hasEncoder=true, hasDecoder=false)
-public class ColorHSLDencoder {
+public class ColorHslDencoder {
 	
-	private ColorHSLDencoder() {
+	private ColorHslDencoder() {
 		// NOP
 	}
 	
 	
 	@DencoderFunction
-	public static String encColorHSLFn(DencodeCondition cond) {
-		return encColorHSLFn(cond.valueAsColors());
+	public static String encColorHsl(DencodeCondition cond) {
+		return encColorHsl(cond.valueAsColors());
 	}
 	
 	
-	private static String encColorHSLFn(List<Color> vals) {
+	private static String encColorHsl(List<Color> vals) {
 		return DencodeUtils.dencodeLines(vals, (color) -> {
 			if (color == null) {
 				return null;

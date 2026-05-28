@@ -31,7 +31,7 @@ import com.dencode.logic.model.color.ColorSpaceRgb;
 import com.dencode.logic.model.color.ColorSpaceSrgbLinear;
 
 @Dencoder(type="color", method="color.rgb", hasEncoder=true, hasDecoder=false)
-public class ColorRGBDencoder {
+public class ColorRgbDencoder {
 	private static final ColorSpace RGB_HEX_RGBA = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_RGBA);
 	private static final ColorSpace RGB_HEX_ARGB = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_HEX_ARGB);
 	private static final ColorSpace RGB_PERCENTAGE = ColorSpace.RGB.with(ColorSpaceRgb.FORMATTER_PERCENTAGE);
@@ -44,22 +44,22 @@ public class ColorRGBDencoder {
 	private static final ColorSpace REC2020_PERCENTAGE = ColorSpace.REC2020.with(ColorSpaceRec2020.FORMATTER_PERCENTAGE);
 
 
-	private ColorRGBDencoder() {
+	private ColorRgbDencoder() {
 		// NOP
 	}
 
 
 	@DencoderFunction
-	public static String encColorRGBHex(DencodeCondition cond) {
-		return encColorRGBHex(
+	public static String encColorRgbHex(DencodeCondition cond) {
+		return encColorRgbHex(
 				cond.valueAsColors(),
 				DencodeUtils.getOption(cond.options(), "color.rgb.hex-notation", "rrggbbaa")
 				);
 	}
 
 	@DencoderFunction
-	public static String encColorRGBFn(DencodeCondition cond) {
-		return encColorRGBFn(
+	public static String encColorRgb(DencodeCondition cond) {
+		return encColorRgb(
 				cond.valueAsColors(),
 				DencodeUtils.getOption(cond.options(), "color.rgb.color-space", "rgb"),
 				DencodeUtils.getOption(cond.options(), "color.rgb.notation", "number")
@@ -67,7 +67,7 @@ public class ColorRGBDencoder {
 	}
 
 
-	private static String encColorRGBHex(List<Color> vals, String hexNotation) {
+	private static String encColorRgbHex(List<Color> vals, String hexNotation) {
 		ColorSpace colorSpace = hexNotation.equals("aarrggbb") ? RGB_HEX_ARGB : RGB_HEX_RGBA;
 
 		return DencodeUtils.dencodeLines(vals, (color) -> {
@@ -79,7 +79,7 @@ public class ColorRGBDencoder {
 		});
 	}
 
-	private static String encColorRGBFn(List<Color> vals, String colorSpaceId, String notation) {
+	private static String encColorRgb(List<Color> vals, String colorSpaceId, String notation) {
 		ColorSpace colorSpace = colorSpace(colorSpaceId, notation);
 
 		return DencodeUtils.dencodeLines(vals, (color) -> {

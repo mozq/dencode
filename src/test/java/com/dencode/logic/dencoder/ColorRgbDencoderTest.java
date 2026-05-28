@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.dencode.logic.model.DencodeCondition;
 
-public class ColorRGBDencoderTest {
+public class ColorRgbDencoderTest {
 
 	@Test
 	public void testHex_blank() {
@@ -130,7 +130,7 @@ public class ColorRGBDencoderTest {
 		Map<String, String> options = new HashMap<>();
 		options.put("color.rgb.notation", "number");
 		DencodeCondition cond = new DencodeCondition("red", StandardCharsets.UTF_8, "", null, options);
-		assertEquals("rgb(255 0 0)", ColorRGBDencoder.encColorRGBFn(cond));
+		assertEquals("rgb(255 0 0)", ColorRgbDencoder.encColorRgb(cond));
 	}
 
 	@Test
@@ -181,7 +181,7 @@ public class ColorRGBDencoderTest {
 
 	private void testHexDencoder(String val, String exp) {
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<String, String>(0));
-		String encStr = ColorRGBDencoder.encColorRGBHex(cond);
+		String encStr = ColorRgbDencoder.encColorRgbHex(cond);
 		assertEquals(exp, encStr);
 	}
 
@@ -190,13 +190,13 @@ public class ColorRGBDencoderTest {
 		options.put("color.rgb.hex-notation", hexNotation);
 
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, options);
-		String encStr = ColorRGBDencoder.encColorRGBHex(cond);
+		String encStr = ColorRgbDencoder.encColorRgbHex(cond);
 		assertEquals(exp, encStr);
 	}
 
 	private void testFnDencoder(String val, String exp) {
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<String, String>(0));
-		String encStr = ColorRGBDencoder.encColorRGBFn(cond);
+		String encStr = ColorRgbDencoder.encColorRgb(cond);
 		assertEquals(exp, encStr);
 	}
 
@@ -206,7 +206,7 @@ public class ColorRGBDencoderTest {
 		options.put("color.rgb.notation", notation);
 
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, options);
-		String encStr = ColorRGBDencoder.encColorRGBFn(cond);
+		String encStr = ColorRgbDencoder.encColorRgb(cond);
 		assertEquals(exp, encStr);
 	}
 }

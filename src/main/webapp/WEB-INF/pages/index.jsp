@@ -1542,7 +1542,7 @@
 					<c:if test="${types.contains('color')}">
 						<tbody>
 							<c:if test="${methods.contains('color.name')}"><tr data-dencode-method="color.name"><th>${dc:h(msg['color.name.func.encColorName'])}</th><td><span id="encColorName" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRGBHex'])}</th><td><span id="encColorRGBHex" class="for-disp"></span>
+							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRgbHex'])}</th><td><span id="encColorRgbHex" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['color.rgb.hex-notation'])}</span>
@@ -1553,7 +1553,7 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRGBFn'])}</th><td><span id="encColorRGBFn" class="for-disp"></span>
+							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRgb'])}</th><td><span id="encColorRgb" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['color.rgb.color-space'])}</span>
@@ -1576,13 +1576,13 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('color.hsl')}"><tr data-dencode-method="color.hsl"><th>${dc:h(msg['color.hsl.func.encColorHSLFn'])}</th><td><span id="encColorHSLFn" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('color.hsl')}"><tr data-dencode-method="color.hsl"><th>${dc:h(msg['color.hsl.func.encColorHsl'])}</th><td><span id="encColorHsl" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.hwb')}"><tr data-dencode-method="color.hwb"><th>${dc:h(msg['color.hwb.func.encColorHwb'])}</th><td><span id="encColorHwb" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.lab')}"><tr data-dencode-method="color.lab"><th>${dc:h(msg['color.lab.func.encColorLab'])}</th><td><span id="encColorLab" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.lch')}"><tr data-dencode-method="color.lch"><th>${dc:h(msg['color.lch.func.encColorLch'])}</th><td><span id="encColorLch" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.oklab')}"><tr data-dencode-method="color.oklab"><th>${dc:h(msg['color.oklab.func.encColorOklab'])}</th><td><span id="encColorOklab" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.oklch')}"><tr data-dencode-method="color.oklch"><th>${dc:h(msg['color.oklch.func.encColorOklch'])}</th><td><span id="encColorOklch" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCMYKFn'])}</th><td><span id="encColorCMYKFn" class="for-disp"></span>
+							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCmyk'])}</th><td><span id="encColorCmyk" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['color.cmyk.profile'])}</span>

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.dencode.logic.model.DencodeCondition;
 
-public class ColorHSLDencoderTest {
+public class ColorHslDencoderTest {
 
 	@Test
 	public void test_blank() {
@@ -84,7 +84,7 @@ public class ColorHSLDencoderTest {
 
 	private void testDencoder(String val, String exp) {
 		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<>(0));
-		String encStr = ColorHSLDencoder.encColorHSLFn(cond);
+		String encStr = ColorHslDencoder.encColorHsl(cond);
 		assertEquals(exp, encStr);
 	}
 }
