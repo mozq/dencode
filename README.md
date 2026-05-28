@@ -101,7 +101,6 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Color Name](https://dencode.com/color/name)
     - [RGB Color](https://dencode.com/color/rgb)
     - [HSL Color](https://dencode.com/color/hsl)
-    - [HSV Color](https://dencode.com/color/hsv)
     - [HWB Color](https://dencode.com/color/hwb)
     - [Lab Color](https://dencode.com/color/lab)
     - [LCH Color](https://dencode.com/color/lch)
