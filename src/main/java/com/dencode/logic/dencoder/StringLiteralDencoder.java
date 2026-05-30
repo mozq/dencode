@@ -20,30 +20,30 @@ import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="string", method="string.program-string", hasEncoder=true, hasDecoder=true, useNl=true)
-public class StringProgramStringDencoder {
+@Dencoder(type="string", method="string.literal", hasEncoder=true, hasDecoder=true, useNl=true)
+public class StringLiteralDencoder {
 	
 	private static final char ESCAPE_CHAR = '\\';
 	
-	private StringProgramStringDencoder() {
+	private StringLiteralDencoder() {
 		// NOP
 	}
 	
 	
 	@DencoderFunction
-	public static String encStrProgramString(DencodeCondition cond) {
-		return encStrProgramString(
+	public static String encStrLiteral(DencodeCondition cond) {
+		return encStrLiteral(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "string.program-string.quotes", "double")
+				DencodeUtils.getOption(cond.options(), "string.literal.quotes", "double")
 				);
 	}
 	
 	@DencoderFunction
-	public static String decStrProgramString(DencodeCondition cond) {
-		return decStrProgramString(cond.value());
+	public static String decStrLiteral(DencodeCondition cond) {
+		return decStrLiteral(cond.value());
 	}
 	
-	private static String encStrProgramString(String val, String quotes) {
+	private static String encStrLiteral(String val, String quotes) {
 		if (val == null) {
 			return null;
 		}
@@ -90,7 +90,7 @@ public class StringProgramStringDencoder {
 		return sb.toString();
 	}
 	
-	private static String decStrProgramString(String val) {
+	private static String decStrLiteral(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}

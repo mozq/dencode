@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Sobre cadenas de programa</h3>
-<p>La cadena de programa es una representación descriptiva para definir cadenas en lenguajes de programación.</p>
-<p>La cadena se encierra entre comillas ("" o '') y los siguientes caracteres se escapan con el símbolo \.</p>
+%><h3>关于字符串字面量</h3>
+<p>字符串字面量是编程语言中用于定义字符串的表示形式。</p>
+<p>用引号 ("" 或 '') 将字符串括起来，以下字符用 \ 符号进行转义。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Carácter</th><th>Código ASCII</th><th>Resultado escapado</th></tr>
+		<tr><th>字符</th><th>字符的 ASCII 码</th><th>转义结果</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Über Programm-Strings</h3>
-<p>Programm-Strings sind Darstellungen zur Definition von Zeichenketten in Programmiersprachen.</p>
-<p>Der String wird in Anführungszeichen ("" oder '') eingeschlossen, und die folgenden Zeichen werden mit einem Backslash (\) maskiert:</p>
+%><h3>Informazioni sulla Stringa letterale</h3>
+<p>Una stringa di programma è una rappresentazione descrittiva per definire stringhe nei linguaggi di programmazione.</p>
+<p>La stringa è racchiusa tra virgolette ("" o '') e i seguenti caratteri sono preceduti dal simbolo \ (escape).</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Zeichen</th><th>ASCII-Code</th><th>Ergebnis</th></tr>
+		<tr><th>Carattere</th><th>Codice ASCII</th><th>Risultato Escape</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

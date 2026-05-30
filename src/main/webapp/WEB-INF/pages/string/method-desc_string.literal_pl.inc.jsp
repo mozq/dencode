@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>프로그램 문자열에 대해서</h3>
-<p>프로그램 문자열은 프로그래밍 언어에서 문자열을 정의하기 위한 기술 표현입니다.</p>
-<p>문자열을 인용부호 ("" 또는 '') 로 묶고, 다음 문자는 \기호로 이스케이프합니다.</p>
+%><h3>O literale łańcuchowym</h3>
+<p>Jest to reprezentacja literał łańcuchowy używany w językach programowania.</p>
+<p>Literał łańcuchowy jest ujęty w cudzysłowy ("" lub ''), a znaki specjalne są eskapowane za pomocą backslasha (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>문자</th><th>문자의 ASCII 코드</th><th>이스케이프 결과</th></tr>
+		<tr><th>Znak</th><th>Kod ASCII</th><th>Wynik eskapowania</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

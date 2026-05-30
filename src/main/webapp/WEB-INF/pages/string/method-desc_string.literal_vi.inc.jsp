@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>About Program String</h3>
-<p>A program string is a descriptive representation for defining a string in a programming language.</p>
-<p>Enclose the string in quotes ("" or '') and escape the following characters with the \ symbol.</p>
+%><h3>Về Ký tự chuỗi literal</h3>
+<p>Ký tự chuỗi literal là biểu diễn mô tả để định nghĩa chuỗi trong ngôn ngữ lập trình.</p>
+<p>Chuỗi được bao quanh bởi dấu ngoặc kép ("" hoặc '') và các ký tự sau được escape bằng dấu \.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Character</th><th>ASCII code of character</th><th>Escape result</th></tr>
+		<tr><th>Ký tự</th><th>Mã ASCII của ký tự</th><th>Kết quả escape</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

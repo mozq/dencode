@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Về Chuỗi chương trình</h3>
-<p>Chuỗi chương trình là biểu diễn mô tả để định nghĩa chuỗi trong ngôn ngữ lập trình.</p>
-<p>Chuỗi được bao quanh bởi dấu ngoặc kép ("" hoặc '') và các ký tự sau được escape bằng dấu \.</p>
+%><h3>À propos des littéraux de chaîne</h3>
+<p>Les littéraux de chaîne sont des expressions descriptives pour définir des chaînes de caractères dans les langages de programmation.</p>
+<p>La chaîne est entourée de guillemets ("" ou '') et les caractères suivants sont échappés avec le symbole \.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Ký tự</th><th>Mã ASCII của ký tự</th><th>Kết quả escape</th></tr>
+		<tr><th>Caractère</th><th>Code ASCII</th><th>Résultat échappé</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

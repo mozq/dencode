@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Over Programmastrings</h3>
-<p>Een programmastring is een descriptieve weergave voor het definiëren van tekenreeksen in programmeertalen.</p>
-<p>Tekenreeksen worden omsloten door aanhalingstekens ("" of '') en de volgende tekens worden geëscaped met een backslash (\).</p>
+%><h3>Sobre literales de cadena</h3>
+<p>La literal de cadena es una representación descriptiva para definir cadenas en lenguajes de programación.</p>
+<p>La cadena se encierra entre comillas ("" o '') y los siguientes caracteres se escapan con el símbolo \.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Teken</th><th>ASCII-code van teken</th><th>Escape-resultaat</th></tr>
+		<tr><th>Carácter</th><th>Código ASCII</th><th>Resultado escapado</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

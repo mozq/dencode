@@ -65,7 +65,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Ascii85](https://dencode.com/string/ascii85)
     - [Quoted-printable](https://dencode.com/string/quoted-printable)
     - [Unicode Escape](https://dencode.com/string/unicode-escape)
-    - [Program String](https://dencode.com/string/program-string)
+    - [String Literal](https://dencode.com/string/literal)
     - [Morse Code](https://dencode.com/string/morse-code)
     - [Hieroglyphs](https://dencode.com/string/hieroglyphs)
     - [Braille](https://dencode.com/string/braille)

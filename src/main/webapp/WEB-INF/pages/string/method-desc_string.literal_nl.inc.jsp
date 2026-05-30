@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>关于程序字符串 (Program String)</h3>
-<p>程序字符串是编程语言中用于定义字符串的表示形式。</p>
-<p>用引号 ("" 或 '') 将字符串括起来，以下字符用 \ 符号进行转义。</p>
+%><h3>Over String Literal</h3>
+<p>Een string literal is een descriptieve weergave voor het definiëren van tekenreeksen in programmeertalen.</p>
+<p>Tekenreeksen worden omsloten door aanhalingstekens ("" of '') en de volgende tekens worden geëscaped met een backslash (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>字符</th><th>字符的 ASCII 码</th><th>转义结果</th></tr>
+		<tr><th>Teken</th><th>ASCII-code van teken</th><th>Escape-resultaat</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Sobre Strings de Programação</h3>
-<p>Strings de programação são expressões descritivas para definir strings em linguagens de programação.</p>
-<p>A string é delimitada por aspas ("" ou '') e os seguintes caracteres são escapados com o símbolo \.</p>
+%><h3>Tentang String Literal</h3>
+<p>String program adalah representasi deskriptif untuk mendefinisikan string dalam bahasa pemrograman.</p>
+<p>String diapit oleh tanda kutip ("" atau '') dan karakter berikut di-escape dengan simbol backslash (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Caractere</th><th>Código ASCII do caractere</th><th>Resultado escapado</th></tr>
+		<tr><th>Karakter</th><th>Kode ASCII Karakter</th><th>Hasil Escape</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

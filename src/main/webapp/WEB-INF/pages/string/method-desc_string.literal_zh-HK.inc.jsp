@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>Tentang String Program</h3>
-<p>String program adalah representasi deskriptif untuk mendefinisikan string dalam bahasa pemrograman.</p>
-<p>String diapit oleh tanda kutip ("" atau '') dan karakter berikut di-escape dengan simbol backslash (\).</p>
+%><h3>關於字串字面值</h3>
+<p>字串字面值是程式語言中用於定義字串的表示形式。</p>
+<p>用引號 ("" 或 '') 將字串括起來，以下字元用 \ 符號進行跳脫。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Karakter</th><th>Kode ASCII Karakter</th><th>Hasil Escape</th></tr>
+		<tr><th>字元</th><th>字元的 ASCII 碼</th><th>跳脫結果</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>

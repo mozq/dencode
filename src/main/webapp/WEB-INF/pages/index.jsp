@@ -90,7 +90,7 @@
 					<li><a href="${dc:h(basePath)}/string/ascii85" data-dencode-method="string.ascii85">${dc:h(msg['string.ascii85.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/quoted-printable" data-dencode-method="string.quoted-printable">${dc:h(msg['string.quoted-printable.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/unicode-escape" data-dencode-method="string.unicode-escape">${dc:h(msg['string.unicode-escape.method'])}</a></li>
-					<li><a href="${dc:h(basePath)}/string/program-string" data-dencode-method="string.program-string">${dc:h(msg['string.program-string.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/literal" data-dencode-method="string.literal">${dc:h(msg['string.literal.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/morse-code" data-dencode-method="string.morse-code">${dc:h(msg['string.morse-code.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/braille" data-dencode-method="string.braille">${dc:h(msg['string.braille.method'])}</a></li>
@@ -346,7 +346,7 @@
 							<c:if test="${methods.contains('string.ascii85')}"><tr data-dencode-method="string.ascii85"><th>${dc:h(msg['string.ascii85.func.decStrAscii85'])}</th><td><span id="decStrAscii85" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.quoted-printable')}"><tr data-dencode-method="string.quoted-printable"><th>${dc:h(msg['string.quoted-printable.func.decStrQuotedPrintable'])}</th><td><span id="decStrQuotedPrintable" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.unicode-escape')}"><tr data-dencode-method="string.unicode-escape"><th>${dc:h(msg['string.unicode-escape.func.decStrUnicodeEscape'])}</th><td><span id="decStrUnicodeEscape" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('string.program-string')}"><tr data-dencode-method="string.program-string"><th>${dc:h(msg['string.program-string.func.decStrProgramString'])}</th><td><span id="decStrProgramString" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.literal')}"><tr data-dencode-method="string.literal"><th>${dc:h(msg['string.literal.func.decStrLiteral'])}</th><td><span id="decStrLiteral" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.morse-code')}"><tr data-dencode-method="string.morse-code"><th>${dc:h(msg['string.morse-code.func.decStrMorseCode'])}</th><td><span id="decStrMorseCode" class="for-disp"></span>
@@ -1281,14 +1281,14 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('string.program-string')}"><tr data-dencode-method="string.program-string"><th>${dc:h(msg['string.program-string.func.encStrProgramString'])}</th><td><span id="encStrProgramString" class="for-disp"></span>
+							<c:if test="${methods.contains('string.literal')}"><tr data-dencode-method="string.literal"><th>${dc:h(msg['string.literal.func.encStrLiteral'])}</th><td><span id="encStrLiteral" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
-										<span class="input-group-text">${dc:h(msg['string.program-string.quotes'])}</span>
-										<select name="string.program-string.quotes" class="dencode-option form-select">
-											<option value="double">${dc:h(msg['string.program-string.quotes.double'])}</option>
-											<option value="single">${dc:h(msg['string.program-string.quotes.single'])}</option>
-											<option value="none">${dc:h(msg['string.program-string.quotes.none'])}</option>
+										<span class="input-group-text">${dc:h(msg['string.literal.quotes'])}</span>
+										<select name="string.literal.quotes" class="dencode-option form-select">
+											<option value="double">${dc:h(msg['string.literal.quotes.double'])}</option>
+											<option value="single">${dc:h(msg['string.literal.quotes.single'])}</option>
+											<option value="none">${dc:h(msg['string.literal.quotes.none'])}</option>
 										</select>
 									</div>
 								</div>

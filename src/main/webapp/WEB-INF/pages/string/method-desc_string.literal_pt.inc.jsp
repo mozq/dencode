@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><h3>À propos des chaînes de caractères de programme</h3>
-<p>Les chaînes de programme sont des expressions descriptives pour définir des chaînes de caractères dans les langages de programmation.</p>
-<p>La chaîne est entourée de guillemets ("" ou '') et les caractères suivants sont échappés avec le symbole \.</p>
+%><h3>Sobre String literal</h3>
+<p>String literal são expressões descritivas para definir strings em linguagens de programação.</p>
+<p>A string é delimitada por aspas ("" ou '') e os seguintes caracteres são escapados com o símbolo \.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th>Caractère</th><th>Code ASCII</th><th>Résultat échappé</th></tr>
+		<tr><th>Caractere</th><th>Código ASCII do caractere</th><th>Resultado escapado</th></tr>
 		<tr><td>(NUL)</td><td>0x00</td><td>\0</td></tr>
 		<tr><td>(BEL)</td><td>0x07</td><td>\a</td></tr>
 		<tr><td>(BS)</td><td>0x08</td><td>\b</td></tr>
