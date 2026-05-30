@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>Informazioni sulla Stringa letterale</h3>
-<p>Una stringa di programma è una rappresentazione descrittiva per definire stringhe nei linguaggi di programmazione.</p>
-<p>La stringa è racchiusa tra virgolette ("" o '') e i seguenti caratteri sono preceduti dal simbolo \ (escape).</p>
+<p>Un valore letterale stringa è una rappresentazione descrittiva per definire stringhe nei linguaggi di programmazione.</p>
+<p>La stringa è racchiusa tra virgolette (come "") e i seguenti caratteri sono preceduti dal simbolo \ (escape).</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

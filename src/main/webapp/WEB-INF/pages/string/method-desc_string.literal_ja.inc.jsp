@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>文字列リテラルについて</h3>
 <p>文字列リテラルは、プログラミング言語で文字列を定義するための記述表現です。</p>
-<p>文字列を引用符 ("" または '') で括り、以下の文字は\記号でエスケープします。</p>
+<p>文字列を引用符 ( "" など) で括り、以下の文字は\記号でエスケープします。</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

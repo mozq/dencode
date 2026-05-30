@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>关于字符串字面量</h3>
 <p>字符串字面量是编程语言中用于定义字符串的表示形式。</p>
-<p>用引号 ("" 或 '') 将字符串括起来，以下字符用 \ 符号进行转义。</p>
+<p>用引号 ( "" 等) 将字符串括起来，以下字符用 \ 符号进行转义。</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

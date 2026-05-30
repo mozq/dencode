@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>Tentang String Literal</h3>
-<p>String program adalah representasi deskriptif untuk mendefinisikan string dalam bahasa pemrograman.</p>
-<p>String diapit oleh tanda kutip ("" atau '') dan karakter berikut di-escape dengan simbol backslash (\).</p>
+<p>String literal adalah representasi deskriptif untuk mendefinisikan string dalam bahasa pemrograman.</p>
+<p>String diapit oleh tanda kutip (seperti "") dan karakter berikut di-escape dengan simbol backslash (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

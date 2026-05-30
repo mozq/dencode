@@ -51,6 +51,7 @@ public class StringLiteralDencoder {
 		char quoteChar = switch (quotes) {
 			case "double" -> '\"';
 			case "single" -> '\'';
+			case "backtick" -> '`';
 			default -> '\0';
 		};
 		
@@ -101,7 +102,8 @@ public class StringLiteralDencoder {
 			char fc = val.charAt(0);
 			char lc = val.charAt(len - 1);
 			if ((fc == '\"' && lc == '\"')
-				|| (fc == '\'' && lc == '\'')) {
+				|| (fc == '\'' && lc == '\'')
+				|| (fc == '`' && lc == '`')) {
 				// Trim quotes
 				val = val.substring(1, len - 1);
 				len = val.length();

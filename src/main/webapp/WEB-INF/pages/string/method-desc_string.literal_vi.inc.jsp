@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>Về Ký tự chuỗi literal</h3>
 <p>Ký tự chuỗi literal là biểu diễn mô tả để định nghĩa chuỗi trong ngôn ngữ lập trình.</p>
-<p>Chuỗi được bao quanh bởi dấu ngoặc kép ("" hoặc '') và các ký tự sau được escape bằng dấu \.</p>
+<p>Chuỗi được bao quanh bởi dấu ngoặc kép (như "") và các ký tự sau được escape bằng dấu \.</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

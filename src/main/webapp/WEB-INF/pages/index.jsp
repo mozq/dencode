@@ -1288,6 +1288,7 @@
 										<select name="string.literal.quotes" class="dencode-option form-select">
 											<option value="double">${dc:h(msg['string.literal.quotes.double'])}</option>
 											<option value="single">${dc:h(msg['string.literal.quotes.single'])}</option>
+											<option value="backtick">${dc:h(msg['string.literal.quotes.backtick'])}</option>
 											<option value="none">${dc:h(msg['string.literal.quotes.none'])}</option>
 										</select>
 									</div>

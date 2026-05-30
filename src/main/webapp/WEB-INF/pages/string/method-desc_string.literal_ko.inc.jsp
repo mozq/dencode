@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>문자열 리터럴에 대해서</h3>
 <p>문자열 리터럴은 프로그래밍 언어에서 문자열을 정의하기 위한 기술 표현입니다.</p>
-<p>문자열을 인용부호 ("" 또는 '') 로 묶고, 다음 문자는 \기호로 이스케이프합니다.</p>
+<p>문자열을 인용부호 ( "" 등) 로 묶고, 다음 문자는 \기호로 이스케이프합니다.</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>O literale łańcuchowym</h3>
 <p>Jest to reprezentacja literał łańcuchowy używany w językach programowania.</p>
-<p>Literał łańcuchowy jest ujęty w cudzysłowy ("" lub ''), a znaki specjalne są eskapowane za pomocą backslasha (\).</p>
+<p>Literał łańcuchowy jest ujęty w cudzysłowy (np. ""), a znaki specjalne są eskapowane za pomocą backslasha (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

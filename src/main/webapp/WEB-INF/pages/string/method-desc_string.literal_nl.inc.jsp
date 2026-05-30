@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>Over String Literal</h3>
 <p>Een string literal is een descriptieve weergave voor het definiëren van tekenreeksen in programmeertalen.</p>
-<p>Tekenreeksen worden omsloten door aanhalingstekens ("" of '') en de volgende tekens worden geëscaped met een backslash (\).</p>
+<p>Tekenreeksen worden omsloten door aanhalingstekens (zoals "") en de volgende tekens worden geëscaped met een backslash (\).</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

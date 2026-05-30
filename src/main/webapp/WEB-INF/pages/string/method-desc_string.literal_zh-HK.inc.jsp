@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>關於字串字面值</h3>
 <p>字串字面值是程式語言中用於定義字串的表示形式。</p>
-<p>用引號 ("" 或 '') 將字串括起來，以下字元用 \ 符號進行跳脫。</p>
+<p>用引號 ( "" 等) 將字串括起來，以下字元用 \ 符號進行跳脫。</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>

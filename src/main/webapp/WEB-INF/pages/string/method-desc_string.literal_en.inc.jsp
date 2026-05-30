@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><h3>About String Literal</h3>
-<p>A program string is a descriptive representation for defining a string in a programming language.</p>
-<p>Enclose the string in quotes ("" or '') and escape the following characters with the \ symbol.</p>
+<p>A string literal is a descriptive representation for defining a string in a programming language.</p>
+<p>Enclose the string in quotes (such as "") and escape the following characters with the \ symbol.</p>
 
 <div class="table-responsive">
 	<table class="table">
@@ -16,6 +16,7 @@
 		<tr><td>(CR)</td><td>0x0D</td><td>\r</td></tr>
 		<tr><td>"</td><td>0x22</td><td>\"</td></tr>
 		<tr><td>'</td><td>0x27</td><td>\'</td></tr>
+		<tr><td>`</td><td>0x60</td><td>\`</td></tr>
 		<tr><td>\</td><td>0x5C</td><td>\\</td></tr>
 	</table>
 </div>
