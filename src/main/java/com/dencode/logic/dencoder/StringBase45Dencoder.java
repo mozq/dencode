@@ -77,33 +77,30 @@ public class StringBase45Dencoder {
 	
 	@DencoderFunction
 	public static String decStrBase45(DencodeCondition cond) {
-		byte[] decValue = decodeBase45(cond.value(), 0, cond.value().length());
-		if (decValue == null) {
-			return null;
-		}
-		
-		return new String(decValue, cond.charset());
-	}
-	
-	@DencoderFunction
-	public static String decStrBase45ZlibCoseCbor(DencodeCondition cond) {
 		String val = cond.value();
+		int len = val.length();
 		
-		byte[] decValue = decodeBase45(val, 0, val.length());
+		byte[] decValue = decodeBase45(val, 0, len);
 		if (decValue == null) {
 			// Remove context identifiers such as "HC1:" and "LT1:"
-			int idx = val.indexOf(':', 0, Math.min(10, val.length()));
+			int idx = val.indexOf(':', 0, Math.min(10, len));
 			if (idx < 0) {
 				return null;
 			}
 			
-			decValue = decodeBase45(val, idx + 1, val.length());
+			decValue = decodeBase45(val, idx + 1, len);
 			if (decValue == null) {
 				return null;
 			}
 		}
 		
-		return parseZlibCoseCbor(decValue);
+		// Try to parse as Zlib/COSE/CBOR
+		String zlibCoseCborValue = parseZlibCoseCbor(decValue);
+		if (zlibCoseCborValue != null) {
+			return zlibCoseCborValue;
+		}
+		
+		return new String(decValue, cond.charset());
 	}
 	
 	private static String encodeBase45(byte[] binValue) {
