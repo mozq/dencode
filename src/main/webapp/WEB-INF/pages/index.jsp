@@ -103,7 +103,6 @@
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/character-width" data-dencode-method="string.character-width">${dc:h(msg['string.character-width.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/letter-case" data-dencode-method="string.letter-case">${dc:h(msg['string.letter-case.method'])}</a></li>
-					<li><a href="${dc:h(basePath)}/string/text-initials" data-dencode-method="string.text-initials">${dc:h(msg['string.text-initials.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/text-reverse" data-dencode-method="string.text-reverse">${dc:h(msg['string.text-reverse.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/font-style" data-dencode-method="string.font-style">${dc:h(msg['string.font-style.method'])}</a></li>
@@ -1358,7 +1357,6 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('string.text-initials')}"><tr data-dencode-method="string.text-initials"><th>${dc:h(msg['string.text-initials.func.encStrInitials'])}</th><td><span id="encStrInitials" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.text-reverse')}"><tr data-dencode-method="string.text-reverse"><th>${dc:h(msg['string.text-reverse.func.encStrReverse'])}</th><td><span id="encStrReverse" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
