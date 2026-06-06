@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.dencode.logic.DencodeMapper;
+import com.dencode.web.model.SupportedLocales;
 import com.dencode.web.servlet.AbstractDencodeHttpServlet;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -52,13 +53,11 @@ public class SitemapServlet extends AbstractDencodeHttpServlet {
 		SUPPORTED_METHOD_PATHS = Collections.unmodifiableList(paths);
 	}
 	
-	private static final List<String> SUPPORTED_LOCALE_IDS = List.of(config().getString("locales").split(","));
-	
 	@Override
 	protected void doGet() throws Exception {
 		
 		reqres().setAttribute("supportedMethodPaths", SUPPORTED_METHOD_PATHS);
-		reqres().setAttribute("supportedLocaleIDs", SUPPORTED_LOCALE_IDS);
+		reqres().setAttribute("supportedLocaleIDs", SupportedLocales.ids());
 		reqres().setAttribute("baseURL", getBaseURL(reqres()));
 		
 		forward("/WEB-INF/pages/sitemap.jsp");

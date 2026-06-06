@@ -16,12 +16,12 @@
  */
 package com.dencode.web.servlet.pages;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jakarta.servlet.annotation.WebServlet;
 
+import com.dencode.web.model.SupportedLocales;
 import com.dencode.web.servlet.AbstractDencodeHttpServlet;
 
 @WebServlet("/")
@@ -29,8 +29,6 @@ public class RootServlet extends AbstractDencodeHttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Pattern LOCALE_PATH_PATTERN = Pattern.compile("/([a-z]{2}(?:\\-[A-Za-z]{2})?)/(.*)");
-	
-	private static final List<String> SUPPORTED_LOCALE_IDS = List.of(config().getString("locales").split(","));
 	
 	@Override
 	protected void doGet() throws Exception {
@@ -42,7 +40,7 @@ public class RootServlet extends AbstractDencodeHttpServlet {
 			String localeId = normalizeLocaleId(localePathMatcher.group(1));
 			String subPath = localePathMatcher.group(2);
 			
-			if (SUPPORTED_LOCALE_IDS.contains(localeId)) {
+			if (SupportedLocales.ids().contains(localeId)) {
 				reqres().setAttribute("localeId", localeId);
 				reqres().setAttribute("currentPath", subPath);
 				

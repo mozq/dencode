@@ -19,7 +19,6 @@ package com.dencode.web.servlet.pages;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -30,6 +29,7 @@ import java.util.stream.Collectors;
 
 import com.dencode.logic.DencodeMapper;
 import com.dencode.logic.dencoder.annotation.Dencoder;
+import com.dencode.web.model.SupportedLocales;
 import com.dencode.web.servlet.AbstractDencodeHttpServlet;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -66,9 +66,7 @@ public class IndexServlet extends AbstractDencodeHttpServlet {
 	
 	private static final Map<String, String> SUPPORTED_LOCALE_MAP;
 	static {
-		String[] supportedLocaleIds = config().getString("locales").split(",");
-		
-		SUPPORTED_LOCALE_MAP = Arrays.stream(supportedLocaleIds)
+		SUPPORTED_LOCALE_MAP = SupportedLocales.ids().stream()
 				.collect(Collectors.toMap(
 					Function.identity(),
 					id -> ResourceBundle.getBundle("messages", Locale.forLanguageTag(id)).getString("locale.name"),

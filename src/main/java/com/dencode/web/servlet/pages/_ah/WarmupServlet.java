@@ -23,6 +23,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.dencode.logic.DencodeMapper;
+import com.dencode.web.model.SupportedLocales;
 import com.dencode.web.servlet.AbstractDencodeHttpServlet;
 
 @WebServlet("/_ah/warmup")
@@ -37,9 +38,8 @@ public class WarmupServlet extends AbstractDencodeHttpServlet {
 		DencodeMapper.init();
 		
 		// Cache messages
-		String[] supportedLocaleIds = config().getString("locales").split(",");
-		for (String id : supportedLocaleIds) {
-			ResourceBundle.getBundle("messages", Locale.forLanguageTag(id));
+		for (Locale locale : SupportedLocales.locales()) {
+			ResourceBundle.getBundle("messages", locale);
 		}
 		
 		// Response

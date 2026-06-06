@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import com.dencode.web.model.Message;
 import com.dencode.web.model.ResponseModel;
+import com.dencode.web.model.SupportedLocales;
 
 import jakarta.servlet.http.HttpServletResponse;
 import tools.jackson.databind.json.JsonMapper;
@@ -36,7 +37,7 @@ import tools.jackson.databind.json.JsonMapper;
 public abstract class AbstractDencodeHttpServlet extends AbstractHttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final Locale DEFAULT_LOCALE = Locale.forLanguageTag(config().getString("locales").split(",")[0]);
+	private static final Locale DEFAULT_LOCALE = SupportedLocales.defaultLocale();
 	
 	private static final ResourceBundle.Control CONTROL_NO_FALLBACK_LOCALE = new ResourceBundle.Control() {
 		@Override

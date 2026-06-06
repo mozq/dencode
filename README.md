@@ -152,12 +152,13 @@ DenCode supports the following languages:
 
 If you want to add other languages, please add or modify the following source code.
 
-- Append a new language code to the locales config with a comma separator (like locales=en,ja,ru)
-    - /src/main/resources/config.properties [Required]
-- Add translated files
-    - /src/main/resources/messages_*.properties [Required]
-    - /src/main/webapp/WEB-INF/pages/policy_*.inc.jsp [Optional]
-    - /src/main/webapp/WEB-INF/pages/method-desc_\*.\*_*.inc.jsp [Optional]
+- Add a translated messages file. Supported languages are detected from the file name.
+    - /src/main/resources/messages_{language}.properties [Required]
+- Add translated page fragments
+    - /src/main/webapp/WEB-INF/pages/policy_{language}.inc.jsp [Optional]
+    - /src/main/webapp/WEB-INF/pages/{type}/method-desc_{method}_{language}.inc.jsp [Optional]
+
+For the `{language}` part, use `_` for regional variants in `*.properties` file names and `-` in `*.jsp` file names. (e.g. `messages_zh_CN.properties`, `policy_zh-CN.inc.jsp`)
 
 ## How to add another encoder and decoder
 If you want to add a new encoder or decoder, please add or modify the following source code.
@@ -167,9 +168,9 @@ If you want to add a new encoder or decoder, please add or modify the following 
 - Append the encoding and decoding rows for the dencoder
     - /src/main/webapp/WEB-INF/pages/index.jsp [Required]
 - Append label texts for index.jsp
-    - /src/main/resources/messages_*.properties [Required]
+    - /src/main/resources/messages_{language}.properties [Required]
 - Add description files
-    - /src/main/webapp/WEB-INF/pages/method-desc_\*.\*_*.inc.jsp [Optional]
+    - /src/main/webapp/WEB-INF/pages/{type}/method-desc_{method}_{language}.inc.jsp [Optional]
 
 ## Third-party color profiles
 DenCode includes third-party ICC color profiles for some CMYK color conversions.
