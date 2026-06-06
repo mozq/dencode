@@ -33,8 +33,8 @@ public class NumberEnglishDencoder {
 	
 	
 	@DencoderFunction
-	public static String encNumEnShortScale(DencodeCondition cond) {
-		return encNumEnShortScale(
+	public static String encNumEnglish(DencodeCondition cond) {
+		return encNumEnglish(
 				cond.valueAsNumbers(),
 				DencodeUtils.getOption(cond.options(), "number.english.decimal-notation", ""),
 				DencodeUtils.getOption(cond.options(), "number.english.system", "")
@@ -42,12 +42,12 @@ public class NumberEnglishDencoder {
 	}
 	
 	@DencoderFunction
-	public static String decNumEnShortScale(DencodeCondition cond) {
-		return decNumEnShortScale(cond.valueAsLines());
+	public static String decNumEnglish(DencodeCondition cond) {
+		return decNumEnglish(cond.valueAsLines());
 	}
 	
 	
-	private static String encNumEnShortScale(List<BigDecimal> vals, String optDecimalNotation, String optSystem) {
+	private static String encNumEnglish(List<BigDecimal> vals, String optDecimalNotation, String optSystem) {
 		EnglishNumberUtils.DecimalNotation decimalNotation = (optDecimalNotation.equals("fraction"))
 				? EnglishNumberUtils.DecimalNotation.FRACTION
 				: EnglishNumberUtils.DecimalNotation.POINT;
@@ -69,7 +69,7 @@ public class NumberEnglishDencoder {
 		});
 	}
 	
-	private static String decNumEnShortScale(List<String> vals) {
+	private static String decNumEnglish(List<String> vals) {
 		return DencodeUtils.dencodeLines(vals, (val) -> {
 			BigDecimal bigDec;
 			try {

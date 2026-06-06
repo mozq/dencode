@@ -433,7 +433,7 @@
 							</td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.decNumEnShortScale'])}</th><td><span id="decNumEnShortScale" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.decNumEnglish'])}</th><td><span id="decNumEnglish" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.decNumJapanese'])}</th><td><span id="decNumJapanese" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('number.roman')}"><tr data-dencode-method="number.roman"><th>${dc:h(msg['number.roman.func.decNumRoman'])}</th><td><span id="decNumRoman" class="for-disp"></span></td></tr></c:if>
 						</tbody>
@@ -1464,7 +1464,7 @@
 							<c:if test="${methods.contains('number.fraction')}"><tr data-dencode-method="number.fraction"><th>${dc:h(msg['number.fraction.func.encNumFraction'])}</th><td><span id="encNumFraction" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.encNumEnShortScale'])}</th><td><span id="encNumEnShortScale" class="for-disp"></span>
+							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.encNumEnglish'])}</th><td><span id="encNumEnglish" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['number.english.decimal-notation'])}</span>
