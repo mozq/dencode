@@ -33,50 +33,34 @@ public class NumberJapaneseDencoder {
 	
 	
 	@DencoderFunction
-	public static String encNumJP(DencodeCondition cond) {
-		return encNumJP(cond.valueAsNumbers());
+	public static String encNumJapanese(DencodeCondition cond) {
+		return encNumJapanese(
+				cond.valueAsNumbers(),
+				DencodeUtils.getOption(cond.options(), "number.japanese.variant", "standard").equals("daiji")
+				);
 	}
 	
 	@DencoderFunction
-	public static String encNumJPDaiji(DencodeCondition cond) {
-		return encNumJPDaiji(cond.valueAsNumbers());
-	}
-	
-	@DencoderFunction
-	public static String decNumJP(DencodeCondition cond) {
-		return decNumJP(cond.valueAsLines());
+	public static String decNumJapanese(DencodeCondition cond) {
+		return decNumJapanese(cond.valueAsLines());
 	}
 	
 	
-	private static String encNumJP(List<BigDecimal> vals) {
+	private static String encNumJapanese(List<BigDecimal> vals, boolean useDaiji) {
 		return DencodeUtils.dencodeLines(vals, (bigDec) -> {
 			if (bigDec == null) {
 				return null;
 			}
 			
 			try {
-				return JapaneseNumberUtils.toJPNum(bigDec, false, false, false);
+				return JapaneseNumberUtils.toJPNum(bigDec, useDaiji, useDaiji, false);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		});
 	}
 	
-	private static String encNumJPDaiji(List<BigDecimal> vals) {
-		return DencodeUtils.dencodeLines(vals, (bigDec) -> {
-			if (bigDec == null) {
-				return null;
-			}
-			
-			try {
-				return JapaneseNumberUtils.toJPNum(bigDec, true, true, false);
-			} catch (IllegalArgumentException e) {
-				return null;
-			}
-		});
-	}
-	
-	private static String decNumJP(List<String> vals) {
+	private static String decNumJapanese(List<String> vals) {
 		return DencodeUtils.dencodeLines(vals, (val) -> {
 			BigDecimal bigDec;
 			try {

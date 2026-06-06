@@ -434,7 +434,7 @@
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.decNumEnShortScale'])}</th><td><span id="decNumEnShortScale" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.decNumJP'])}</th><td><span id="decNumJP" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.decNumJapanese'])}</th><td><span id="decNumJapanese" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('number.roman')}"><tr data-dencode-method="number.roman"><th>${dc:h(msg['number.roman.func.decNumRoman'])}</th><td><span id="decNumRoman" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>
@@ -1482,8 +1482,17 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.encNumJP'])}</th><td><span id="encNumJP" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.encNumJPDaiji'])}</th><td><span id="encNumJPDaiji" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.encNumJapanese'])}</th><td><span id="encNumJapanese" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['number.japanese.variant'])}</span>
+										<select name="number.japanese.variant" class="dencode-option form-select">
+											<option value="standard">${dc:h(msg['number.japanese.variant.standard'])}</option>
+											<option value="daiji">${dc:h(msg['number.japanese.variant.daiji'])}</option>
+										</select>
+									</div>
+								</div>
+							</td></tr></c:if>
 							<c:if test="${methods.contains('number.roman')}"><tr data-dencode-method="number.roman"><th>${dc:h(msg['number.roman.func.encNumRoman'])}</th><td><span id="encNumRoman" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>
