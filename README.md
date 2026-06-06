@@ -90,6 +90,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Fraction Numbers](https://dencode.com/number/fraction)
     - [English Numerals](https://dencode.com/number/english)
     - [Kanji Numerals](https://dencode.com/number/japanese)
+    - [Roman Numerals](https://dencode.com/number/roman)
 - [Date](https://dencode.com/date)
     - [UNIX Time](https://dencode.com/date/unix-time)
     - [W3C-DTF Date](https://dencode.com/date/w3cdtf)

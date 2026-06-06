@@ -130,6 +130,7 @@
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/number/english" data-dencode-method="number.english">${dc:h(msg['number.english.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/number/japanese" data-dencode-method="number.japanese">${dc:h(msg['number.japanese.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/number/roman" data-dencode-method="number.roman">${dc:h(msg['number.roman.method'])}</a></li>
 				</ul>
 			</li>
 			<li class="nav-item dropdown-toggle ${(type eq 'date') ? 'active' : ''}" role="button" aria-expanded="false" data-dencode-type="date">
@@ -434,6 +435,7 @@
 						<tbody>
 							<c:if test="${methods.contains('number.english')}"><tr data-dencode-method="number.english"><th>${dc:h(msg['number.english.func.decNumEnShortScale'])}</th><td><span id="decNumEnShortScale" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.decNumJP'])}</th><td><span id="decNumJP" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('number.roman')}"><tr data-dencode-method="number.roman"><th>${dc:h(msg['number.roman.func.decNumRoman'])}</th><td><span id="decNumRoman" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>
 					<c:if test="${types.contains('cipher')}">
@@ -1482,6 +1484,7 @@
 							</td></tr></c:if>
 							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.encNumJP'])}</th><td><span id="encNumJP" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('number.japanese')}"><tr data-dencode-method="number.japanese"><th>${dc:h(msg['number.japanese.func.encNumJPDaiji'])}</th><td><span id="encNumJPDaiji" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('number.roman')}"><tr data-dencode-method="number.roman"><th>${dc:h(msg['number.roman.func.encNumRoman'])}</th><td><span id="encNumRoman" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>
 					<c:if test="${types.contains('date')}">
