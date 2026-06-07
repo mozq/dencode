@@ -122,6 +122,7 @@ public class StringLiteralDencoder {
 			
 			int refIdx = beginIdx + 1;
 			if (len <= refIdx) {
+				idx = beginIdx;
 				break;
 			}
 			
