@@ -56,6 +56,10 @@ public class CipherRailFenceDencoder {
 			return "";
 		}
 		
+		if (key < 2) {
+			return new String(cps, 0, len);
+		}
+		
 		StringBuilder sb = new StringBuilder(len); // Extends automatically if surrogate pairs are included
 		
 		int maxY = key;
@@ -86,6 +90,10 @@ public class CipherRailFenceDencoder {
 		
 		if (len == 0) {
 			return "";
+		}
+		
+		if (key < 2) {
+			return new String(cps, 0, len);
 		}
 		
 		int maxY = key;
