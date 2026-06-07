@@ -27,7 +27,11 @@ import com.dencode.logic.parser.NumberParser;
 
 @Dencoder(type="number", method="number.n-ary", hasEncoder=true, hasDecoder=true)
 public class NumberNAryDencoder {
-	
+
+	private static final int DEFAULT_RADIX = 32;
+	private static final int MIN_RADIX = 2;
+	private static final int MAX_RADIX = 36;
+
 	private static final int DEC_RADIX = 10;
 	private static final int DEC_MAX_SCALE = 100;
 	
@@ -45,7 +49,7 @@ public class NumberNAryDencoder {
 		return encNumNAry(
 				cond.valueAsNumbers(),
 				cond.valueAsLines(),
-				DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", 32, 32)
+				normalizeRadix(DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
 				);
 	}
 	
@@ -53,11 +57,18 @@ public class NumberNAryDencoder {
 	public static String decNumNAry(DencodeCondition cond) {
 		return decNumNAry(
 				cond.valueAsLines(),
-				DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", 32, 32)
+				normalizeRadix(DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
 				);
 	}
 	
 	
+	private static int normalizeRadix(int radix) {
+		if (radix < MIN_RADIX || MAX_RADIX < radix) {
+			return DEFAULT_RADIX;
+		}
+		return radix;
+	}
+
 	private static String encNumNAry(List<BigDecimal> vals, List<String> strVals, int radix) {
 		return DencodeUtils.dencodeLines(vals, strVals, (bigDec, strVal) -> {
 			return DencodeUtils.numToString(bigDec, NumberParser.isTruncatedDecimal(strVal), radix, DEC_MAX_SCALE, MAX_REPETEND_COUNT);
