@@ -16,166 +16,157 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class StringAscii85DencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			StringAscii85Dencoder::encStrAscii85,
+			StringAscii85Dencoder::decStrAscii85,
+			"string.ascii85.variant");
+
 	@Test
 	public void testZ85() {
-		testDencoder("", "", "z85");
-		testDencoder("H", "nb", "z85");
-		testDencoder("He", "nm.", "z85");
-		testDencoder("Hel", "nm=P", "z85");
-		testDencoder("Hell", "nm=QN", "z85");
-		testDencoder("Hello", "nm=QNzV", "z85");
-		testDencoder("Hello!", "nm=QNzY]", "z85");
-		
-		testDencoder("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.",
-				"o<}]Zx(+zcx(!xgzFa9aB7/b}efF?GBrCHty<vdjC{3^mB0bHmvrlv8efFzABrC4raARphB0bKrzFa9dvr9GfvrlH7z/cXfA=k!qz//V7AV!!dx(do{B1wCTxLy%&azC)tvixxeB95Kyw/#hewGU&7zE+pvBzb98ayYQsvixJ2A=U/nwPzi%v}u^3w/$R}y?WJ}BrCpnaARpday/tcBzkSnwN(](zE:(7zE^r<vrui@vpB4:azkn6wPzj3x(v(iz!pbczF%-nwN]B+efFIGv}xjZB0bNrwGV5cz/P}xC4Ct#zdNP{wGU]6ayPekay!&2zEEu7Abo8]B9hIme=",
-				"z85");
-		
+		tester.test("", "", tester.options("z85"));
+		tester.test("H", "nb", tester.options("z85"));
+		tester.test("He", "nm.", tester.options("z85"));
+		tester.test("Hel", "nm=P", tester.options("z85"));
+		tester.test("Hell", "nm=QN", tester.options("z85"));
+		tester.test("Hello", "nm=QNzV", tester.options("z85"));
+		tester.test("Hello!", "nm=QNzY]", tester.options("z85"));
+		tester.test("\u00FF", "@@", tester.options("z85"), StandardCharsets.ISO_8859_1);
+
+		tester.test("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.", "o<}]Zx(+zcx(!xgzFa9aB7/b}efF?GBrCHty<vdjC{3^mB0bHmvrlv8efFzABrC4raARphB0bKrzFa9dvr9GfvrlH7z/cXfA=k!qz//V7AV!!dx(do{B1wCTxLy%&azC)tvixxeB95Kyw/#hewGU&7zE+pvBzb98ayYQsvixJ2A=U/nwPzi%v}u^3w/$R}y?WJ}BrCpnaARpday/tcBzkSnwN(](zE:(7zE^r<vrui@vpB4:azkn6wPzj3x(v(iz!pbczF%-nwN]B+efFIGv}xjZB0bNrwGV5cz/P}xC4Ct#zdNP{wGU]6ayPekay!&2zEEu7Abo8]B9hIme=", tester.options("z85"));
+
 		// Zeros
-		testDencoder("\0", "00", "z85");
-		testDencoder("\0\0", "000", "z85");
-		testDencoder("\0\0\0", "0000", "z85");
-		testDencoder("\0\0\0\0", "00000", "z85");
-		testDencoder("\0\0\0\0\0", "0000000", "z85");
-		
+		tester.test("\0", "00", tester.options("z85"));
+		tester.test("\0\0", "000", tester.options("z85"));
+		tester.test("\0\0\0", "0000", tester.options("z85"));
+		tester.test("\0\0\0\0", "00000", tester.options("z85"));
+		tester.test("\0\0\0\0\0", "0000000", tester.options("z85"));
+
 		// Spaces
-		testDencoder(" ", "ao", "z85");
-		testDencoder("  ", "arQ", "z85");
-		testDencoder("   ", "arR^", "z85");
-		testDencoder("    ", "arR^H", "z85");
-		testDencoder("     ", "arR^Hao", "z85");
-		
+		tester.test(" ", "ao", tester.options("z85"));
+		tester.test("  ", "arQ", tester.options("z85"));
+		tester.test("   ", "arR^", tester.options("z85"));
+		tester.test("    ", "arR^H", tester.options("z85"));
+		tester.test("     ", "arR^Hao", tester.options("z85"));
+
 		// Unsupported value
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("\\", "z85")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("a\\", "z85")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("~", "z85")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("a~", "z85")));
+		tester.testDecoder("\\", null, tester.options("z85"));
+		tester.testDecoder("a\\", null, tester.options("z85"));
+		tester.testDecoder("~", null, tester.options("z85"));
+		tester.testDecoder("a~", null, tester.options("z85"));
 	}
-	
+
 	@Test
 	public void testAdobe() {
-		testDencoder("", "", "adobe");
-		testDencoder("H", "8,", "adobe");
-		testDencoder("He", "87_", "adobe");
-		testDencoder("Hel", "87cT", "adobe");
-		testDencoder("Hell", "87cUR", "adobe");
-		testDencoder("Hello", "87cURDZ", "adobe");
-		testDencoder("Hello!", "87cURD]o", "adobe");
-		
-		testDencoder("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.",
-				"9jqo^BlbD-BleB1DJ+*+F(f,q/0JhKF<GL>Cj@.4Gp$d7F!,L7@<6@)/0JDEF<G%<+EV:2F!,O<DJ+\r\n" +
-				"*.@<*K0@<6L(Df-\\0Ec5e;DffZ(EZee.Bl.9pF\"AGXBPCsi+DGm>@3BB/F*&OCAfu2/AKYi(DIb:@FD,\r\n" +
-				"*)+C]U=@3BN#EcYf8ATD3s@q?d$AftVqCh[NqF<G:8+EV:.+Cf>-FD5W8ARlolDIal(DId<j@<?3r@:F\r\n" +
-				"%a+D58'ATD4$Bl@l3De:,-DJs`8ARoFb/0JMK@qB4^F!,R<AKZ&-DfTqBG%G>uD.RTpAKYo'+CT/5+Ce\r\n" +
-				"i#DII?(E,9)oF*2M7/c",
-				"adobe");
-		
+		tester.test("", adobe(""), tester.options("adobe"));
+		tester.test("H", adobe("8,"), tester.options("adobe"));
+		tester.test("He", adobe("87_"), tester.options("adobe"));
+		tester.test("Hel", adobe("87cT"), tester.options("adobe"));
+		tester.test("Hell", adobe("87cUR"), tester.options("adobe"));
+		tester.test("Hello", adobe("87cURDZ"), tester.options("adobe"));
+		tester.test("Hello!", adobe("87cURD]o"), tester.options("adobe"));
+
+		tester.test("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.", adobe("9jqo^BlbD-BleB1DJ+*+F(f,q/0JhKF<GL>Cj@.4Gp$d7F!,L7@<6@)/0JDEF<G%<+EV:2F!,O<DJ+\n" +
+				"*.@<*K0@<6L(Df-\\0Ec5e;DffZ(EZee.Bl.9pF\"AGXBPCsi+DGm>@3BB/F*&OCAfu2/AKYi(DIb:@FD,\n" +
+				"*)+C]U=@3BN#EcYf8ATD3s@q?d$AftVqCh[NqF<G:8+EV:.+Cf>-FD5W8ARlolDIal(DId<j@<?3r@:F\n" +
+				"%a+D58'ATD4$Bl@l3De:,-DJs`8ARoFb/0JMK@qB4^F!,R<AKZ&-DfTqBG%G>uD.RTpAKYo'+CT/5+Ce\n" +
+				"i#DII?(E,9)oF*2M7/c"), tester.options("adobe"));
+
 		// Zeros
-		testDencoder("\0", "!!", "adobe");
-		testDencoder("\0\0", "!!!", "adobe");
-		testDencoder("\0\0\0", "!!!!", "adobe");
-		testDencoder("\0\0\0\0", "z", "adobe");
-		testDencoder("\0\0\0\0\0", "z!!", "adobe");
-		
+		tester.test("\0", adobe("!!"), tester.options("adobe"));
+		tester.test("\0\0", adobe("!!!"), tester.options("adobe"));
+		tester.test("\0\0\0", adobe("!!!!"), tester.options("adobe"));
+		tester.test("\0\0\0\0", adobe("z"), tester.options("adobe"));
+		tester.test("\0\0\0\0\0", adobe("z!!"), tester.options("adobe"));
+
 		// Spaces
-		testDencoder(" ", "+9", "adobe");
-		testDencoder("  ", "+<U", "adobe");
-		testDencoder("   ", "+<Vd", "adobe");
-		testDencoder("    ", "+<VdL", "adobe");
-		testDencoder("     ", "+<VdL+9", "adobe");
-		
+		tester.test(" ", adobe("+9"), tester.options("adobe"));
+		tester.test("  ", adobe("+<U"), tester.options("adobe"));
+		tester.test("   ", adobe("+<Vd"), tester.options("adobe"));
+		tester.test("    ", adobe("+<VdL"), tester.options("adobe"));
+		tester.test("     ", adobe("+<VdL+9"), tester.options("adobe"));
+
 		// line-break and white-space
-		assertEquals("Hello!", StringAscii85Dencoder.decStrAscii85(condition("<~87 cU  RD  \r\n  ]o~>", "adobe")));
-		
+		tester.testDecoder("<~87 cU  RD  \r\n  ]o~>", "Hello!", tester.options("adobe"));
+
 		// Compressed value
-		assertEquals("\0\0\0\0", StringAscii85Dencoder.decStrAscii85(condition("<~z~>", "adobe")));
-		
+		tester.testDecoder("<~z~>", "\0\0\0\0", tester.options("adobe"));
+
 		// Unsupported value
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("<~v~>", "adobe")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("<~av~>", "adobe")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("<~y~>", "adobe")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("<~ay~>", "adobe")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("<~az~>", "adobe")));
+		tester.testDecoder("<~v~>", null, tester.options("adobe"));
+		tester.testDecoder("<~av~>", null, tester.options("adobe"));
+		tester.testDecoder("<~y~>", null, tester.options("adobe"));
+		tester.testDecoder("<~ay~>", null, tester.options("adobe"));
+		tester.testDecoder("<~az~>", null, tester.options("adobe"));
 	}
-	
+
 	@Test
 	public void testBTOA() {
-		testDencoder("", "", "btoa");
-		testDencoder("H", "8,rVi", "btoa");
-		testDencoder("He", "87_c$", "btoa");
-		testDencoder("Hel", "87cT;", "btoa");
-		testDencoder("Hell", "87cUR", "btoa");
-		testDencoder("Hello", "87cURDZBb;", "btoa");
-		testDencoder("Hello!", "87cURD]o)\\", "btoa");
-		
-		testDencoder("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.",
-				"9jqo^BlbD-BleB1DJ+*+F(f,q/0JhKF<GL>Cj@.4Gp$d7F!,L7@<6@)/0JDEF<G%<+EV:2F!,O<DJ+\r\n" +
-				"*.@<*K0@<6L(Df-\\0Ec5e;DffZ(EZee.Bl.9pF\"AGXBPCsi+DGm>@3BB/F*&OCAfu2/AKYi(DIb:@F\r\n" +
-				"D,*)+C]U=@3BN#EcYf8ATD3s@q?d$AftVqCh[NqF<G:8+EV:.+Cf>-FD5W8ARlolDIal(DId<j@<?3\r\n" +
-				"r@:F%a+D58'ATD4$Bl@l3De:,-DJs`8ARoFb/0JMK@qB4^F!,R<AKZ&-DfTqBG%G>uD.RTpAKYo'+C\r\n" +
-				"T/5+Cei#DII?(E,9)oF*2M7/cYkO",
-				"btoa");
-		
+		tester.test("", btoa("", ""), tester.options("btoa"));
+		tester.test("H", btoa("H", "8,rVi"), tester.options("btoa"));
+		tester.test("He", btoa("He", "87_c$"), tester.options("btoa"));
+		tester.test("Hel", btoa("Hel", "87cT;"), tester.options("btoa"));
+		tester.test("Hell", btoa("Hell", "87cUR"), tester.options("btoa"));
+		tester.test("Hello", btoa("Hello", "87cURDZBb;"), tester.options("btoa"));
+		tester.test("Hello!", btoa("Hello!", "87cURD]o)\\"), tester.options("btoa"));
+		tester.test("Hello!", btoa("Hello!", "87cURD]o)\\", "\r\n"), tester.options("btoa"), "\r\n");
+
+		tester.test("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.", btoa("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.", "9jqo^BlbD-BleB1DJ+*+F(f,q/0JhKF<GL>Cj@.4Gp$d7F!,L7@<6@)/0JDEF<G%<+EV:2F!,O<DJ+\n" +
+				"*.@<*K0@<6L(Df-\\0Ec5e;DffZ(EZee.Bl.9pF\"AGXBPCsi+DGm>@3BB/F*&OCAfu2/AKYi(DIb:@F\n" +
+				"D,*)+C]U=@3BN#EcYf8ATD3s@q?d$AftVqCh[NqF<G:8+EV:.+Cf>-FD5W8ARlolDIal(DId<j@<?3\n" +
+				"r@:F%a+D58'ATD4$Bl@l3De:,-DJs`8ARoFb/0JMK@qB4^F!,R<AKZ&-DfTqBG%G>uD.RTpAKYo'+C\n" +
+				"T/5+Cei#DII?(E,9)oF*2M7/cYkO"), tester.options("btoa"));
+
 		// Zeros
-		testDencoder("\0", "z", "btoa");
-		testDencoder("\0\0", "z", "btoa");
-		testDencoder("\0\0\0", "z", "btoa");
-		testDencoder("\0\0\0\0", "z", "btoa");
-		testDencoder("\0\0\0\0\0", "zz", "btoa");
-		
+		tester.test("\0", btoa("\0", "z"), tester.options("btoa"));
+		tester.test("\0\0", btoa("\0\0", "z"), tester.options("btoa"));
+		tester.test("\0\0\0", btoa("\0\0\0", "z"), tester.options("btoa"));
+		tester.test("\0\0\0\0", btoa("\0\0\0\0", "z"), tester.options("btoa"));
+		tester.test("\0\0\0\0\0", btoa("\0\0\0\0\0", "zz"), tester.options("btoa"));
+
 		// Spaces
-		testDencoder(" ", "+92BA", "btoa");
-		testDencoder("  ", "+<UXa", "btoa");
-		testDencoder("   ", "+<Vd,", "btoa");
-		testDencoder("    ", "y", "btoa");
-		testDencoder("     ", "y+92BA", "btoa");
-		
+		tester.test(" ", btoa(" ", "+92BA"), tester.options("btoa"));
+		tester.test("  ", btoa("  ", "+<UXa"), tester.options("btoa"));
+		tester.test("   ", btoa("   ", "+<Vd,"), tester.options("btoa"));
+		tester.test("    ", btoa("    ", "y"), tester.options("btoa"));
+		tester.test("     ", btoa("     ", "y+92BA"), tester.options("btoa"));
+
 		// line-break and white-space
-		assertEquals("Hello!", StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "87 cU  RD  \r\n  ]o)\\" + "\r\n" + buildBTOASuffix("Hello!") + "\r\n", "btoa")));
-		
+		tester.testDecoder(btoaEnvelope("87 cU  RD  \r\n  ]o)\\", "Hello!"), "Hello!", tester.options("btoa"));
+
 		// Compressed value
-		assertEquals("    ", StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "y" + "\r\n" + buildBTOASuffix("    ") + "\r\n", "btoa")));
-		assertEquals("\0\0\0\0", StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "z" + "\r\n" + buildBTOASuffix("\0\0\0\0") + "\r\n", "btoa")));
-		
+		tester.testDecoder(btoaEnvelope("y", "    "), "    ", tester.options("btoa"));
+		tester.testDecoder(btoaEnvelope("z", "\0\0\0\0"), "\0\0\0\0", tester.options("btoa"));
+
 		// Unsupported value
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "v" + "\r\n" + buildBTOASuffix("") + "\r\n", "btoa")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "av" + "\r\n" + buildBTOASuffix("") + "\r\n", "btoa")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "ay" + "\r\n" + buildBTOASuffix("") + "\r\n", "btoa")));
-		assertEquals(null, StringAscii85Dencoder.decStrAscii85(condition("xbtoa Begin\r\n" + "az" + "\r\n" + buildBTOASuffix("") + "\r\n", "btoa")));
+		tester.testDecoder(btoaEnvelope("v", ""), null, tester.options("btoa"));
+		tester.testDecoder(btoaEnvelope("av", ""), null, tester.options("btoa"));
+		tester.testDecoder(btoaEnvelope("ay", ""), null, tester.options("btoa"));
+		tester.testDecoder(btoaEnvelope("az", ""), null, tester.options("btoa"));
 	}
-	
-	private void testDencoder(String value, String expectedEncodedValue, String format) {
-		if (format.equals("btoa")) {
-			expectedEncodedValue = "xbtoa Begin\r\n" + expectedEncodedValue + "\r\n" + buildBTOASuffix(value) + "\r\n";
-		} else if (format.equals("adobe")) {
-			expectedEncodedValue = "<~" + expectedEncodedValue + "~>";
-		}
-		String encodedValue = StringAscii85Dencoder.encStrAscii85(condition(value, format));
-		assertEquals(expectedEncodedValue, encodedValue);
-		String decodedValue = StringAscii85Dencoder.decStrAscii85(condition(encodedValue, format));
-		assertEquals(value, decodedValue);
+
+	private static String adobe(String encodedValue) {
+		return "<~" + encodedValue + "~>";
 	}
-	
-	private DencodeCondition condition(String value, String format) {
-		return condition(value, format, StandardCharsets.UTF_8);
+
+	private static String btoa(String value, String encodedValue) {
+		return btoa(value, encodedValue, "\n");
 	}
-	
-	private DencodeCondition condition(String value, String format, Charset charset) {
-		Map<String, String> options = new HashMap<>();
-		options.put("string.ascii85.variant", format);
-		return new DencodeCondition(value, charset, "\r\n", null, options);
+
+	private static String btoa(String value, String encodedValue, String lineBreak) {
+		return btoaEnvelope(encodedValue, value, lineBreak);
+	}
+
+	private static String btoaEnvelope(String encodedValue, String suffixValue) {
+		return btoaEnvelope(encodedValue, suffixValue, "\n");
+	}
+
+	private static String btoaEnvelope(String encodedValue, String suffixValue, String lineBreak) {
+		return "xbtoa Begin" + lineBreak + encodedValue + lineBreak + buildBTOASuffix(suffixValue) + lineBreak;
 	}
 
 	private static String buildBTOASuffix(String v) {
@@ -186,10 +177,10 @@ public class StringAscii85DencoderTest {
 		int eor = 0;
 		int sum = 0;
 		int rot = 0;
-		
+
 		for (int i = 0; i < x.length; i++) {
 			int c = 0xFF & x[i];
-			
+
 			eor ^= c;
 			sum += c;
 			sum++;
@@ -201,8 +192,7 @@ public class StringAscii85DencoderTest {
 			}
 			rot += c;
 		}
-		
+
 		return String.format("xbtoa End N %d %x E %x S %x R %x", x.length, x.length, eor, sum, rot);
 	}
- }
- 
+}

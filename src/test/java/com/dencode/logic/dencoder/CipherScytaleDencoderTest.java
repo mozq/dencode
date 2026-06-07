@@ -16,52 +16,42 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class CipherScytaleDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			CipherScytaleDencoder::encCipherScytale,
+			CipherScytaleDencoder::decCipherScytale,
+			"cipher.scytale.key",
+			"cipher.scytale.key-per");
+
 	@Test
 	public void testKeyPerY() {
 		// Blank
-		testDencoder("", 2, "y", "");
-		testDencoder("", 4, "y", "");
+		tester.test("", "", tester.options(2, "y"));
+		tester.test("", "", tester.options(4, "y"));
 
 		// THIS_IS_A_SE
 		// CRET_MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 2, "y", "TCHRIEST__IMSE_SAS_ASGEE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TCHRIEST__IMSE_SAS_ASGEE", tester.options(2, "y"));
+
 		// THIS_IS_
 		// A_SECRET
 		// _MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 3, "y", "TA_H_MISESES_CSIRASEG_TE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TA_H_MISESES_CSIRASEG_TE", tester.options(3, "y"));
+
 		// THIS_I
 		// S_A_SE
 		// CRET_M
 		// ESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 4, "y", "TSCEH_RSIAESS_TA_S_GIEME");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSCEH_RSIAESS_TA_S_GIEME", tester.options(4, "y"));
+
 		// THIS_
 		// IS_A_
 		// SECRE
 		// T_MES
 		// SAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 5, "y", "TISTSHSE_AI_CMGSAREE__ES");
-		
-		// THIS
-		// _IS_
-		// A_SE
-		// CRET
-		// _MES
-		// SAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 6, "y", "T_AC_SHI_RMAISSEEGS_ETSE");
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TISTSHSE_AI_CMGSAREE__ES", tester.options(5, "y"));
 
 		// THIS
 		// _IS_
@@ -69,9 +59,17 @@ public class CipherScytaleDencoderTest {
 		// CRET
 		// _MES
 		// SAGE
-		// 
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 7, "y", "T_AC_SHI_RMAISSEEGS_ETSE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "T_AC_SHI_RMAISSEEGS_ETSE", tester.options(6, "y"));
+
+		// THIS
+		// _IS_
+		// A_SE
+		// CRET
+		// _MES
+		// SAGE
+		//
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "T_AC_SHI_RMAISSEEGS_ETSE", tester.options(7, "y"));
+
 		// THI
 		// S_I
 		// S_A
@@ -80,8 +78,8 @@ public class CipherScytaleDencoderTest {
 		// T_M
 		// ESS
 		// AGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 8, "y", "TSS_CTEAH__SR_SGIIAEEMSE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSS_CTEAH__SR_SGIIAEEMSE", tester.options(8, "y"));
+
 		// THI
 		// S_I
 		// S_A
@@ -90,9 +88,9 @@ public class CipherScytaleDencoderTest {
 		// T_M
 		// ESS
 		// AGE
-		// 
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 9, "y", "TSS_CTEAH__SR_SGIIAEEMSE");
-		
+		//
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSS_CTEAH__SR_SGIIAEEMSE", tester.options(9, "y"));
+
 		// THI
 		// S_I
 		// S_A
@@ -101,10 +99,10 @@ public class CipherScytaleDencoderTest {
 		// T_M
 		// ESS
 		// AGE
-		// 
-		// 
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 10, "y", "TSS_CTEAH__SR_SGIIAEEMSE");
-		
+		//
+		//
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSS_CTEAH__SR_SGIIAEEMSE", tester.options(10, "y"));
+
 		// THI
 		// S_I
 		// S_A
@@ -113,11 +111,11 @@ public class CipherScytaleDencoderTest {
 		// T_M
 		// ESS
 		// AGE
-		// 
-		// 
-		// 
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 11, "y", "TSS_CTEAH__SR_SGIIAEEMSE");
-		
+		//
+		//
+		//
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSS_CTEAH__SR_SGIIAEEMSE", tester.options(11, "y"));
+
 		// TH
 		// IS
 		// _I
@@ -130,8 +128,8 @@ public class CipherScytaleDencoderTest {
 		// ES
 		// SA
 		// GE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 12, "y", "TI_SASCE_ESGHSI__ERTMSAE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TI_SASCE_ESGHSI__ERTMSAE", tester.options(12, "y"));
+
 		// TH
 		// IS
 		// _I
@@ -144,23 +142,23 @@ public class CipherScytaleDencoderTest {
 		// ES
 		// SA
 		// GE
-		// 
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 13, "y", "TI_SASCE_ESGHSI__ERTMSAE");
-		
+		//
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TI_SASCE_ESGHSI__ERTMSAE", tester.options(13, "y"));
+
 		// T
 		// ...
 		// E
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 24, "y", "THIS_IS_A_SECRET_MESSAGE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "THIS_IS_A_SECRET_MESSAGE", tester.options(24, "y"));
+
 		// Out of length
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 100, "y", "THIS_IS_A_SECRET_MESSAGE");
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "THIS_IS_A_SECRET_MESSAGE", tester.options(100, "y"));
 	}
-	
+
 	@Test
 	public void testKeyPerX() {
 		// Blank
-		testDencoder("", 2, "x", "");
-		testDencoder("", 4, "x", "");
+		tester.test("", "", tester.options(2, "x"));
+		tester.test("", "", tester.options(4, "x"));
 
 		// TH
 		// IS
@@ -174,8 +172,8 @@ public class CipherScytaleDencoderTest {
 		// ES
 		// SA
 		// GE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 2, "x", "TI_SASCE_ESGHSI__ERTMSAE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TI_SASCE_ESGHSI__ERTMSAE", tester.options(2, "x"));
+
 		// THI
 		// S_I
 		// S_A
@@ -184,100 +182,71 @@ public class CipherScytaleDencoderTest {
 		// T_M
 		// ESS
 		// AGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 3, "x", "TSS_CTEAH__SR_SGIIAEEMSE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSS_CTEAH__SR_SGIIAEEMSE", tester.options(3, "x"));
+
 		// THIS
 		// _IS_
 		// A_SE
 		// CRET
 		// _MES
 		// SAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 4, "x", "T_AC_SHI_RMAISSEEGS_ETSE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "T_AC_SHI_RMAISSEEGS_ETSE", tester.options(4, "x"));
+
 		// THIS_
 		// IS_A_
 		// SECRE
 		// T_MES
 		// SAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 5, "x", "TISTSHSE_AI_CMGSAREE__ES");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TISTSHSE_AI_CMGSAREE__ES", tester.options(5, "x"));
+
 		// THIS_I
 		// S_A_SE
 		// CRET_M
 		// ESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 6, "x", "TSCEH_RSIAESS_TA_S_GIEME");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSCEH_RSIAESS_TA_S_GIEME", tester.options(6, "x"));
+
 		// THIS_IS
 		// _A_SECR
 		// ET_MESS
 		// AGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 7, "x", "T_EAHATGI__ESSM_EEICSSRS");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "T_EAHATGI__ESSM_EEICSSRS", tester.options(7, "x"));
+
 		// THIS_IS_
 		// A_SECRET
 		// _MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 8, "x", "TA_H_MISESES_CSIRASEG_TE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TA_H_MISESES_CSIRASEG_TE", tester.options(8, "x"));
+
 		// THIS_IS_A
 		// _SECRET_M
 		// ESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 9, "x", "T_EHSSIESSCA_RGIEEST__AM");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "T_EHSSIESSCA_RGIEEST__AM", tester.options(9, "x"));
+
 		// THIS_IS_A_
 		// SECRET_MES
 		// SAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 10, "x", "TSSHEAICGSRE_EITS__MAE_S");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TSSHEAICGSRE_EITS__MAE_S", tester.options(10, "x"));
+
 		// THIS_IS_A_S
 		// ECRET_MESSA
 		// GE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 11, "x", "TEGHCEIRSE_TI_SM_EAS_SSA");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TEGHCEIRSE_TI_SM_EAS_SSA", tester.options(11, "x"));
+
 		// THIS_IS_A_SE
 		// CRET_MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 12, "x", "TCHRIEST__IMSE_SAS_ASGEE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TCHRIEST__IMSE_SAS_ASGEE", tester.options(12, "x"));
+
 		// THIS_IS_A_SEC
 		// RET_MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 13, "x", "TRHEITS__MIESS_SAA_GSEEC");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TRHEITS__MIESS_SAA_GSEEC", tester.options(13, "x"));
+
 		// THIS_IS_A_SECRET_MESSAG
 		// E
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 23, "x", "TEHIS_IS_A_SECRET_MESSAG");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "TEHIS_IS_A_SECRET_MESSAG", tester.options(23, "x"));
+
 		// THIS_IS_A_SECRET_MESSAGE
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 24, "x", "THIS_IS_A_SECRET_MESSAGE");
-		
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "THIS_IS_A_SECRET_MESSAGE", tester.options(24, "x"));
+
 		// Out of length
-		testDencoder("THIS_IS_A_SECRET_MESSAGE", 100, "x", "THIS_IS_A_SECRET_MESSAGE");
+		tester.test("THIS_IS_A_SECRET_MESSAGE", "THIS_IS_A_SECRET_MESSAGE", tester.options(100, "x"));
 	}
-	
-	private void testDencoder(String value, int key, String keyPer, String expectedEncodedValue) {
-		testDencoder(value, key, keyPer, expectedEncodedValue, null);
-	}
-	
-	private void testDencoder(String value, int key, String keyPer, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = CipherScytaleDencoder.encCipherScytale(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("cipher.scytale.key", String.valueOf(key));
-				put("cipher.scytale.key-per", keyPer);
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = CipherScytaleDencoder.decCipherScytale(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("cipher.scytale.key", String.valueOf(key));
-				put("cipher.scytale.key-per", keyPer);
-			}
-		}));
-		if (expectedDecodedValue == null) {
-			assertEquals(value, decodedValue);
-		} else {
-			assertEquals(expectedDecodedValue, decodedValue);
-		}
-	}
- }
- 
+}

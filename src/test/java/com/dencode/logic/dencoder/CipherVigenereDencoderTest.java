@@ -16,216 +16,200 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class CipherVigenereDencoderTest {
+	private final DencoderTester tester = new DencoderTester(
+			CipherVigenereDencoder::encCipherVigenere,
+			CipherVigenereDencoder::decCipherVigenere,
+			"cipher.vigenere.key");
 
 	@Test
 	public void test_blank() {
 		// Blank
-		testDencoder("", "", "");
-		
+		tester.test("", "", tester.options(""));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "", "abcdefghijklmnopqrstuvwxyz");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", tester.options(""));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz", tester.options(""));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", tester.options(""));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", tester.options(""));
+
 		// Unsupported characters
-		testDencoder(" ", "", " ");
-		testDencoder("!", "", "!");
-		testDencoder("!a!", "", "!a!");
+		tester.test(" ", " ", tester.options(""));
+		tester.test("!", "!", tester.options(""));
+		tester.test("!a!", "!a!", tester.options(""));
 	}
-	
+
 	@Test
 	public void test_A() {
 		// Blank
-		testDencoder("", "A", "");
-		
+		tester.test("", "", tester.options("A"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "A", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "A", "abcdefghijklmnopqrstuvwxyz");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", tester.options("A"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz", tester.options("A"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "A", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "A", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", tester.options("A"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", tester.options("A"));
+
 		// Unsupported characters
-		testDencoder(" ", "A", " ");
-		testDencoder("!", "A", "!");
-		testDencoder("!a!", "A", "!a!");
+		tester.test(" ", " ", tester.options("A"));
+		tester.test("!", "!", tester.options("A"));
+		tester.test("!a!", "!a!", tester.options("A"));
 	}
-	
+
 	@Test
 	public void test_AAA() {
 		// Blank
-		testDencoder("", "AAA", "");
-		
+		tester.test("", "", tester.options("AAA"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "AAA", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "AAA", "abcdefghijklmnopqrstuvwxyz");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", tester.options("AAA"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz", tester.options("AAA"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "AAA", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "AAA", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", tester.options("AAA"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", tester.options("AAA"));
+
 		// Unsupported characters
-		testDencoder(" ", "AAA", " ");
-		testDencoder("!", "AAA", "!");
-		testDencoder("!a!", "AAA", "!a!");
+		tester.test(" ", " ", tester.options("AAA"));
+		tester.test("!", "!", tester.options("AAA"));
+		tester.test("!a!", "!a!", tester.options("AAA"));
 	}
-	
+
 	@Test
 	public void test_SECRET() {
 		// Blank
-		testDencoder("", "SECRET", "");
-		
+		tester.test("", "", tester.options("SECRET"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "SECRET", "SFEUIYYLKAOEERQGUKKXWMAQQD");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "SECRET", "sfeuiyylkaoeerqgukkxwmaqqd");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "SFEUIYYLKAOEERQGUKKXWMAQQD", tester.options("SECRET"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "sfeuiyylkaoeerqgukkxwmaqqd", tester.options("SECRET"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "SECRET", "ＳＦＥＵＩＹＹＬＫＡＯＥＥＲＱＧＵＫＫＸＷＭＡＱＱＤ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "SECRET", "ｓｆｅｕｉｙｙｌｋａｏｅｅｒｑｇｕｋｋｘｗｍａｑｑｄ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＳＦＥＵＩＹＹＬＫＡＯＥＥＲＱＧＵＫＫＸＷＭＡＱＱＤ", tester.options("SECRET"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｓｆｅｕｉｙｙｌｋａｏｅｅｒｑｇｕｋｋｘｗｍａｑｑｄ", tester.options("SECRET"));
+
 		// Unsupported characters
-		testDencoder(" ", "SECRET", " ");
-		testDencoder("!", "SECRET", "!");
-		testDencoder("!a!", "SECRET", "!s!");
-		
-		testDencoder("!a!a!a!a!a!a!a!", "SECRET", "!s!e!c!r!e!t!s!");
+		tester.test(" ", " ", tester.options("SECRET"));
+		tester.test("!", "!", tester.options("SECRET"));
+		tester.test("!a!", "!s!", tester.options("SECRET"));
+
+		tester.test("!a!a!a!a!a!a!a!", "!s!e!c!r!e!t!s!", tester.options("SECRET"));
 	}
-	
+
 	@Test
 	public void test__Se_c_r_et_() {
 		// Blank
-		testDencoder("", " Se c!r/et ", "");
-		
+		tester.test("", "", tester.options(" Se c!r/et "));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", " Se c!r/et ", "SFEUIYYLKAOEERQGUKKXWMAQQD");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", " Se c!r/et ", "sfeuiyylkaoeerqgukkxwmaqqd");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "SFEUIYYLKAOEERQGUKKXWMAQQD", tester.options(" Se c!r/et "));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "sfeuiyylkaoeerqgukkxwmaqqd", tester.options(" Se c!r/et "));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", " Se c!r/et ", "ＳＦＥＵＩＹＹＬＫＡＯＥＥＲＱＧＵＫＫＸＷＭＡＱＱＤ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", " Se c!r/et ", "ｓｆｅｕｉｙｙｌｋａｏｅｅｒｑｇｕｋｋｘｗｍａｑｑｄ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＳＦＥＵＩＹＹＬＫＡＯＥＥＲＱＧＵＫＫＸＷＭＡＱＱＤ", tester.options(" Se c!r/et "));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｓｆｅｕｉｙｙｌｋａｏｅｅｒｑｇｕｋｋｘｗｍａｑｑｄ", tester.options(" Se c!r/et "));
+
 		// Unsupported characters
-		testDencoder(" ", " Se c!r/et ", " ");
-		testDencoder("!", " Se c!r/et ", "!");
-		testDencoder("!a!", " Se c!r/et ", "!s!");
-		
-		testDencoder("!a!a!a!a!a!a!a!", " Se c!r/et ", "!s!e!c!r!e!t!s!");
+		tester.test(" ", " ", tester.options(" Se c!r/et "));
+		tester.test("!", "!", tester.options(" Se c!r/et "));
+		tester.test("!a!", "!s!", tester.options(" Se c!r/et "));
+
+		tester.test("!a!a!a!a!a!a!a!", "!s!e!c!r!e!t!s!", tester.options(" Se c!r/et "));
 	}
 
 	@Test
 	public void test_X() {
 		// Blank
-		testDencoder("", "X", "");
-		
+		tester.test("", "", tester.options("X"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "X", "XYZABCDEFGHIJKLMNOPQRSTUVW");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "X", "xyzabcdefghijklmnopqrstuvw");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "XYZABCDEFGHIJKLMNOPQRSTUVW", tester.options("X"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "xyzabcdefghijklmnopqrstuvw", tester.options("X"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "X", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "X", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ", tester.options("X"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ", tester.options("X"));
+
 		// Unsupported characters
-		testDencoder(" ", "X", " ");
-		testDencoder("!", "X", "!");
-		testDencoder("!a!", "X", "!x!");
+		tester.test(" ", " ", tester.options("X"));
+		tester.test("!", "!", tester.options("X"));
+		tester.test("!a!", "!x!", tester.options("X"));
 	}
 
 	@Test
 	public void test_X_lower() {
 		// Blank
-		testDencoder("", "x", "");
-		
+		tester.test("", "", tester.options("x"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "x", "XYZABCDEFGHIJKLMNOPQRSTUVW");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "x", "xyzabcdefghijklmnopqrstuvw");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "XYZABCDEFGHIJKLMNOPQRSTUVW", tester.options("x"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "xyzabcdefghijklmnopqrstuvw", tester.options("x"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "x", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "x", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ", tester.options("x"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ", tester.options("x"));
+
 		// Unsupported characters
-		testDencoder(" ", "x", " ");
-		testDencoder("!", "x", "!");
-		testDencoder("!a!", "x", "!x!");
+		tester.test(" ", " ", tester.options("x"));
+		tester.test("!", "!", tester.options("x"));
+		tester.test("!a!", "!x!", tester.options("x"));
 	}
 
 	@Test
 	public void test_X_fullWidth() {
 		// Blank
-		testDencoder("", "Ｘ", "");
-		
+		tester.test("", "", tester.options("Ｘ"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Ｘ", "XYZABCDEFGHIJKLMNOPQRSTUVW");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "Ｘ", "xyzabcdefghijklmnopqrstuvw");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "XYZABCDEFGHIJKLMNOPQRSTUVW", tester.options("Ｘ"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "xyzabcdefghijklmnopqrstuvw", tester.options("Ｘ"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "Ｘ", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "Ｘ", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷ", tester.options("Ｘ"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗ", tester.options("Ｘ"));
+
 		// Unsupported characters
-		testDencoder(" ", "Ｘ", " ");
-		testDencoder("!", "Ｘ", "!");
-		testDencoder("!a!", "Ｘ", "!x!");
+		tester.test(" ", " ", tester.options("Ｘ"));
+		tester.test("!", "!", tester.options("Ｘ"));
+		tester.test("!a!", "!x!", tester.options("Ｘ"));
 	}
 
 	@Test
 	public void test_D() {
 		// Blank
-		testDencoder("", "D", "");
-		
+		tester.test("", "", tester.options("D"));
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "D", "DEFGHIJKLMNOPQRSTUVWXYZABC");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "D", "defghijklmnopqrstuvwxyzabc");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "DEFGHIJKLMNOPQRSTUVWXYZABC", tester.options("D"));
+		tester.test("abcdefghijklmnopqrstuvwxyz", "defghijklmnopqrstuvwxyzabc", tester.options("D"));
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "D", "ＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺＡＢＣ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "D", "ｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚａｂｃ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺＡＢＣ", tester.options("D"));
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚａｂｃ", tester.options("D"));
+
 		// Unsupported characters
-		testDencoder(" ", "D", " ");
-		testDencoder("!", "D", "!");
-		testDencoder("!a!", "D", "!d!");
+		tester.test(" ", " ", tester.options("D"));
+		tester.test("!", "!", tester.options("D"));
+		tester.test("!a!", "!d!", tester.options("D"));
 	}
-	
-	private void testDencoder(String value, String key, String expectedEncodedValue) {
-		testDencoder(value, key, expectedEncodedValue, value);
+
+	@Test
+	public void test_keyLongerThanInput() {
+		// Key "SECRETSECRET" is longer than input "AB"
+		tester.test("AB", "SF", tester.options("SECRETSECRET"));
+		tester.test("A", "S", tester.options("SECRETSECRET"));
 	}
-	
-	private void testDencoder(String value, String key, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = CipherVigenereDencoder.encCipherVigenere(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("cipher.vigenere.key", key);
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = CipherVigenereDencoder.decCipherVigenere(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("cipher.vigenere.key", key);
-			}
-		}));
-		if (expectedDecodedValue == null) {
-			assertEquals(value, decodedValue);
-		} else {
-			assertEquals(expectedDecodedValue, decodedValue);
-		}
+
+	@Test
+	public void test_nonAlphaKey() {
+		// Key with only non-alphabetic characters (treated as empty key)
+		tester.test("ABC", "ABC", tester.options("123"));
+		tester.test("ABC", "ABC", tester.options("!!!"));
 	}
- }
- 
+}

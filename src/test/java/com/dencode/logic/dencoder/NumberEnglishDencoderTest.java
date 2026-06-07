@@ -16,89 +16,57 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class NumberEnglishDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			NumberEnglishDencoder::encNumEnglish,
+			NumberEnglishDencoder::decNumEnglish,
+			"number.english.system",
+			"number.english.decimal-notation");
+
 	@Test
 	public void test() {
-		testDencoder("0", "Zero");
-		testDencoder("1", "One");
-		testDencoder("10", "Ten");
-		testDencoder("101", "One Hundred One");
-		testDencoder("23456", "Twenty-Three Thousand Four Hundred Fifty-Six");
-		testDencoder("1234.5", "One Thousand Two Hundred Thirty-Four point Five");
-		testDencoder("-0.012", "Negative Zero point Zero One Two");
-		testDencoder("1\n20", "One\nTwenty");
-		
-		testDencoder("abc", null);
-		testDencoder("", null);
-		testDencoder("1\nabc", null);
+		tester.test("0", "Zero");
+		tester.test("1", "One");
+		tester.test("10", "Ten");
+		tester.test("101", "One Hundred One");
+		tester.test("23456", "Twenty-Three Thousand Four Hundred Fifty-Six");
+		tester.test("1234.5", "One Thousand Two Hundred Thirty-Four point Five");
+		tester.test("-0.012", "Negative Zero point Zero One Two");
+		tester.test("1\n20", "One\nTwenty");
+
+		tester.test("abc", null);
+		tester.test("", null);
+		tester.test("1\nabc", null);
 	}
-	
+
 	@Test
 	public void test_fraction() {
-		testDencoder("1.0", "One and 0/10", Map.of("number.english.decimal-notation", "fraction"));
-		testDencoder("1.012", "One and 12/1000", Map.of("number.english.decimal-notation", "fraction"));
-		testDencoder("-1.012", "Negative One and 12/1000", Map.of("number.english.decimal-notation", "fraction"));
+		tester.test("1.0", "One and 0/10", tester.options(null, "fraction"));
+		tester.test("1.012", "One and 12/1000", tester.options(null, "fraction"));
+		tester.test("-1.012", "Negative One and 12/1000", tester.options(null, "fraction"));
 	}
-	
+
 	@Test
 	public void test_system_cw() {
-		testDencoder("1000000000000000000000000000000000000000000000000000000000000000000000000", "One Tresvigintillion", Map.of("number.english.system", "cw"));
+		tester.test("1000000000000000000000000000000000000000000000000000000000000000000000000", "One Tresvigintillion", tester.options("cw"));
 	}
-	
+
 	@Test
 	public void test_decoder() {
-		testDecoder("Zero", "0");
-		testDecoder("One", "1");
-		testDecoder("Ten", "10");
-		testDecoder("One Hundred One", "101");
-		testDecoder("Twenty-Three Thousand Four Hundred Fifty-Six", "23456");
-		testDecoder("One Thousand Two Hundred Thirty-Four point Five", "1234.5");
-		testDecoder("One and 12/1000", "1.012");
-		testDecoder("Negative Zero point Zero One Two", "-0.012");
-		testDecoder("One\nTwenty", "1\n20");
-		
-		testDecoder("", null);
-		testDecoder("xxx", null);
-		testDecoder("One\nxxx", null);
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue) {
-		testDencoder(value, expectedEncodedValue, Map.of());
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue, Map<String, String> options) {
-		String encodedValue = NumberEnglishDencoder.encNumEnglish(condition(value, options));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		if (expectedEncodedValue == null) {
-			return;
-		}
-		
-		String decodedValue = NumberEnglishDencoder.decNumEnglish(condition(encodedValue));
-		assertEquals(value, decodedValue);
-	}
-	
-	private void testDecoder(String value, String expectedDecodedValue) {
-		String decodedValue = NumberEnglishDencoder.decNumEnglish(condition(value));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
-	
-	private DencodeCondition condition(String value) {
-		return condition(value, Map.of());
-	}
-	
-	private DencodeCondition condition(String value, Map<String, String> options) {
-		return new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>(options));
+		tester.testDecoder("Zero", "0");
+		tester.testDecoder("One", "1");
+		tester.testDecoder("Ten", "10");
+		tester.testDecoder("One Hundred One", "101");
+		tester.testDecoder("Twenty-Three Thousand Four Hundred Fifty-Six", "23456");
+		tester.testDecoder("One Thousand Two Hundred Thirty-Four point Five", "1234.5");
+		tester.testDecoder("One and 12/1000", "1.012");
+		tester.testDecoder("Negative Zero point Zero One Two", "-0.012");
+		tester.testDecoder("One\nTwenty", "1\n20");
+
+		tester.testDecoder("", null);
+		tester.testDecoder("xxx", null);
+		tester.testDecoder("One\nxxx", null);
 	}
 }

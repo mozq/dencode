@@ -16,100 +16,69 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class StringBase32DencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			StringBase32Dencoder::encStrBase32,
+			StringBase32Dencoder::decStrBase32);
+
 	@Test
 	public void test() {
 		// Blank
-		testDencoder("", "");
-		
+		tester.test("", "");
+
 		// ASCII
-		testDencoder("A", "IE======");
-		testDencoder("AA", "IFAQ====");
-		testDencoder("AAA", "IFAUC===");
-		testDencoder("AAAA", "IFAUCQI=");
-		testDencoder("AAAAA", "IFAUCQKB");
-		testDencoder("AAAAAA", "IFAUCQKBIE======");
-		testDencoder("AAAAAAA", "IFAUCQKBIFAQ====");
-		
+		tester.test("A", "IE======");
+		tester.test("AA", "IFAQ====");
+		tester.test("AAA", "IFAUC===");
+		tester.test("AAAA", "IFAUCQI=");
+		tester.test("AAAAA", "IFAUCQKB");
+		tester.test("AAAAAA", "IFAUCQKBIE======");
+		tester.test("AAAAAAA", "IFAUCQKBIFAQ====");
+
 		// non-ASCII (Latin-1)
-		testDencoder("ä", "YOSA====");
-		testDencoder("ää", "YOSMHJA=");
-		testDencoder("äää", "YOSMHJGDUQ======");
-		testDencoder("ääää", "YOSMHJGDUTB2I===");
-		
+		tester.test("ä", "YOSA====");
+		tester.test("ää", "YOSMHJA=");
+		tester.test("äää", "YOSMHJGDUQ======");
+		tester.test("ääää", "YOSMHJGDUTB2I===");
+		tester.test("\u00FF", "74======", tester.options(), StandardCharsets.ISO_8859_1);
+
 		// non-ASCII (Japanese)
-		testDencoder("ア", "4OBKE===");
-		testDencoder("アア", "4OBKFY4CUI======");
-		testDencoder("アアア", "4OBKFY4CULRYFIQ=");
-		
+		tester.test("ア", "4OBKE===");
+		tester.test("アア", "4OBKFY4CUI======");
+		tester.test("アアア", "4OBKFY4CULRYFIQ=");
+
 		// non-BMP
-		testDencoder("😀", "6CPZRAA=");
-		testDencoder("😀😀", "6CPZRAHQT6MIA===");
-		testDencoder("😀😀😀", "6CPZRAHQT6MIB4E7TCAA====");
+		tester.test("😀", "6CPZRAA=");
+		tester.test("😀😀", "6CPZRAHQT6MIA===");
+		tester.test("😀😀😀", "6CPZRAHQT6MIB4E7TCAA====");
 	}
-	
+
 	@Test
 	public void test_decoder() {
 		// Blank
-		testDecoder("", "");
-		
+		tester.testDecoder("", "");
+
 		// Case
-		testDecoder("IFAUCQKBIFAQ====", "AAAAAAA");
-		testDecoder("ifaucqkbifaq====", "AAAAAAA");
-		
+		tester.testDecoder("IFAUCQKBIFAQ====", "AAAAAAA");
+		tester.testDecoder("ifaucqkbifaq====", "AAAAAAA");
+
 		// Padding
-		testDecoder("IE======", "A");
-		testDecoder("IE=====", "A");
-		testDecoder("IE====", "A");
-		testDecoder("IE===", "A");
-		testDecoder("IE==", "A");
-		testDecoder("IE=", "A");
-		testDecoder("IE", "A");
-		
+		tester.testDecoder("IE======", "A");
+		tester.testDecoder("IE=====", "A");
+		tester.testDecoder("IE====", "A");
+		tester.testDecoder("IE===", "A");
+		tester.testDecoder("IE==", "A");
+		tester.testDecoder("IE=", "A");
+		tester.testDecoder("IE", "A");
+
 		// Trailing white-spaces
-		testDecoder("IE ==\t====\r\n", "A");
-		
+		tester.testDecoder("IE ==\t====\r\n", "A");
+
 		// White-space (Ignore SPACE, TAB, CR and LF)
-		testDecoder("IF AU\tCQK\r\nBIE======", "AAAAAA");
+		tester.testDecoder("IF AU\tCQK\r\nBIE======", "AAAAAA");
 	}
-	
-	private void testDencoder(String value, String expectedEncodedValue) {
-		testDencoder(value, expectedEncodedValue, value);
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = StringBase32Dencoder.encStrBase32(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = StringBase32Dencoder.decStrBase32(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
-	
-	private void testDecoder(String value, String expectedDecodedValue) {
-		String decodedValue = StringBase32Dencoder.decStrBase32(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
- }
- 
+}

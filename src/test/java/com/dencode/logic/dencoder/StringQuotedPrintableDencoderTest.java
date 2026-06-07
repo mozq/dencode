@@ -16,130 +16,99 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class StringQuotedPrintableDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			StringQuotedPrintableDencoder::encStrQuotedPrintable,
+			StringQuotedPrintableDencoder::decStrQuotedPrintable);
+
 	@Test
 	public void test() {
 		// Blank
-		testDencoder("", "");
-		
+		tester.test("", "");
+
 		// Printable: A-Z 0-9
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz");
-		testDencoder("0123456789", "0123456789");
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		tester.test("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz");
+		tester.test("0123456789", "0123456789");
 
 		// Printable: Symbols
-		testDencoder("!\"#$%&'()*+,-./:;<>?@[\\]^_`{|}~", "!\"#$%&'()*+,-./:;<>?@[\\]^_`{|}~");
-		testDencoder("=", "=3D");
-		
+		tester.test("!\"#$%&'()*+,-./:;<>?@[\\]^_`{|}~", "!\"#$%&'()*+,-./:;<>?@[\\]^_`{|}~");
+		tester.test("=", "=3D");
+
 		// White-space
-		testDencoder(" ", "=20");
-		testDencoder("\t", "=09");
-		testDencoder("\r\n", "=0D=0A");
-		testDencoder("A A", "A A");
-		testDencoder("A\tA", "A\tA");
-		testDencoder("A\r\nA", "A\r\nA");
-		testDencoder("   \r\n\t\t\t\r\n\r\n", "  =20\r\n\t\t=09\r\n=0D=0A");
-		
+		tester.test(" ", "=20");
+		tester.test("\t", "=09");
+		tester.test("\n", "=0A");
+		tester.test("A A", "A A");
+		tester.test("A\tA", "A\tA");
+		tester.test("A\nA", "A\nA");
+		tester.test("   \n\t\t\t\n\n", "  =20\n\t\t=09\n=0A");
+
 		// non-ASCII (Latin-1)
-		testDencoder("ä", "=C3=A4");
-		
+		tester.test("ä", "=C3=A4");
+		tester.test("\u00FF", "=FF", tester.options(), StandardCharsets.ISO_8859_1);
+
 		// non-ASCII (Japanese)
-		testDencoder("ア", "=E3=82=A2");
-		
+		tester.test("ア", "=E3=82=A2");
+
 		// non-BMP
-		testDencoder("😀", "=F0=9F=98=80");
-		
+		tester.test("😀", "=F0=9F=98=80");
+
 		// Line-break
-		testDencoder("J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font vite pédagogues et t'enseignent comme but ce qui n'est par essence qu'un moyen, et te trompant ainsi sur la route à suivre les voilà bientôt qui te dégradent, car si leur musique est vulgaire ils te fabriquent pour te la vendre une âme vulgaire.\r\n"
+		tester.test("J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font vite pédagogues et t'enseignent comme but ce qui n'est par essence qu'un moyen, et te trompant ainsi sur la route à suivre les voilà bientôt qui te dégradent, car si leur musique est vulgaire ils te fabriquent pour te la vendre une âme vulgaire.\n"
 				+ "   — Antoine de Saint-Exupéry, Citadelle (1948)",
 				"J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font=\r\n"
 						+ " vite p=C3=A9dagogues et t'enseignent comme but ce qui n'est par essence qu=\r\n"
 						+ "'un moyen, et te trompant ainsi sur la route =C3=A0 suivre les voil=C3=A0 b=\r\n"
 						+ "ient=C3=B4t qui te d=C3=A9gradent, car si leur musique est vulgaire ils te =\r\n"
-						+ "fabriquent pour te la vendre une =C3=A2me vulgaire.\r\n"
+						+ "fabriquent pour te la vendre une =C3=A2me vulgaire.\n"
 						+ "   =E2=80=94=E2=80=89Antoine de Saint-Exup=C3=A9ry, Citadelle (1948)"
 				);
 	}
-	
+
 	@Test
 	public void test_decoder() {
 		// Blank
-		testDecoder("", "");
-		
+		tester.testDecoder("", "");
+
 		// Padding
-		testDecoder("J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font=\r\n"
-				+ " vite p=C3=A9dagogues et t'enseignent comme but ce qui n'est par essence qu=\r\n"
-				+ "'un moyen, et te trompant ainsi sur la route =C3=A0 suivre les voil=C3=\r\n"
-				+ "=A0 bient=C3=B4t qui te d=C3=A9gradent, car si leur musique est vulgaire il=\r\n"
-				+ "s te fabriquent pour te la vendre une =C3=A2me vulgaire.\r\n"
+		tester.testDecoder("J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font=\n"
+				+ " vite p=C3=A9dagogues et t'enseignent comme but ce qui n'est par essence qu=\n"
+				+ "'un moyen, et te trompant ainsi sur la route =C3=A0 suivre les voil=C3=\n"
+				+ "=A0 bient=C3=B4t qui te d=C3=A9gradent, car si leur musique est vulgaire il=\n"
+				+ "s te fabriquent pour te la vendre une =C3=A2me vulgaire.\n"
 				+ "   =E2=80=94=E2=80=89Antoine de Saint-Exup=C3=A9ry, Citadelle (1948)",
-				"J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font vite pédagogues et t'enseignent comme but ce qui n'est par essence qu'un moyen, et te trompant ainsi sur la route à suivre les voilà bientôt qui te dégradent, car si leur musique est vulgaire ils te fabriquent pour te la vendre une âme vulgaire.\r\n"
+				"J'interdis aux marchands de vanter trop leurs marchandises. Car ils se font vite pédagogues et t'enseignent comme but ce qui n'est par essence qu'un moyen, et te trompant ainsi sur la route à suivre les voilà bientôt qui te dégradent, car si leur musique est vulgaire ils te fabriquent pour te la vendre une âme vulgaire.\n"
 						+ "   — Antoine de Saint-Exupéry, Citadelle (1948)"
 				);
-		
+
 		// RFC 2047
-		testDecoder("From: =?US-ASCII?Q?Keith_Moore?= <moore@cs.utk.edu>\r\n"
-				+ "   To: =?ISO-8859-1?Q?Keld_J=F8rn_Simonsen?= <keld@dkuug.dk>\r\n"
+		tester.testDecoder("From: =?US-ASCII?Q?Keith_Moore?= <moore@cs.utk.edu>\n"
+				+ "   To: =?ISO-8859-1?Q?Keld_J=F8rn_Simonsen?= <keld@dkuug.dk>\n"
 				+ "   CC: =?ISO-8859-1?Q?Andr=E9?= Pirard <PIRARD@vm1.ulg.ac.be>",
-				"From: Keith Moore <moore@cs.utk.edu>\r\n"
-					+ "   To: Keld Jørn Simonsen <keld@dkuug.dk>\r\n"
+				"From: Keith Moore <moore@cs.utk.edu>\n"
+					+ "   To: Keld Jørn Simonsen <keld@dkuug.dk>\n"
 					+ "   CC: André Pirard <PIRARD@vm1.ulg.ac.be>"
 				);
-		testDecoder("From: =?ISO-8859-1?Q?Olle_J=E4rnefors?= <ojarnef@admin.kth.se>", "From: Olle Järnefors <ojarnef@admin.kth.se>");
-		testDecoder("From: =?ISO-8859-1?Q?Patrik_F=E4ltstr=F6m?= <paf@nada.kth.se>", "From: Patrik Fältström <paf@nada.kth.se>");
-		testDecoder("(=?ISO-8859-1?Q?a?=)", "(a)");
-		testDecoder("(=?ISO-8859-1?Q?a?= b)", "(a b)");
-		testDecoder("(=?ISO-8859-1?Q?a?= =?ISO-8859-1?Q?b?=)", "(ab)");
-		testDecoder("(=?ISO-8859-1?Q?a?=  =?ISO-8859-1?Q?b?=)", "(ab)");
-		testDecoder("(=?ISO-8859-1?Q?a?=\r\n"
+		tester.testDecoder("From: =?ISO-8859-1?Q?Olle_J=E4rnefors?= <ojarnef@admin.kth.se>", "From: Olle Järnefors <ojarnef@admin.kth.se>");
+		tester.testDecoder("From: =?ISO-8859-1?Q?Patrik_F=E4ltstr=F6m?= <paf@nada.kth.se>", "From: Patrik Fältström <paf@nada.kth.se>");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?=)", "(a)");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?= b)", "(a b)");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?= =?ISO-8859-1?Q?b?=)", "(ab)");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?=  =?ISO-8859-1?Q?b?=)", "(ab)");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?=\n"
 				+ "    =?ISO-8859-1?Q?b?=)",
 				"(ab)"
 				);
-		testDecoder("(=?ISO-8859-1?Q?a_b?=)", "(a b)");
-		testDecoder("(=?ISO-8859-1?Q?a?= =?ISO-8859-2?Q?_b?=)", "(a b)");
-		testDecoder("Subject: =?UTF-8?Q?=E3=82=B5=E3=83=B3=E3=83=97=E3=83=AB?=", "Subject: サンプル");
-		
+		tester.testDecoder("(=?ISO-8859-1?Q?a_b?=)", "(a b)");
+		tester.testDecoder("(=?ISO-8859-1?Q?a?= =?ISO-8859-2?Q?_b?=)", "(a b)");
+		tester.testDecoder("Subject: =?UTF-8?Q?=E3=82=B5=E3=83=B3=E3=83=97=E3=83=AB?=", "Subject: サンプル");
+
 		// RFC 2231
-		testDecoder("Subject: =?UTF-8*ja-JP?Q?=E3=82=B5=E3=83=B3=E3=83=97=E3=83=AB?=", "Subject: サンプル");
+		tester.testDecoder("Subject: =?UTF-8*ja-JP?Q?=E3=82=B5=E3=83=B3=E3=83=97=E3=83=AB?=", "Subject: サンプル");
 	}
-	
-	private void testDencoder(String value, String expectedEncodedValue) {
-		testDencoder(value, expectedEncodedValue, value);
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = StringQuotedPrintableDencoder.encStrQuotedPrintable(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = StringQuotedPrintableDencoder.decStrQuotedPrintable(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
-	
-	private void testDecoder(String value, String expectedDecodedValue) {
-		String decodedValue = StringQuotedPrintableDencoder.decStrQuotedPrintable(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
- }
- 
+}

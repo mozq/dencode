@@ -16,71 +16,61 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class CipherAtbashDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			CipherAtbashDencoder::encCipherAtbash,
+			CipherAtbashDencoder::encCipherAtbash);
+
 	@Test
 	public void test() {
 		// Blank
-		testDencoder("", "");
-		
+		tester.test("", "");
+
 		// Hebrew alphabets
-		testDencoder("אבגדהוזחטיכלמנסעפצקרשת", "תשרקצפעסנמלכיטחזוהדגבא");
-		
+		tester.test("אבגדהוזחטיכלמנסעפצקרשת", "תשרקצפעסנמלכיטחזוהדגבא");
+
 		// Half-width Latin alphabets
-		testDencoder("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ZYXWVUTSRQPONMLKJIHGFEDCBA");
-		testDencoder("abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba");
-		
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ZYXWVUTSRQPONMLKJIHGFEDCBA");
+		tester.test("abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba");
+
 		// Full-width Latin alphabets
-		testDencoder("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＺＹＸＷＶＵＴＳＲＱＰＯＮＭＬＫＪＩＨＧＦＥＤＣＢＡ");
-		testDencoder("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｚｙｘｗｖｕｔｓｒｑｐｏｎｍｌｋｊｉｈｇｆｅｄｃｂａ");
-		
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＺＹＸＷＶＵＴＳＲＱＰＯＮＭＬＫＪＩＨＧＦＥＤＣＢＡ");
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｚｙｘｗｖｕｔｓｒｑｐｏｎｍｌｋｊｉｈｇｆｅｄｃｂａ");
+
 		// Full-width Japanese Hiragana
-		testDencoder("ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ", "ゔんをゑゐわゎろれるりらよょゆゅやゃもめむみまぽぼほぺべへぷぶふぴびひぱばはのねぬになどとでてづつっぢちだたぞそぜせずすじしざさごこげけぐくぎきがかおぉえぇうぅいぃあぁ");
-		
+		tester.test("ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ", "ゔんをゑゐわゎろれるりらよょゆゅやゃもめむみまぽぼほぺべへぷぶふぴびひぱばはのねぬになどとでてづつっぢちだたぞそぜせずすじしざさごこげけぐくぎきがかおぉえぇうぅいぃあぁ");
+
 		// Full-width Japanese Katakana
-		testDencoder("ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴ", "ヴンヲヱヰワヮロレルリラヨョユュヤャモメムミマポボホペベヘプブフピビヒパバハノネヌニナドトデテヅツッヂチダタゾソゼセズスジシザサゴコゲケグクギキガカオォエェウゥイィアァ");
-		
+		tester.test("ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴ", "ヴンヲヱヰワヮロレルリラヨョユュヤャモメムミマポボホペベヘプブフピビヒパバハノネヌニナドトデテヅツッヂチダタゾソゼセズスジシザサゴコゲケグクギキガカオォエェウゥイィアァ");
+
 		// Cyrillic alphabets
-		testDencoder("АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЕДГВБА");
-		testDencoder("абвгдежзийклмнопрстуфхцчшщъыьэюя", "яюэьыъщшчцхфутсрпонмлкйизжедгвба");
-		
+		tester.test("АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЕДГВБА");
+		tester.test("абвгдежзийклмнопрстуфхцчшщъыьэюя", "яюэьыъщшчцхфутсрпонмлкйизжедгвба");
+
 		// Unsupported characters
-		testDencoder(" ", " ");
-		testDencoder("!", "!");
-		testDencoder("!a!", "!z!");
+		tester.test(" ", " ");
+		tester.test("!", "!");
+		tester.test("!a!", "!z!");
+
+		// Mixed alphabets (Latin + Cyrillic + Hebrew)
+		tester.test("Aа א", "Zя ת");
+
+		// Mixed alphabets (Latin + Japanese Hiragana + Katakana)
+		tester.test("Aぁァ", "Zゔヴ");
+
+		// Numbers pass through
+		tester.test("A1B2C3", "Z1Y2X3");
+
+		// Single character boundary
+		tester.test("A", "Z");
+		tester.test("Z", "A");
+		tester.test("a", "z");
+		tester.test("z", "a");
+		tester.test("А", "Я");
+		tester.test("Я", "А");
+		tester.test("א", "ת");
+		tester.test("ת", "א");
 	}
-	
-	private void testDencoder(String value, String expectedEncodedValue) {
-		testDencoder(value, expectedEncodedValue, value);
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = CipherAtbashDencoder.encCipherAtbash(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = CipherAtbashDencoder.encCipherAtbash(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		if (expectedDecodedValue == null) {
-			assertEquals(value, decodedValue);
-		} else {
-			assertEquals(expectedDecodedValue, decodedValue);
-		}
-	}
- }
- 
+}

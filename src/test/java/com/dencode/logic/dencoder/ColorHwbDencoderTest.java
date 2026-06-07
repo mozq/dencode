@@ -16,91 +16,80 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class ColorHwbDencoderTest {
+	private final DencoderTester tester = new DencoderTester(
+			ColorHwbDencoder::encColorHwb);
 
 	@Test
 	public void test_blank() {
-		testDencoder("", null);
+		tester.testEncoder("", null);
 	}
 
 	@Test
 	public void test_colorVariations() {
-		testDencoder("red", "hwb(0deg 0% 0%)");
-		testDencoder("green", "hwb(120deg 0% 49.8%)");
-		testDencoder("lime", "hwb(120deg 0% 0%)");
-		testDencoder("blue", "hwb(240deg 0% 0%)");
-		testDencoder("yellow", "hwb(60deg 0% 0%)");
-		testDencoder("cyan", "hwb(180deg 0% 0%)");
-		testDencoder("magenta", "hwb(300deg 0% 0%)");
-		testDencoder("gray", "hwb(0deg 50.2% 49.8%)");
-		testDencoder("white", "hwb(0deg 100% 0%)");
-		testDencoder("black", "hwb(0deg 0% 100%)");
-		testDencoder("orange", "hwb(38.82deg 0% 0%)");
-		testDencoder("purple", "hwb(300deg 0% 49.8%)");
-		testDencoder("indigo", "hwb(274.62deg 0% 49.02%)");
-		testDencoder("pink", "hwb(349.52deg 75.29% 0%)");
-		testDencoder("brown", "hwb(0deg 16.47% 35.29%)");
-		testDencoder("maroon", "hwb(0deg 0% 49.8%)");
-		testDencoder("olive", "hwb(60deg 0% 49.8%)");
-		testDencoder("teal", "hwb(180deg 0% 49.8%)");
-		testDencoder("navy", "hwb(240deg 0% 49.8%)");
-		testDencoder("silver", "hwb(0deg 75.29% 24.71%)");
-		testDencoder("rebeccapurple", "hwb(270deg 20% 40%)");
+		tester.testEncoder("red", "hwb(0deg 0% 0%)");
+		tester.testEncoder("green", "hwb(120deg 0% 49.8%)");
+		tester.testEncoder("lime", "hwb(120deg 0% 0%)");
+		tester.testEncoder("blue", "hwb(240deg 0% 0%)");
+		tester.testEncoder("yellow", "hwb(60deg 0% 0%)");
+		tester.testEncoder("cyan", "hwb(180deg 0% 0%)");
+		tester.testEncoder("magenta", "hwb(300deg 0% 0%)");
+		tester.testEncoder("gray", "hwb(0deg 50.2% 49.8%)");
+		tester.testEncoder("white", "hwb(0deg 100% 0%)");
+		tester.testEncoder("black", "hwb(0deg 0% 100%)");
+		tester.testEncoder("orange", "hwb(38.82deg 0% 0%)");
+		tester.testEncoder("purple", "hwb(300deg 0% 49.8%)");
+		tester.testEncoder("indigo", "hwb(274.62deg 0% 49.02%)");
+		tester.testEncoder("pink", "hwb(349.52deg 75.29% 0%)");
+		tester.testEncoder("brown", "hwb(0deg 16.47% 35.29%)");
+		tester.testEncoder("maroon", "hwb(0deg 0% 49.8%)");
+		tester.testEncoder("olive", "hwb(60deg 0% 49.8%)");
+		tester.testEncoder("teal", "hwb(180deg 0% 49.8%)");
+		tester.testEncoder("navy", "hwb(240deg 0% 49.8%)");
+		tester.testEncoder("silver", "hwb(0deg 75.29% 24.71%)");
+		tester.testEncoder("rebeccapurple", "hwb(270deg 20% 40%)");
 	}
 
 	@Test
 	public void test_identity() {
-		testDencoder("hwb(0 0% 0%)", "hwb(0deg 0% 0%)"); // red
-		testDencoder("hwb(120 0% 49.8%)", "hwb(120deg 0% 49.8%)"); // green
-		testDencoder("hwb(120 0% 0%)", "hwb(120deg 0% 0%)"); // lime
-		testDencoder("hwb(240 0% 0%)", "hwb(240deg 0% 0%)"); // blue
-		testDencoder("hwb(60 0% 0%)", "hwb(60deg 0% 0%)"); // yellow
-		testDencoder("hwb(180 0% 0%)", "hwb(180deg 0% 0%)"); // cyan
-		testDencoder("hwb(300 0% 0%)", "hwb(300deg 0% 0%)"); // magenta
-		testDencoder("hwb(0 50.2% 49.8%)", "hwb(0deg 50.2% 49.8%)"); // gray
-		testDencoder("hwb(0 100% 0%)", "hwb(0deg 100% 0%)"); // white
-		testDencoder("hwb(0 0% 100%)", "hwb(0deg 0% 100%)"); // black
-		testDencoder("hwb(38.8 0% 0%)", "hwb(38.8deg 0% 0%)"); // orange
-		testDencoder("hwb(300 0% 49.8%)", "hwb(300deg 0% 49.8%)"); // purple
-		testDencoder("hwb(274.6 0% 49%)", "hwb(274.6deg 0% 49%)"); // indigo
-		testDencoder("hwb(349.5 75.3% 0%)", "hwb(349.5deg 75.3% 0%)"); // pink
-		testDencoder("hwb(0 16.5% 35.3%)", "hwb(0deg 16.5% 35.3%)"); // brown
-		testDencoder("hwb(0 0% 49.8%)", "hwb(0deg 0% 49.8%)"); // maroon
-		testDencoder("hwb(60 0% 49.8%)", "hwb(60deg 0% 49.8%)"); // olive
-		testDencoder("hwb(180 0% 49.8%)", "hwb(180deg 0% 49.8%)"); // teal
-		testDencoder("hwb(240 0% 49.8%)", "hwb(240deg 0% 49.8%)"); // navy
-		testDencoder("hwb(0 75.3% 24.7%)", "hwb(0deg 75.3% 24.7%)"); // silver
-		testDencoder("hwb(270 20% 40%)", "hwb(270deg 20% 40%)"); // rebeccapurple
+		tester.testEncoder("hwb(0 0% 0%)", "hwb(0deg 0% 0%)"); // red
+		tester.testEncoder("hwb(120 0% 49.8%)", "hwb(120deg 0% 49.8%)"); // green
+		tester.testEncoder("hwb(120 0% 0%)", "hwb(120deg 0% 0%)"); // lime
+		tester.testEncoder("hwb(240 0% 0%)", "hwb(240deg 0% 0%)"); // blue
+		tester.testEncoder("hwb(60 0% 0%)", "hwb(60deg 0% 0%)"); // yellow
+		tester.testEncoder("hwb(180 0% 0%)", "hwb(180deg 0% 0%)"); // cyan
+		tester.testEncoder("hwb(300 0% 0%)", "hwb(300deg 0% 0%)"); // magenta
+		tester.testEncoder("hwb(0 50.2% 49.8%)", "hwb(0deg 50.2% 49.8%)"); // gray
+		tester.testEncoder("hwb(0 100% 0%)", "hwb(0deg 100% 0%)"); // white
+		tester.testEncoder("hwb(0 0% 100%)", "hwb(0deg 0% 100%)"); // black
+		tester.testEncoder("hwb(38.8 0% 0%)", "hwb(38.8deg 0% 0%)"); // orange
+		tester.testEncoder("hwb(300 0% 49.8%)", "hwb(300deg 0% 49.8%)"); // purple
+		tester.testEncoder("hwb(274.6 0% 49%)", "hwb(274.6deg 0% 49%)"); // indigo
+		tester.testEncoder("hwb(349.5 75.3% 0%)", "hwb(349.5deg 75.3% 0%)"); // pink
+		tester.testEncoder("hwb(0 16.5% 35.3%)", "hwb(0deg 16.5% 35.3%)"); // brown
+		tester.testEncoder("hwb(0 0% 49.8%)", "hwb(0deg 0% 49.8%)"); // maroon
+		tester.testEncoder("hwb(60 0% 49.8%)", "hwb(60deg 0% 49.8%)"); // olive
+		tester.testEncoder("hwb(180 0% 49.8%)", "hwb(180deg 0% 49.8%)"); // teal
+		tester.testEncoder("hwb(240 0% 49.8%)", "hwb(240deg 0% 49.8%)"); // navy
+		tester.testEncoder("hwb(0 75.3% 24.7%)", "hwb(0deg 75.3% 24.7%)"); // silver
+		tester.testEncoder("hwb(270 20% 40%)", "hwb(270deg 20% 40%)"); // rebeccapurple
 	}
 
 	@Test
 	public void test_hexAndRgb() {
-		testDencoder("#ff0000", "hwb(0deg 0% 0%)");
-		testDencoder("rgb(255 0 0)", "hwb(0deg 0% 0%)");
+		tester.testEncoder("#ff0000", "hwb(0deg 0% 0%)");
+		tester.testEncoder("rgb(255 0 0)", "hwb(0deg 0% 0%)");
 	}
 
 	@Test
 	public void test_alpha() {
-		testDencoder("rgba(255 0 0 / 0.5)", "hwb(0deg 0% 0% / 0.5)");
+		tester.testEncoder("rgba(255 0 0 / 0.5)", "hwb(0deg 0% 0% / 0.5)");
 	}
 
 	@Test
 	public void test_invalid() {
-		testDencoder("x", null);
-	}
-	
-	private void testDencoder(String val, String exp) {
-		DencodeCondition cond = new DencodeCondition(val, StandardCharsets.UTF_8, "", null, new HashMap<>(0));
-		String encStr = ColorHwbDencoder.encColorHwb(cond);
-		assertEquals(exp, encStr);
+		tester.testEncoder("x", null);
 	}
 }

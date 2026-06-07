@@ -16,134 +16,103 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class StringURLEncodingDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			StringURLEncodingDencoder::encStrURLEncoding,
+			StringURLEncodingDencoder::decStrURLEncoding,
+			"string.url-encoding.space");
+
 	@Test
 	public void test_default() {
 		// Blank
-		testDencoder("", "", "");
-		
+		tester.test("", "", tester.options(""));
+
 		// A-Z 0-9
-		testDencoder("AZaz09", "", "AZaz09");
-		
+		tester.test("AZaz09", "AZaz09", tester.options(""));
+
 		// Symbol (Space)
-		testDencoder(" ", "", "%20");
-		
+		tester.test(" ", "%20", tester.options(""));
+
 		// Symbol (Reserved)
-		testDencoder("%:/?=*()", "", "%25%3A%2F%3F%3D%2A%28%29");
-		
+		tester.test("%:/?=*()", "%25%3A%2F%3F%3D%2A%28%29", tester.options(""));
+
 		// Symbol (Unreserved)
-		testDencoder("-._~", "", "-._~");
-		
+		tester.test("-._~", "-._~", tester.options(""));
+
 		// Control
-		testDencoder("\0\t\r\n", "", "%00%09%0D%0A");
-		
+		tester.test("\0\t\n", "%00%09%0A", tester.options(""));
+
 		// non-ASCII (Latin-1)
-		testDencoder("ä", "", "%C3%A4");
-		
+		tester.test("ä", "%C3%A4", tester.options(""));
+		tester.test("\u00FF", "%FF", tester.options(""), StandardCharsets.ISO_8859_1);
+
 		// non-ASCII (Japanese)
-		testDencoder("ア", "", "%E3%82%A2");
-		
+		tester.test("ア", "%E3%82%A2", tester.options(""));
+
 		// non-BMP
-		testDencoder("😀", "", "%F0%9F%98%80");
+		tester.test("😀", "%F0%9F%98%80", tester.options(""));
 	}
-	
+
 	@Test
 	public void test_form() {
 		// Blank
-		testDencoder("", "form", "");
-		
+		tester.test("", "", tester.options("form"));
+
 		// A-Z 0-9
-		testDencoder("AZaz09", "form", "AZaz09");
-		
+		tester.test("AZaz09", "AZaz09", tester.options("form"));
+
 		// Symbol (Space)
-		testDencoder(" ", "form", "+");
-		
+		tester.test(" ", "+", tester.options("form"));
+
 		// Symbol (Reserved)
-		testDencoder("%:/?=*()", "form", "%25%3A%2F%3F%3D%2A%28%29");
-		
+		tester.test("%:/?=*()", "%25%3A%2F%3F%3D%2A%28%29", tester.options("form"));
+
 		// Symbol (Unreserved)
-		testDencoder("-._~", "form", "-._~");
-		
+		tester.test("-._~", "-._~", tester.options("form"));
+
 		// Control
-		testDencoder("\0\t\r\n", "form", "%00%09%0D%0A");
-		
+		tester.test("\0\t\n", "%00%09%0A", tester.options("form"));
+
 		// non-ASCII (Latin-1)
-		testDencoder("ä", "form", "%C3%A4");
-		
+		tester.test("ä", "%C3%A4", tester.options("form"));
+
 		// non-ASCII (Japanese)
-		testDencoder("ア", "form", "%E3%82%A2");
-		
+		tester.test("ア", "%E3%82%A2", tester.options("form"));
+
 		// non-BMP
-		testDencoder("😀", "form", "%F0%9F%98%80");
+		tester.test("😀", "%F0%9F%98%80", tester.options("form"));
 	}
-	
+
 	@Test
 	public void test_decoder() {
 		// Blank
-		testDecoder("", "");
-		
+		tester.testDecoder("", "");
+
 		// Supported character
-		testDecoder("AZaz09", "AZaz09");
-		
+		tester.testDecoder("AZaz09", "AZaz09");
+
 		// Symbol (Unreserved)
-		testDecoder("-._~", "-._~");
-		
+		tester.testDecoder("-._~", "-._~");
+
 		// Unsupported character
-		testDecoder("ア", null);
-		testDecoder("😀", null);
-		
+		tester.testDecoder("ア", null);
+		tester.testDecoder("😀", null);
+
 		// Illegal format
-		testDecoder("%", null);
-		testDecoder("%x", null);
-		testDecoder("%%", null);
-		testDecoder("%2", null);
-		testDecoder("%2x", null);
-		
+		tester.testDecoder("%", null);
+		tester.testDecoder("%x", null);
+		tester.testDecoder("%%", null);
+		tester.testDecoder("%2", null);
+		tester.testDecoder("%2x", null);
+
 		// Lower case
-		testDecoder("%3a", ":");
-		
+		tester.testDecoder("%3a", ":");
+
 		// Mixed
-		testDecoder("A%20Z+0%F0%9f%98%809", "A Z 0😀9");
+		tester.testDecoder("A%20Z+0%F0%9f%98%809", "A Z 0😀9");
 	}
-	
-	private void testDencoder(String value, String space, String expectedEncodedValue) {
-		testDencoder(value, space, expectedEncodedValue, value);
-	}
-	
-	private void testDencoder(String value, String space, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = StringURLEncodingDencoder.encStrURLEncoding(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("string.url-encoding.space", space);
-			}
-		}));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		String decodedValue = StringURLEncodingDencoder.decStrURLEncoding(new DencodeCondition(encodedValue, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
-	
-	private void testDecoder(String value, String expectedDecodedValue) {
-		String decodedValue = StringURLEncodingDencoder.decStrURLEncoding(new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		}));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
- }
- 
+}

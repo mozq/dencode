@@ -16,166 +16,137 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class NumberRomanDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			NumberRomanDencoder::encNumRoman,
+			NumberRomanDencoder::decNumRoman);
+
 	@Test
 	public void test() {
-		testDencoder("1", "I");
-		testDencoder("2", "II");
-		testDencoder("3", "III");
-		testDencoder("4", "IV");
-		testDencoder("5", "V");
-		testDencoder("6", "VI");
-		testDencoder("7", "VII");
-		testDencoder("8", "VIII");
-		testDencoder("9", "IX");
-		testDencoder("10", "X");
-		testDencoder("40", "XL");
-		testDencoder("41", "XLI");
-		testDencoder("44", "XLIV");
-		testDencoder("45", "XLV");
-		testDencoder("46", "XLVI");
-		testDencoder("49", "XLIX");
-		testDencoder("50", "L");
-		testDencoder("60", "LX");
-		testDencoder("90", "XC");
-		testDencoder("100", "C");
-		testDencoder("400", "CD");
-		testDencoder("401", "CDI");
-		testDencoder("440", "CDXL");
-		testDencoder("500", "D");
-		testDencoder("600", "DC");
-		testDencoder("900", "CM");
-		testDencoder("999", "CMXCIX");
-		testDencoder("1000", "M");
-		testDencoder("1999", "MCMXCIX");
-		testDencoder("3000", "MMM");
-		testDencoder("3009", "MMMIX");
-		testDencoder("3090", "MMMXC");
-		testDencoder("3333", "MMMCCCXXXIII");
-		testDencoder("3900", "MMMCM");
-		testDencoder("3999", "MMMCMXCIX");
-		
-		testDencoder("0", null);
-		testDencoder("-1", null);
-		testDencoder("1.5", null);
-		testDencoder("4000", null);
-		testDencoder("", null);
+		tester.test("1", "I");
+		tester.test("2", "II");
+		tester.test("3", "III");
+		tester.test("4", "IV");
+		tester.test("5", "V");
+		tester.test("6", "VI");
+		tester.test("7", "VII");
+		tester.test("8", "VIII");
+		tester.test("9", "IX");
+		tester.test("10", "X");
+		tester.test("40", "XL");
+		tester.test("41", "XLI");
+		tester.test("44", "XLIV");
+		tester.test("45", "XLV");
+		tester.test("46", "XLVI");
+		tester.test("49", "XLIX");
+		tester.test("50", "L");
+		tester.test("60", "LX");
+		tester.test("90", "XC");
+		tester.test("100", "C");
+		tester.test("400", "CD");
+		tester.test("401", "CDI");
+		tester.test("440", "CDXL");
+		tester.test("500", "D");
+		tester.test("600", "DC");
+		tester.test("900", "CM");
+		tester.test("999", "CMXCIX");
+		tester.test("1000", "M");
+		tester.test("1999", "MCMXCIX");
+		tester.test("3000", "MMM");
+		tester.test("3009", "MMMIX");
+		tester.test("3090", "MMMXC");
+		tester.test("3333", "MMMCCCXXXIII");
+		tester.test("3900", "MMMCM");
+		tester.test("3999", "MMMCMXCIX");
+
+		tester.test("0", null);
+		tester.test("-1", null);
+		tester.test("1.5", null);
+		tester.test("4000", null);
+		tester.test("", null);
 	}
-	
+
 	@Test
 	public void test_decoder() {
-		testDecoder("I", "1");
-		testDecoder("II", "2");
-		testDecoder("III", "3");
-		testDecoder("IV", "4");
-		testDecoder("V", "5");
-		testDecoder("VI", "6");
-		testDecoder("VII", "7");
-		testDecoder("VIII", "8");
-		testDecoder("IX", "9");
-		testDecoder("X", "10");
-		testDecoder("XL", "40");
-		testDecoder("XLI", "41");
-		testDecoder("XLIV", "44");
-		testDecoder("XLV", "45");
-		testDecoder("XLVI", "46");
-		testDecoder("XLIX", "49");
-		testDecoder("L", "50");
-		testDecoder("LX", "60");
-		testDecoder("XC", "90");
-		testDecoder("C", "100");
-		testDecoder("CD", "400");
-		testDecoder("CDI", "401");
-		testDecoder("CDXL", "440");
-		testDecoder("D", "500");
-		testDecoder("DC", "600");
-		testDecoder("CM", "900");
-		testDecoder("CMXCIX", "999");
-		testDecoder("M", "1000");
-		testDecoder("MCMXCIX", "1999");
-		testDecoder("MMM", "3000");
-		testDecoder("MMMIX", "3009");
-		testDecoder("MMMXC", "3090");
-		testDecoder("MMMCCCXXXIII", "3333");
-		testDecoder("MMMCM", "3900");
-		testDecoder("MMMCMXCIX", "3999");
-		
-		testDecoder("xiv", "14");
-		testDecoder(" xii", "12");
-		testDecoder("XII", "12");
-		testDecoder("mcmxcix", "1999");
-		testDecoder("Ⅰ", "1");
-		testDecoder("Ⅱ", "2");
-		testDecoder("Ⅳ", "4");
-		testDecoder("Ⅸ", "9");
-		testDecoder("Ⅹ", "10");
-		testDecoder("Ⅺ", "11");
-		testDecoder("Ⅻ", "12");
-		testDecoder("Ⅼ", "50");
-		testDecoder("Ⅽ", "100");
-		testDecoder("Ⅾ", "500");
-		testDecoder("Ⅿ", "1000");
-		testDecoder("ⅿⅽⅿⅹⅽⅰⅹ", "1999");
-		testDecoder("ⅩIV", "14");
-		testDecoder("MⅭⅯXCⅠⅩ", "1999");
-		testDecoder("mⅭⅯxcⅠⅩ", "1999");
-		
-		testDecoder("", null);
-		testDecoder("IIII", null);
-		testDecoder("VIIII", null);
-		testDecoder("XXXX", null);
-		testDecoder("LXXXX", null);
-		testDecoder("CCCC", null);
-		testDecoder("DCCCC", null);
-		testDecoder("VV", null);
-		testDecoder("IIV", null);
-		testDecoder("IIX", null);
-		testDecoder("IC", null);
-		testDecoder("IL", null);
-		testDecoder("VX", null);
-		testDecoder("XM", null);
-		testDecoder("MMMM", null);
-		testDecoder("ABC", null);
-		testDecoder("ⅫⅢ", null);
-		testDecoder("ⅫI", null);
-		testDecoder("MⅫ", null);
-		testDecoder("ⅩⅫ", null);
-		testDecoder("ⅩⅣ", null);
-		testDecoder("MⅭⅯXCⅨ", null);
-	}
-	
-	private void testDencoder(String value, String expectedEncodedValue) {
-		String encodedValue = NumberRomanDencoder.encNumRoman(condition(value));
-		assertEquals(expectedEncodedValue, encodedValue);
-		
-		if (expectedEncodedValue == null) {
-			return;
-		}
-		
-		String decodedValue = NumberRomanDencoder.decNumRoman(condition(encodedValue));
-		assertEquals(value, decodedValue);
-	}
-	
-	private void testDecoder(String value, String expectedDecodedValue) {
-		String decodedValue = NumberRomanDencoder.decNumRoman(condition(value));
-		assertEquals(expectedDecodedValue, decodedValue);
-	}
-	
-	private DencodeCondition condition(String value) {
-		return new DencodeCondition(value, StandardCharsets.UTF_8, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-			}
-		});
+		tester.testDecoder("I", "1");
+		tester.testDecoder("II", "2");
+		tester.testDecoder("III", "3");
+		tester.testDecoder("IV", "4");
+		tester.testDecoder("V", "5");
+		tester.testDecoder("VI", "6");
+		tester.testDecoder("VII", "7");
+		tester.testDecoder("VIII", "8");
+		tester.testDecoder("IX", "9");
+		tester.testDecoder("X", "10");
+		tester.testDecoder("XL", "40");
+		tester.testDecoder("XLI", "41");
+		tester.testDecoder("XLIV", "44");
+		tester.testDecoder("XLV", "45");
+		tester.testDecoder("XLVI", "46");
+		tester.testDecoder("XLIX", "49");
+		tester.testDecoder("L", "50");
+		tester.testDecoder("LX", "60");
+		tester.testDecoder("XC", "90");
+		tester.testDecoder("C", "100");
+		tester.testDecoder("CD", "400");
+		tester.testDecoder("CDI", "401");
+		tester.testDecoder("CDXL", "440");
+		tester.testDecoder("D", "500");
+		tester.testDecoder("DC", "600");
+		tester.testDecoder("CM", "900");
+		tester.testDecoder("CMXCIX", "999");
+		tester.testDecoder("M", "1000");
+		tester.testDecoder("MCMXCIX", "1999");
+		tester.testDecoder("MMM", "3000");
+		tester.testDecoder("MMMIX", "3009");
+		tester.testDecoder("MMMXC", "3090");
+		tester.testDecoder("MMMCCCXXXIII", "3333");
+		tester.testDecoder("MMMCM", "3900");
+		tester.testDecoder("MMMCMXCIX", "3999");
+
+		tester.testDecoder("xiv", "14");
+		tester.testDecoder(" xii", "12");
+		tester.testDecoder("XII", "12");
+		tester.testDecoder("mcmxcix", "1999");
+		tester.testDecoder("Ⅰ", "1");
+		tester.testDecoder("Ⅱ", "2");
+		tester.testDecoder("Ⅳ", "4");
+		tester.testDecoder("Ⅸ", "9");
+		tester.testDecoder("Ⅹ", "10");
+		tester.testDecoder("Ⅺ", "11");
+		tester.testDecoder("Ⅻ", "12");
+		tester.testDecoder("Ⅼ", "50");
+		tester.testDecoder("Ⅽ", "100");
+		tester.testDecoder("Ⅾ", "500");
+		tester.testDecoder("Ⅿ", "1000");
+		tester.testDecoder("ⅿⅽⅿⅹⅽⅰⅹ", "1999");
+		tester.testDecoder("ⅩIV", "14");
+		tester.testDecoder("MⅭⅯXCⅠⅩ", "1999");
+		tester.testDecoder("mⅭⅯxcⅠⅩ", "1999");
+
+		tester.testDecoder("", null);
+		tester.testDecoder("IIII", null);
+		tester.testDecoder("VIIII", null);
+		tester.testDecoder("XXXX", null);
+		tester.testDecoder("LXXXX", null);
+		tester.testDecoder("CCCC", null);
+		tester.testDecoder("DCCCC", null);
+		tester.testDecoder("VV", null);
+		tester.testDecoder("IIV", null);
+		tester.testDecoder("IIX", null);
+		tester.testDecoder("IC", null);
+		tester.testDecoder("IL", null);
+		tester.testDecoder("VX", null);
+		tester.testDecoder("XM", null);
+		tester.testDecoder("MMMM", null);
+		tester.testDecoder("ABC", null);
+		tester.testDecoder("ⅫⅢ", null);
+		tester.testDecoder("ⅫI", null);
+		tester.testDecoder("MⅫ", null);
+		tester.testDecoder("ⅩⅫ", null);
+		tester.testDecoder("ⅩⅣ", null);
+		tester.testDecoder("MⅭⅯXCⅨ", null);
 	}
 }

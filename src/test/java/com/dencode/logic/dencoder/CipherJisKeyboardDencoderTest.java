@@ -16,157 +16,124 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
-import com.dencode.logic.model.DencodeCondition;
-
 public class CipherJisKeyboardDencoderTest {
-	
+	private final DencoderTester tester = new DencoderTester(
+			CipherJisKeyboardDencoder::encCipherJisKeyboard,
+			CipherJisKeyboardDencoder::encCipherJisKeyboard,
+			"cipher.jis-keyboard.mode");
+
 	@Test
 	public void testStrict() {
 		// Blank
-		testDencoder("", "strict", "");
-		
+		tester.test("", "", tester.options("strict"));
+
 		// Supported characters
-		testDencoder("1234567890-^|", "strict", "ぬふあうえおやゆよわほへー");
-		testDencoder("qwertyuiop @[", "strict", "たていすかんなにらせ ゛゜");
-		testDencoder("asdfghjkl;:]", "strict", "ちとしはきくまのりれけむ");
-		testDencoder("zxcvbnm,./\\", "strict", "つさそひこみもねるめろ");
-		testDencoder("#$%&'()", "strict", "ぁぅぇぉゃゅょ");
-		testDencoder("E{", "strict", "ぃ「");
-		testDencoder("}", "strict", "」");
-		testDencoder("Z<>?", "strict", "っ、。・");
-		
+		tester.test("1234567890-^|", "ぬふあうえおやゆよわほへー", tester.options("strict"));
+		tester.test("qwertyuiop @[", "たていすかんなにらせ ゛゜", tester.options("strict"));
+		tester.test("asdfghjkl;:]", "ちとしはきくまのりれけむ", tester.options("strict"));
+		tester.test("zxcvbnm,./\\", "つさそひこみもねるめろ", tester.options("strict"));
+		tester.test("#$%&'()", "ぁぅぇぉゃゅょ", tester.options("strict"));
+		tester.test("E{", "ぃ「", tester.options("strict"));
+		tester.test("}", "」", tester.options("strict"));
+		tester.test("Z<>?", "っ、。・", tester.options("strict"));
+
 		// Voiced sound mark
-		testDencoder("t@g@h@:@b@", "strict", "がぎぐげご");
-		testDencoder("x@d@r@p@c@", "strict", "ざじずぜぞ");
-		testDencoder("q@a@z@w@s@", "strict", "だぢづでど");
-		testDencoder("f@v@2@^@-@", "strict", "ばびぶべぼ");
-		testDencoder("4@", "strict", "ゔ");
-		testDencoder("f[v[2[^[-[", "strict", "ぱぴぷぺぽ");
-		testDencoder("1@1[", "strict", "ぬ゛ぬ゜");
-		testDencoder("@1", "strict", "゛ぬ");
-		testDencoder("[1", "strict", "゜ぬ");
-		testDencoder("@", "strict", "゛");
-		testDencoder("[", "strict", "゜");
-		
+		tester.test("t@g@h@:@b@", "がぎぐげご", tester.options("strict"));
+		tester.test("x@d@r@p@c@", "ざじずぜぞ", tester.options("strict"));
+		tester.test("q@a@z@w@s@", "だぢづでど", tester.options("strict"));
+		tester.test("f@v@2@^@-@", "ばびぶべぼ", tester.options("strict"));
+		tester.test("4@", "ゔ", tester.options("strict"));
+		tester.test("f[v[2[^[-[", "ぱぴぷぺぽ", tester.options("strict"));
+		tester.test("1@1[", "ぬ゛ぬ゜", tester.options("strict"));
+		tester.test("@1", "゛ぬ", tester.options("strict"));
+		tester.test("[1", "゜ぬ", tester.options("strict"));
+		tester.test("@", "゛", tester.options("strict"));
+		tester.test("[", "゜", tester.options("strict"));
+
 		// Upper alphabet
-		testDencoder("QWERTYUIOP", "strict", "QWぃRTYUIOP");
-		testDencoder("ASDFGHJKL", "strict", "ASDFGHJKL");
-		testDencoder("ZXCVBNM", "strict", "っXCVBNM");
-		
+		tester.test("QWERTYUIOP", "QWぃRTYUIOP", tester.options("strict"));
+		tester.test("ASDFGHJKL", "ASDFGHJKL", tester.options("strict"));
+		tester.test("ZXCVBNM", "っXCVBNM", tester.options("strict"));
+
 		// Katakana
-		testDencoder("ヌフアウエオヤユヨワホヘ", "strict", "ヌフアウエオヤユヨワホヘ");
-		testDencoder("タテイスカンナニラセ", "strict", "タテイスカンナニラセ");
-		testDencoder("チトシハキクマノリレケム", "strict", "チトシハキクマノリレケム");
-		testDencoder("ツサソヒコミモネルメロ", "strict", "ツサソヒコミモネルメロ");
-		testDencoder("ァゥェォャュョ", "strict", "ァゥェォャュョ");
-		testDencoder("ィ", "strict", "ィ");
-		testDencoder("ッ", "strict", "ッ");
-		testDencoder("ガギグゲゴ", "strict", "ガギグゲゴ");
-		testDencoder("ザジズゼゾ", "strict", "ザジズゼゾ");
-		testDencoder("ダヂヅデド", "strict", "ダヂヅデド");
-		testDencoder("バビブベボ", "strict", "バビブベボ");
-		testDencoder("ヴ", "strict", "ヴ");
-		testDencoder("パピプペポ", "strict", "パピプペポ");
-		
+		tester.test("ヌフアウエオヤユヨワホヘ", "ヌフアウエオヤユヨワホヘ", tester.options("strict"));
+		tester.test("タテイスカンナニラセ", "タテイスカンナニラセ", tester.options("strict"));
+		tester.test("チトシハキクマノリレケム", "チトシハキクマノリレケム", tester.options("strict"));
+		tester.test("ツサソヒコミモネルメロ", "ツサソヒコミモネルメロ", tester.options("strict"));
+		tester.test("ァゥェォャュョ", "ァゥェォャュョ", tester.options("strict"));
+		tester.test("ィ", "ィ", tester.options("strict"));
+		tester.test("ッ", "ッ", tester.options("strict"));
+		tester.test("ガギグゲゴ", "ガギグゲゴ", tester.options("strict"));
+		tester.test("ザジズゼゾ", "ザジズゼゾ", tester.options("strict"));
+		tester.test("ダヂヅデド", "ダヂヅデド", tester.options("strict"));
+		tester.test("バビブベボ", "バビブベボ", tester.options("strict"));
+		tester.test("ヴ", "ヴ", tester.options("strict"));
+		tester.test("パピプペポ", "パピプペポ", tester.options("strict"));
+
 		// Unsupported characters
-		testDencoder("!\"=~`+*_", "strict", "!\"=~`+*_"); // Unsupported symbols
-		testDencoder("漢字＠", "strict", "漢字＠"); // Unsupported full-width characters
-		testDencoder("を", "strict", "を"); // Unsupported Hiragana character
-		
+		tester.test("!\"=~`+*_", "!\"=~`+*_", tester.options("strict")); // Unsupported symbols
+		tester.test("漢字＠", "漢字＠", tester.options("strict")); // Unsupported full-width characters
+		tester.test("を", "を", tester.options("strict")); // Unsupported Hiragana character
+
 		// Mixed
-		testDencoder("nttを「みかか」に変換します!?", "strict", "みかかを{ntt}i変換djr!・");
+		tester.test("nttを「みかか」に変換します!?", "みかかを{ntt}i変換djr!・", tester.options("strict"));
 	}
 	@Test
 	public void testLenient() {
 		// Blank
-		testDencoder("", "lenient", "");
-		
+		tester.test("", "", tester.options("lenient"));
+
 		// Supported characters
-		testDencoder("1234567890-^|", "lenient", "ぬふあうえおやゆよわほへー");
-		testDencoder("qwertyuiop @[", "lenient", "たていすかんなにらせ ゛゜");
-		testDencoder("asdfghjkl;:]", "lenient", "ちとしはきくまのりれけむ");
-		testDencoder("zxcvbnm,./\\", "lenient", "つさそひこみもねるめろ");
-		testDencoder("#$%&'()", "lenient", "ぁぅぇぉゃゅょ");
-		testDencoder("E{", "lenient", "ぃ「");
-		testDencoder("}", "lenient", "」");
-		testDencoder("Z<>?", "lenient", "っ、。・");
-		
+		tester.test("1234567890-^|", "ぬふあうえおやゆよわほへー", tester.options("lenient"));
+		tester.test("qwertyuiop @[", "たていすかんなにらせ ゛゜", tester.options("lenient"));
+		tester.test("asdfghjkl;:]", "ちとしはきくまのりれけむ", tester.options("lenient"));
+		tester.test("zxcvbnm,./\\", "つさそひこみもねるめろ", tester.options("lenient"));
+		tester.test("#$%&'()", "ぁぅぇぉゃゅょ", tester.options("lenient"));
+		tester.test("E{", "ぃ「", tester.options("lenient"));
+		tester.test("}", "」", tester.options("lenient"));
+		tester.test("Z<>?", "っ、。・", tester.options("lenient"));
+
 		// Voiced sound mark
-		testDencoder("t@g@h@:@b@", "lenient", "がぎぐげご");
-		testDencoder("x@d@r@p@c@", "lenient", "ざじずぜぞ");
-		testDencoder("q@a@z@w@s@", "lenient", "だぢづでど");
-		testDencoder("f@v@2@^@-@", "lenient", "ばびぶべぼ");
-		testDencoder("4@", "lenient", "ゔ");
-		testDencoder("f[v[2[^[-[", "lenient", "ぱぴぷぺぽ");
-		testDencoder("1@1[", "lenient", "ぬ゛ぬ゜");
-		testDencoder("@1", "lenient", "゛ぬ");
-		testDencoder("[1", "lenient", "゜ぬ");
-		testDencoder("@", "lenient", "゛");
-		testDencoder("[", "lenient", "゜");
-		
+		tester.test("t@g@h@:@b@", "がぎぐげご", tester.options("lenient"));
+		tester.test("x@d@r@p@c@", "ざじずぜぞ", tester.options("lenient"));
+		tester.test("q@a@z@w@s@", "だぢづでど", tester.options("lenient"));
+		tester.test("f@v@2@^@-@", "ばびぶべぼ", tester.options("lenient"));
+		tester.test("4@", "ゔ", tester.options("lenient"));
+		tester.test("f[v[2[^[-[", "ぱぴぷぺぽ", tester.options("lenient"));
+		tester.test("1@1[", "ぬ゛ぬ゜", tester.options("lenient"));
+		tester.test("@1", "゛ぬ", tester.options("lenient"));
+		tester.test("[1", "゜ぬ", tester.options("lenient"));
+		tester.test("@", "゛", tester.options("lenient"));
+		tester.test("[", "゜", tester.options("lenient"));
+
 		// Upper alphabet
-		testDencoder("QWERTYUIOP", "lenient", "たてぃすかんなにらせ", "qwErtyuiop");
-		testDencoder("ASDFGHJKL", "lenient", "ちとしはきくまのり", "asdfghjkl");
-		testDencoder("ZXCVBNM", "lenient", "っさそひこみも", "Zxcvbnm");
-		
+		tester.test("QWERTYUIOP", "たてぃすかんなにらせ", "qwErtyuiop", tester.options("lenient"));
+		tester.test("ASDFGHJKL", "ちとしはきくまのり", "asdfghjkl", tester.options("lenient"));
+		tester.test("ZXCVBNM", "っさそひこみも", "Zxcvbnm", tester.options("lenient"));
+
 		// Katakana
-		testDencoder("ヌフアウエオヤユヨワホヘ", "lenient", "1234567890-^", "ぬふあうえおやゆよわほへ");
-		testDencoder("タテイスカンナニラセ", "lenient", "qwertyuiop", "たていすかんなにらせ");
-		testDencoder("チトシハキクマノリレケム", "lenient", "asdfghjkl;:]", "ちとしはきくまのりれけむ");
-		testDencoder("ツサソヒコミモネルメロ", "lenient", "zxcvbnm,./\\", "つさそひこみもねるめろ");
-		testDencoder("ァゥェォャュョ", "lenient", "#$%&'()", "ぁぅぇぉゃゅょ");
-		testDencoder("ィ", "lenient", "E", "ぃ");
-		testDencoder("ッ", "lenient", "Z", "っ");
-		testDencoder("ガギグゲゴ", "lenient", "t@g@h@:@b@", "がぎぐげご");
-		testDencoder("ザジズゼゾ", "lenient", "x@d@r@p@c@", "ざじずぜぞ");
-		testDencoder("ダヂヅデド", "lenient", "q@a@z@w@s@", "だぢづでど");
-		testDencoder("バビブベボ", "lenient", "f@v@2@^@-@", "ばびぶべぼ");
-		testDencoder("ヴ", "lenient", "4@", "ゔ");
-		testDencoder("パピプペポ", "lenient", "f[v[2[^[-[", "ぱぴぷぺぽ");
-		
+		tester.test("ヌフアウエオヤユヨワホヘ", "1234567890-^", "ぬふあうえおやゆよわほへ", tester.options("lenient"));
+		tester.test("タテイスカンナニラセ", "qwertyuiop", "たていすかんなにらせ", tester.options("lenient"));
+		tester.test("チトシハキクマノリレケム", "asdfghjkl;:]", "ちとしはきくまのりれけむ", tester.options("lenient"));
+		tester.test("ツサソヒコミモネルメロ", "zxcvbnm,./\\", "つさそひこみもねるめろ", tester.options("lenient"));
+		tester.test("ァゥェォャュョ", "#$%&'()", "ぁぅぇぉゃゅょ", tester.options("lenient"));
+		tester.test("ィ", "E", "ぃ", tester.options("lenient"));
+		tester.test("ッ", "Z", "っ", tester.options("lenient"));
+		tester.test("ガギグゲゴ", "t@g@h@:@b@", "がぎぐげご", tester.options("lenient"));
+		tester.test("ザジズゼゾ", "x@d@r@p@c@", "ざじずぜぞ", tester.options("lenient"));
+		tester.test("ダヂヅデド", "q@a@z@w@s@", "だぢづでど", tester.options("lenient"));
+		tester.test("バビブベボ", "f@v@2@^@-@", "ばびぶべぼ", tester.options("lenient"));
+		tester.test("ヴ", "4@", "ゔ", tester.options("lenient"));
+		tester.test("パピプペポ", "f[v[2[^[-[", "ぱぴぷぺぽ", tester.options("lenient"));
+
 		// Unsupported characters
-		testDencoder("!\"=~`+*_", "lenient", "!\"=~`+*_"); // Unsupported symbols
-		testDencoder("漢字＠", "lenient", "漢字＠"); // Unsupported full-width characters
-		testDencoder("を", "lenient", "を"); // Unsupported Hiragana character
-		
+		tester.test("!\"=~`+*_", "!\"=~`+*_", tester.options("lenient")); // Unsupported symbols
+		tester.test("漢字＠", "漢字＠", tester.options("lenient")); // Unsupported full-width characters
+		tester.test("を", "を", tester.options("lenient")); // Unsupported Hiragana character
+
 		// Mixed
-		testDencoder("NTTを「みかか」に変換します!?", "lenient", "みかかを{ntt}i変換djr!・", "nttを「みかか」に変換します!?");
+		tester.test("NTTを「みかか」に変換します!?", "みかかを{ntt}i変換djr!・", "nttを「みかか」に変換します!?", tester.options("lenient"));
 	}
-	
-	private void testDencoder(String value, String mode, String expectedEncodedValue) {
-		testDencoder(value, mode, expectedEncodedValue, null);
-	}
-	
-	private void testDencoder(String value, String mode, String expectedEncodedValue, String expectedDecodedValue) {
-		String encodedValue = CipherJisKeyboardDencoder.encCipherJisKeyboard(condition(value, mode));
-		assertEquals(expectedEncodedValue, encodedValue);
-		String decodedValue = CipherJisKeyboardDencoder.encCipherJisKeyboard(condition(encodedValue, mode));
-		if (expectedDecodedValue == null) {
-			assertEquals(value, decodedValue);
-		} else {
-			assertEquals(expectedDecodedValue, decodedValue);
-		}
-	}
-	
-	private DencodeCondition condition(String value, String mode) {
-		return condition(value, StandardCharsets.UTF_8, mode);
-	}
-	
-	private DencodeCondition condition(String value, Charset charset, String mode) {
-		return new DencodeCondition(value, charset, "\r\n", null, new HashMap<>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("cipher.jis-keyboard.mode", mode);
-			}
-		});
-	}
- }
- 
+}
