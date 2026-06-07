@@ -1,0 +1,53 @@
+/*!
+ * DenCode
+ * Copyright 2016 Mozq
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.dencode.logic.dencoder;
+
+import org.junit.jupiter.api.Test;
+
+public class CipherROT18DencoderTest {
+	private final DencoderTester tester = new DencoderTester(
+			CipherROT18Dencoder::encCipherROT18,
+			CipherROT18Dencoder::decCipherROT18);
+
+	@Test
+	public void test() {
+		// Blank
+		tester.test("", "");
+
+		// Method description example
+		tester.test("Hello, world 123!", "Uryyb, jbeyq 678!");
+
+		// Half-width Latin alphabets and numbers
+		tester.test("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "NOPQRSTUVWXYZABCDEFGHIJKLM");
+		tester.test("abcdefghijklmnopqrstuvwxyz", "nopqrstuvwxyzabcdefghijklm");
+		tester.test("0123456789", "5678901234");
+		tester.test("MnNo 49 50", "ZaAb 94 05");
+
+		// Full-width Latin alphabets and numbers
+		tester.test("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ＮＯＰＱＲＳＴＵＶＷＸＹＺＡＢＣＤＥＦＧＨＩＪＫＬＭ");
+		tester.test("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "ｎｏｐｑｒｓｔｕｖｗｘｙｚａｂｃｄｅｆｇｈｉｊｋｌｍ");
+		tester.test("０１２３４５６７８９", "５６７８９０１２３４");
+
+		// Unsupported characters are unchanged
+		tester.test("!? 漢字 あア", "!? 漢字 あア");
+	}
+
+	@Test
+	public void test_decoder() {
+		tester.testDecoder("Uryyb, jbeyq 678!", "Hello, world 123!");
+	}
+}

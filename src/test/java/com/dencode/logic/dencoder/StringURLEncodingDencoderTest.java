@@ -88,6 +88,13 @@ public class StringURLEncodingDencoderTest {
 	}
 
 	@Test
+	public void test_lineBreak() {
+		tester.test("a\nb", "a%0Ab", tester.options(""), "\n");
+		tester.test("a\nb", "a%0D%0Ab", "a\r\nb", tester.options(""), "\r\n");
+		tester.test("a\nb", "a%0D%0Ab", "a\r\nb", tester.options("form"), "\r\n");
+	}
+
+	@Test
 	public void test_decoder() {
 		// Blank
 		tester.testDecoder("", "");

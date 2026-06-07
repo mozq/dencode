@@ -56,6 +56,12 @@ public class StringBase45DencoderTest {
 	}
 
 	@Test
+	public void test_lineBreak() {
+		tester.test("a\nb", "2CC82", tester.options(), "\n");
+		tester.test("a\nb", "5CC3E1", "a\r\nb", tester.options(), "\r\n");
+	}
+
+	@Test
 	public void testZlibCoseCbor() {
 
 		// see https://github.com/eu-digital-green-certificates/dgc-testdata
