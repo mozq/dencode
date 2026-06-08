@@ -17,13 +17,109 @@
 package com.dencode.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.junit.jupiter.api.Test;
 
 import com.dencode.logic.parser.NumberParser.RepeatingInfo;
 
 public class NumberParserTest {
+
+	@Test
+	public void test_parse() {
+		assertNull(NumberParser.parse(null));
+		assertNull(NumberParser.parse(""));
+		assertNull(NumberParser.parse("   "));
+
+		assertNumber("1234.5", NumberParser.parse("1,234.5"));
+		assertNumber("1234567.89", NumberParser.parse("1.234.567,89"));
+		assertNumber("123.45", NumberParser.parse("１２３．４５"));
+
+		assertNumber("10", NumberParser.parse("0b1010"));
+		assertNumber("493", NumberParser.parse("0o755"));
+		assertNumber("255", NumberParser.parse("0xff"));
+
+		assertNumber("123000", NumberParser.parse("123k"));
+		assertNumber("1500000", NumberParser.parse("1.5M"));
+		assertNumber("7", NumberParser.parse("1+2*3"));
+		assertNumber("123", NumberParser.parse("one hundred twenty-three"));
+		assertNumber("123", NumberParser.parse("百二十三"));
+		assertNull(NumberParser.parse("invalid"));
+	}
+	@Test
+	public void test_parseDec() {
+		assertNull(NumberParser.parseDec(null));
+		assertNull(NumberParser.parseDec(""));
+		assertNumber("1234.5", NumberParser.parseDec("1,234.5"));
+		assertNumber("1234567.89", NumberParser.parseDec("1.234.567,89"));
+		assertNumber("0.5", NumberParser.parseDec("1/2"));
+		assertNumber("7", NumberParser.parseDec("1+2*3"));
+		assertNumber("0.000001", NumberParser.parseDec("1μ"));
+		assertNull(NumberParser.parseDec("one"));
+	}
+
+	@Test
+	public void test_parseN() {
+		assertNull(NumberParser.parseN(null, 10));
+		assertNull(NumberParser.parseN("", 10));
+		assertNumber("10", NumberParser.parseN("1010", 2));
+		assertNumber("-10", NumberParser.parseN("-0b1010", 2));
+		assertNumber("255", NumberParser.parseN("+0xFF", 16));
+		assertNumber("10.5", NumberParser.parseN("1010.1", 2));
+		assertNumber("0.5", NumberParser.parseN("1/2", 10));
+		assertNull(NumberParser.parseN("2", 2));
+	}
+
+	@Test
+	public void test_parseLanguageNumbers() {
+		assertNumber("1000001", NumberParser.parseEnNumShortScale("one million one"));
+		assertNumber("1000001", NumberParser.parseJPNum("百万一"));
+		assertNull(NumberParser.parseEnNumShortScale(null));
+		assertNull(NumberParser.parseEnNumShortScale(""));
+		assertNull(NumberParser.parseEnNumShortScale("not a number"));
+		assertNull(NumberParser.parseJPNum(null));
+		assertNull(NumberParser.parseJPNum(""));
+		assertNull(NumberParser.parseJPNum("invalid"));
+	}
+
+	@Test
+	public void test_fraction() {
+		assertArrayEquals(new BigInteger[] {BigInteger.ONE, BigInteger.valueOf(2)}, NumberParser.parseFraction("1/2", 10));
+		assertArrayEquals(new BigInteger[] {BigInteger.valueOf(15), BigInteger.TEN}, NumberParser.parseFraction("1.5/1", 10));
+		assertArrayEquals(new BigInteger[] {BigInteger.valueOf(10), BigInteger.valueOf(2)}, NumberParser.parseFraction("1010/10", 2));
+		assertNull(NumberParser.parseFraction(null, 10));
+		assertNull(NumberParser.parseFraction("", 10));
+		assertNull(NumberParser.parseFraction("1/0", 10));
+		assertNull(NumberParser.parseFraction("x/y", 10));
+
+		assertArrayEquals(new BigInteger[] {BigInteger.valueOf(123), BigInteger.valueOf(100)}, NumberParser.toFraction(new BigDecimal("1.23"), false));
+		assertArrayEquals(new BigInteger[] {BigInteger.valueOf(12), BigInteger.valueOf(9)}, NumberParser.toFraction(new BigDecimal("1.333333"), true));
+		assertArrayEquals(new BigInteger[] {BigInteger.valueOf(2), BigInteger.valueOf(3)}, NumberParser.reduceFraction(new BigInteger[] {BigInteger.valueOf(4), BigInteger.valueOf(6)}));
+		assertNull(NumberParser.toFraction(null, false));
+		assertNull(NumberParser.reduceFraction(null));
+	}
+
+	private static void assertNumber(String expected, BigDecimal actual) {
+		assertEquals(0, new BigDecimal(expected).compareTo(actual));
+	}
+
+	@Test
+	public void test_truncatedDecimal() {
+		assertEquals("0.33...", NumberParser.truncateRepeatingDecimal("0.333333", 2));
+		assertEquals("0.12345", NumberParser.truncateRepeatingDecimal("0.12345", 2));
+		assertEquals("123", NumberParser.truncateRepeatingDecimal("123", 2));
+		assertNull(NumberParser.truncateRepeatingDecimal(null, 2));
+
+		assertEquals("0.33...", NumberParser.toTruncatedDecimal("0.33"));
+		assertEquals("0.33...", NumberParser.toTruncatedDecimal("0.33..."));
+		assertEquals("123", NumberParser.toTruncatedDecimal("123"));
+		assertNull(NumberParser.toTruncatedDecimal(null));
+	}
 	
 	@Test
 	public void test_analyzeRepeatingDecimal_null() {
@@ -353,5 +449,4 @@ public class NumberParserTest {
 		assertEquals(1, rep.oddRepetendLength());
 		assertEquals(0, rep.roundingDifference());
 	}
- }
- 
+}
