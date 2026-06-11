@@ -105,7 +105,7 @@
 					<li><a href="${dc:h(basePath)}/string/letter-case" data-dencode-method="string.letter-case">${dc:h(msg['string.letter-case.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/text-reverse" data-dencode-method="string.text-reverse">${dc:h(msg['string.text-reverse.method'])}</a></li>
 					<li><hr /></li>
-					<li><a href="${dc:h(basePath)}/string/font-style" data-dencode-method="string.font-style">${dc:h(msg['string.font-style.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/unicode-styled-text" data-dencode-method="string.unicode-styled-text">${dc:h(msg['string.unicode-styled-text.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/unicode-normalization" data-dencode-method="string.unicode-normalization">${dc:h(msg['string.unicode-normalization.method'])}</a></li>
 					<li><hr /></li>
@@ -1362,23 +1362,23 @@
 							<c:if test="${methods.contains('string.text-reverse')}"><tr data-dencode-method="string.text-reverse"><th>${dc:h(msg['string.text-reverse.func.encStrReverse'])}</th><td><span id="encStrReverse" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('string.font-style')}"><tr data-dencode-method="string.font-style"><th>${dc:h(msg['string.font-style.func.encStrFontStyle'])}</th><td><span id="encStrFontStyle" class="for-disp"></span>
+							<c:if test="${methods.contains('string.unicode-styled-text')}"><tr data-dencode-method="string.unicode-styled-text"><th>${dc:h(msg['string.unicode-styled-text.func.encStrUnicodeStyledText'])}</th><td><span id="encStrUnicodeStyledText" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
-										<span class="input-group-text">${dc:h(msg['string.font-style.style'])}</span>
-										<select name="string.font-style.style" class="dencode-option form-select">
-											<option value="">${dc:h(msg['string.font-style.style.none'])}</option>
+										<span class="input-group-text">${dc:h(msg['string.unicode-styled-text.style'])}</span>
+										<select name="string.unicode-styled-text.style" class="dencode-option form-select">
+											<option value="">${dc:h(msg['string.unicode-styled-text.style.none'])}</option>
 											<option value="sansserif">𝖲𝖺𝗇𝗌-𝗌𝖾𝗋𝗂𝖿</option>
-											<option value="sansserif-bold">𝗦𝗮𝗻𝘀-𝘀𝗲𝗿𝗶𝗳 (${dc:h(msg['string.font-style.style.bold'])})</option>
-											<option value="sansserif-italic">𝘚𝘢𝘯𝘴-𝘴𝘦𝘳𝘪𝘧 (${dc:h(msg['string.font-style.style.italic'])})</option>
-											<option value="sansserif-bold-italic">𝙎𝙖𝙣𝙨-𝙨𝙚𝙧𝙞𝙛 (${dc:h(msg['string.font-style.style.bold-italic'])})</option>
-											<option value="serif-bold">𝐒𝐞𝐫𝐢𝐟 (${dc:h(msg['string.font-style.style.bold'])})</option>
-											<option value="serif-italic">𝑆𝑒𝑟𝑖𝑓 (${dc:h(msg['string.font-style.style.italic'])})</option>
-											<option value="serif-bold-italic">𝑺𝒆𝒓𝒊𝒇 (${dc:h(msg['string.font-style.style.bold-italic'])})</option>
+											<option value="sansserif-bold">𝗦𝗮𝗻𝘀-𝘀𝗲𝗿𝗶𝗳 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
+											<option value="sansserif-italic">𝘚𝘢𝘯𝘴-𝘴𝘦𝘳𝘪𝘧 (${dc:h(msg['string.unicode-styled-text.style.italic'])})</option>
+											<option value="sansserif-bold-italic">𝙎𝙖𝙣𝙨-𝙨𝙚𝙧𝙞𝙛 (${dc:h(msg['string.unicode-styled-text.style.bold-italic'])})</option>
+											<option value="serif-bold">𝐒𝐞𝐫𝐢𝐟 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
+											<option value="serif-italic">𝑆𝑒𝑟𝑖𝑓 (${dc:h(msg['string.unicode-styled-text.style.italic'])})</option>
+											<option value="serif-bold-italic">𝑺𝒆𝒓𝒊𝒇 (${dc:h(msg['string.unicode-styled-text.style.bold-italic'])})</option>
 											<option value="script">𝒮𝒸𝓇𝒾𝓅𝓉</option>
-											<option value="script-bold">𝓢𝓬𝓻𝓲𝓹𝓽 (${dc:h(msg['string.font-style.style.bold'])})</option>
+											<option value="script-bold">𝓢𝓬𝓻𝓲𝓹𝓽 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="fraktur">𝔉𝔯𝔞𝔨𝔱𝔲𝔯</option>
-											<option value="fraktur-bold">𝕱𝖗𝖆𝖐𝖙𝖚𝖗 (${dc:h(msg['string.font-style.style.bold'])})</option>
+											<option value="fraktur-bold">𝕱𝖗𝖆𝖐𝖙𝖚𝖗 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="doublestruck">𝔻𝕠𝕦𝕓𝕝𝕖 𝕊𝕥𝕣𝕦𝕔𝕜</option>
 											<option value="monospace">𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎</option>
 											<option value="smallcapital">Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ</option>

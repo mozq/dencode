@@ -17,6 +17,7 @@
 package com.dencode.web.servlet.filter;
 
 import java.io.IOException;
+import java.util.Map;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -30,6 +31,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebFilter(urlPatterns = "/*")
 public class LegacyPathRedirectFilter implements Filter {
+	private static final Map<String, String> LEGACY_PATHS = Map.of(
+			"/string/program-string", "/string/literal",
+			"/string/font-style", "/string/unicode-styled-text"
+			);
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
@@ -46,18 +51,21 @@ public class LegacyPathRedirectFilter implements Filter {
 			String pathInfo = req.getPathInfo();
 			String fullPath = servletPath + ((pathInfo == null) ? "" : pathInfo);
 
-			if (fullPath.endsWith("/string/program-string")) {
-				String contextPath = req.getContextPath();
-				String newPath = contextPath + fullPath.replace("/string/program-string", "/string/literal");
+			for (Map.Entry<String, String> entry : LEGACY_PATHS.entrySet()) {
+				String oldPath = entry.getKey();
+				if (fullPath.endsWith(oldPath)) {
+					String contextPath = req.getContextPath();
+					String newPath = contextPath + fullPath.replace(oldPath, entry.getValue());
 
-				String queryString = req.getQueryString();
-				if (queryString != null) {
-					newPath += "?" + queryString;
+					String queryString = req.getQueryString();
+					if (queryString != null) {
+						newPath += "?" + queryString;
+					}
+
+					res.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+					res.setHeader("Location", newPath);
+					return;
 				}
-
-				res.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-				res.setHeader("Location", newPath);
-				return;
 			}
 		}
 

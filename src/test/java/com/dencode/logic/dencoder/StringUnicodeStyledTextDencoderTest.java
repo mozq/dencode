@@ -16,12 +16,17 @@
  */
 package com.dencode.logic.dencoder;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.Test;
 
-public class StringFontStyleDencoderTest {
+import com.dencode.logic.DencodeMapper;
+
+public class StringUnicodeStyledTextDencoderTest {
 	private final DencoderTester tester = new DencoderTester(
-			StringFontStyleDencoder::encStrFontStyle,
-			"string.font-style.style");
+			StringUnicodeStyledTextDencoder::encStrUnicodeStyledText,
+			"string.unicode-styled-text.style");
 
 	@Test
 	public void test() {

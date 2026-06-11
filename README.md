@@ -77,7 +77,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Letter Case (Upper, Lower, Swap, Capital)](https://dencode.com/string/letter-case)
     - [Text Initials](https://dencode.com/string/text-initials)
     - [Text Reverse](https://dencode.com/string/text-reverse)
-    - [Font Style](https://dencode.com/string/font-style)
+    - [Unicode Styled Text](https://dencode.com/string/unicode-styled-text)
     - [Unicode Normalization](https://dencode.com/string/unicode-normalization)
     - [Line Sort](https://dencode.com/string/line-sort)
     - [Line Unique](https://dencode.com/string/line-unique)

@@ -23,8 +23,8 @@ import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="string", method="string.font-style", hasEncoder=true, hasDecoder=false)
-public class StringFontStyleDencoder {
+@Dencoder(type="string", method="string.unicode-styled-text", hasEncoder=true, hasDecoder=false)
+public class StringUnicodeStyledTextDencoder {
 	
 	private static final Map<String, int[][]> MAPS_DEF = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
@@ -54,19 +54,19 @@ public class StringFontStyleDencoder {
 		}
 	};
 	
-	private StringFontStyleDencoder() {
+	private StringUnicodeStyledTextDencoder() {
 		// NOP
 	}
 	
 	@DencoderFunction
-	public static String encStrFontStyle(DencodeCondition cond) {
-		return encStrFontStyle(
+	public static String encStrUnicodeStyledText(DencodeCondition cond) {
+		return encStrUnicodeStyledText(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "string.font-style.style", "")
+				DencodeUtils.getOption(cond.options(), "string.unicode-styled-text.style", "")
 				);
 	}
 	
-	private static String encStrFontStyle(String val, String style) {
+	private static String encStrUnicodeStyledText(String val, String style) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
