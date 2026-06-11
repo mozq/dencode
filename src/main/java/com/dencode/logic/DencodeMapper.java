@@ -271,57 +271,64 @@ public class DencodeMapper {
 	
 	private static List<Class<?>> listAnnotatedClass(String packageName, Class<? extends Annotation> annotationClass, ClassLoader classLoader) {
 		String resourceName = packageName.replace('.', '/');
-		URL root = classLoader.getResource(resourceName);
-		
-		String protocol = root.getProtocol();
-		
 		List<Class<?>> classList = new ArrayList<>();
 		
-		if (protocol.equals("file")) {
-			File[] files = new File(root.getFile()).listFiles((dir, name) -> name.endsWith(".class"));
-			for (File file : files) {
-				String fileName = file.getName();
-				String className = fileName.substring(0, fileName.length() - ".class".length());
-				try {
-					Class<?> clazz = Class.forName(packageName + "." + className);
-					if (clazz.isAnnotationPresent(annotationClass)) {
-						classList.add(clazz);
-					}
-				} catch (ClassNotFoundException e) {
-					continue;
-				}
-			}
-		} else if (protocol.equals("jar")) {
-			try (JarFile jarFile = ((JarURLConnection) root.openConnection()).getJarFile()) {
-				Enumeration<JarEntry> jarEntries = jarFile.entries();
-				while (jarEntries.hasMoreElements()) {
-					JarEntry jarEntry = jarEntries.nextElement();
-					String jarEntryName = jarEntry.getName();
-					
-					if (!jarEntryName.startsWith(resourceName)) {
+		try {
+			Enumeration<URL> roots = classLoader.getResources(resourceName);
+			while (roots.hasMoreElements()) {
+				URL root = roots.nextElement();
+				String protocol = root.getProtocol();
+				
+				if (protocol.equals("file")) {
+					File[] files = new File(root.getFile()).listFiles((dir, name) -> name.endsWith(".class"));
+					if (files == null) {
 						continue;
 					}
-
-					if (!jarEntryName.endsWith(".class")) {
-						continue;
-					}
-					
-					int nameStartIdx = jarEntryName.lastIndexOf('/') + 1;
-					String className = jarEntryName.substring(nameStartIdx, jarEntryName.length() - ".class".length());
-					try {
-						Class<?> clazz = Class.forName(packageName + "." + className);
-						if (clazz.isAnnotationPresent(annotationClass)) {
-							classList.add(clazz);
+					for (File file : files) {
+						String fileName = file.getName();
+						String className = fileName.substring(0, fileName.length() - ".class".length());
+						try {
+							Class<?> clazz = Class.forName(packageName + "." + className);
+							if (clazz.isAnnotationPresent(annotationClass) && !classList.contains(clazz)) {
+								classList.add(clazz);
+							}
+						} catch (ClassNotFoundException e) {
+							continue;
 						}
-					} catch (ClassNotFoundException e) {
-						continue;
 					}
+				} else if (protocol.equals("jar")) {
+					try (JarFile jarFile = ((JarURLConnection) root.openConnection()).getJarFile()) {
+						Enumeration<JarEntry> jarEntries = jarFile.entries();
+						while (jarEntries.hasMoreElements()) {
+							JarEntry jarEntry = jarEntries.nextElement();
+							String jarEntryName = jarEntry.getName();
+							
+							if (!jarEntryName.startsWith(resourceName)) {
+								continue;
+							}
+							
+							if (!jarEntryName.endsWith(".class")) {
+								continue;
+							}
+							
+							int nameStartIdx = jarEntryName.lastIndexOf('/') + 1;
+							String className = jarEntryName.substring(nameStartIdx, jarEntryName.length() - ".class".length());
+							try {
+								Class<?> clazz = Class.forName(packageName + "." + className);
+								if (clazz.isAnnotationPresent(annotationClass) && !classList.contains(clazz)) {
+									classList.add(clazz);
+								}
+							} catch (ClassNotFoundException e) {
+								continue;
+							}
+						}
+					}
+				} else {
+					// NOP
 				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
 			}
-		} else {
-			// NOP
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 		
 		return classList;
