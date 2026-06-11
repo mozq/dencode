@@ -5,7 +5,7 @@
 
 <p>Ví dụ, khi chuyển “Hello, world! 123” sang kiểu chữ viết tay, kết quả như sau.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>Trong ví dụ này, các chữ cái được thay bằng ký tự Unicode giống chữ viết tay, còn dấu phẩy, khoảng trắng, dấu chấm than và chữ số được giữ nguyên.</p>
 

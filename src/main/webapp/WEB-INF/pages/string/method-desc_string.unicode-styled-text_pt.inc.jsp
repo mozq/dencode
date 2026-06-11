@@ -5,7 +5,7 @@
 
 <p>Por exemplo, ao converter “Hello, world! 123” para um estilo manuscrito, o resultado é o seguinte.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>Neste exemplo, as letras são substituídas por caracteres Unicode com aparência manuscrita, enquanto a vírgula, o espaço, o ponto de exclamação e os dígitos permanecem iguais.</p>
 

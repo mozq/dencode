@@ -5,7 +5,7 @@
 
 <p>Na przykład po konwersji „Hello, world! 123” do stylu pisma odręcznego wynik wygląda następująco.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>W tym przykładzie litery są zastępowane znakami Unicode przypominającymi pismo odręczne, a przecinek, spacja, wykrzyknik i cyfry pozostają bez zmian.</p>
 

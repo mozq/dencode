@@ -5,7 +5,7 @@
 
 <p>For example, converting “Hello, world! 123” to a script style produces the following.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>In this example, the letters are replaced with script-like Unicode characters, while the comma, space, exclamation mark, and digits remain unchanged.</p>
 

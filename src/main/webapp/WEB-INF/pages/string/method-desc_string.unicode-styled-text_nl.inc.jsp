@@ -5,7 +5,7 @@
 
 <p>Als “Hello, world! 123” bijvoorbeeld naar een sierlijke stijl wordt geconverteerd, ziet het resultaat er als volgt uit.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>In dit voorbeeld worden de letters vervangen door Unicode-tekens met een sierlijke uitstraling. De komma, spatie, het uitroepteken en de cijfers blijven ongewijzigd.</p>
 

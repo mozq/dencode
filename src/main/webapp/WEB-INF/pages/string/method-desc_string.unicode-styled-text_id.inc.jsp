@@ -5,7 +5,7 @@
 
 <p>Misalnya, jika “Hello, world! 123” dikonversi ke gaya script, hasilnya adalah sebagai berikut.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>Dalam contoh ini, huruf diganti dengan karakter Unicode bergaya script, sedangkan koma, spasi, tanda seru, dan digit tetap sama.</p>
 

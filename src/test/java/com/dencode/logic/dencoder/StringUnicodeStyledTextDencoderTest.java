@@ -54,7 +54,7 @@ public class StringUnicodeStyledTextDencoderTest {
 		tester.testEncoder("AZaz09", "AZᴀᴢ09", tester.options("smallcapital"));
 
 		// Symbols and unsupported characters are unchanged
-		tester.testEncoder("Hello, world!", "𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹!", tester.options("script"));
+		tester.testEncoder("Hello, world!", "ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹!", tester.options("script"));
 		tester.testEncoder("漢字😀 !?", "漢字😀 !?", tester.options("serif-bold"));
 	}
 }

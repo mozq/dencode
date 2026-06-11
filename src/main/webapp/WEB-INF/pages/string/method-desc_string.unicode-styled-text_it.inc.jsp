@@ -5,7 +5,7 @@
 
 <p>Ad esempio, convertendo “Hello, world! 123” in stile calligrafico si ottiene quanto segue.</p>
 
-<pre>𝐻𝑒𝓁𝓁𝑜, 𝓌𝑜𝓇𝓁𝒹! 123</pre>
+<pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
 <p>In questo esempio, le lettere vengono sostituite da caratteri Unicode in stile calligrafico, mentre virgola, spazio, punto esclamativo e cifre rimangono invariati.</p>
 
