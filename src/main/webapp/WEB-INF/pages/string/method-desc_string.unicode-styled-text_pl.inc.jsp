@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Kursywa w stylu sans-serif. Cyfry nie są konwertowane.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Pogrubione znaki w stylu serif.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Kursywa w stylu serif. Cyfry nie są konwertowane.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Znaki w stylu pisma odręcznego. Cyfry nie są konwertowane.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Znaki w stylu pisma odręcznego. Cyfry nie są konwertowane.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Znaki w stylu Fraktur. Cyfry nie są konwertowane.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Znaki z podwójnym konturem.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Znaki w stylu monospace.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Znaki przypominające kapitaliki. Konwertowane są tylko małe litery.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>Litery i cyfry w kółkach.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>Litery i cyfry w odwróconych kółkach. Małe litery są konwertowane na wielkie litery.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>Litery w kwadratach. Małe litery są konwertowane na wielkie litery. Cyfry nie są konwertowane.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>Litery w odwróconych kwadratach. Małe litery są konwertowane na wielkie litery. Cyfry nie są konwertowane.</td></tr>
 	</table>
 </div>
 

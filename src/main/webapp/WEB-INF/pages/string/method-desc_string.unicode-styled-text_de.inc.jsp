@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Kursive Zeichen im Sans-Serif-Stil. Ziffern werden nicht umgewandelt.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Fette Zeichen im Serif-Stil.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Kursive Zeichen im Serif-Stil. Ziffern werden nicht umgewandelt.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Zeichen im Schreibschrift-Stil. Ziffern werden nicht umgewandelt.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Zeichen im Schreibschrift-Stil. Ziffern werden nicht umgewandelt.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Zeichen im Fraktur-Stil. Ziffern werden nicht umgewandelt.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Doppelt gestrichene Zeichen.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Zeichen im Monospace-Stil.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Zeichen im Kapitälchen-Stil. Nur Kleinbuchstaben werden umgewandelt.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>Buchstaben und Ziffern in Kreisen.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>Negativ eingekreiste Buchstaben und Ziffern. Kleinbuchstaben werden in Großbuchstaben umgewandelt.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>Buchstaben in Quadraten. Kleinbuchstaben werden in Großbuchstaben umgewandelt. Ziffern werden nicht umgewandelt.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>Negative Buchstaben in Quadraten. Kleinbuchstaben werden in Großbuchstaben umgewandelt. Ziffern werden nicht umgewandelt.</td></tr>
 	</table>
 </div>
 

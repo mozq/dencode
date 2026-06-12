@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif 斜体</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>サンセリフ風の斜体です。数字は変換されません。</td></tr>
 		<tr><td>Serif 太字</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>セリフ風の太字です。</td></tr>
 		<tr><td>Serif 斜体</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>セリフ風の斜体です。数字は変換されません。</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>筆記体風の文字です。数字は変換されません。</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>筆記体風の文字です。数字は変換されません。</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>フラクトゥール風の文字です。数字は変換されません。</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>二重線の文字です。</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>等幅風の文字です。</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>小型大文字風の文字です。小文字のみ変換されます。</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>丸囲みの文字と数字です。</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>黒丸囲みの文字と数字です。小文字は大文字に変換されます。</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>四角囲みの文字です。小文字は大文字に変換されます。数字は変換されません。</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>黒四角囲みの文字です。小文字は大文字に変換されます。数字は変換されません。</td></tr>
 	</table>
 </div>
 

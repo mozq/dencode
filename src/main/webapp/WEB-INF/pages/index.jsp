@@ -1382,6 +1382,10 @@
 											<option value="doublestruck">𝔻𝕠𝕦𝕓𝕝𝕖 𝕊𝕥𝕣𝕦𝕔𝕜</option>
 											<option value="monospace">𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎</option>
 											<option value="smallcapital">Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ</option>
+											<option value="circled">Ⓒⓘⓡⓒⓛⓔⓓ</option>
+											<option value="negative-circled">🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓</option>
+											<option value="squared">🅂🅀🅄🄰🅁🄴🄳</option>
+											<option value="negative-squared">🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳</option>
 										</select>
 									</div>
 								</div>

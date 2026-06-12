@@ -52,6 +52,10 @@ public class StringUnicodeStyledTextDencoderTest {
 		tester.testEncoder("AZaz09", "𝔸ℤ𝕒𝕫𝟘𝟡", tester.options("doublestruck"));
 		tester.testEncoder("AZaz09", "𝙰𝚉𝚊𝚣𝟶𝟿", tester.options("monospace"));
 		tester.testEncoder("AZaz09", "AZᴀᴢ09", tester.options("smallcapital"));
+		tester.testEncoder("AZaz09", "ⒶⓏⓐⓩ⓪⑨", tester.options("circled"));
+		tester.testEncoder("AZaz09", "🅐🅩🅐🅩⓿❾", tester.options("negative-circled"));
+		tester.testEncoder("AZaz09", "🄰🅉🄰🅉09", tester.options("squared"));
+		tester.testEncoder("AZaz09", "🅰🆉🅰🆉09", tester.options("negative-squared"));
 
 		// Symbols and unsupported characters are unchanged
 		tester.testEncoder("Hello, world!", "ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹!", tester.options("script"));

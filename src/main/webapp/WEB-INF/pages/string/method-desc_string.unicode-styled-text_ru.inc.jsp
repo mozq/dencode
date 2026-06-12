@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Курсивные символы в стиле sans-serif. Цифры не преобразуются.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Жирные символы в стиле serif.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Курсивные символы в стиле serif. Цифры не преобразуются.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Символы в рукописном стиле. Цифры не преобразуются.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Символы в рукописном стиле. Цифры не преобразуются.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Символы в стиле Fraktur. Цифры не преобразуются.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Символы с двойным контуром.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Символы в моноширинном стиле.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Символы в стиле малых прописных. Преобразуются только строчные буквы.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>Буквы и цифры в кружках.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>Инверсные буквы и цифры в кружках. Строчные буквы преобразуются в прописные.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>Буквы в квадратах. Строчные буквы преобразуются в прописные. Цифры не преобразуются.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>Инверсные буквы в квадратах. Строчные буквы преобразуются в прописные. Цифры не преобразуются.</td></tr>
 	</table>
 </div>
 

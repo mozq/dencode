@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Sans-serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Serif जैसे bold अक्षर.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Script जैसे अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Script जैसे अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Fraktur जैसे अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Double-struck अक्षर.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Monospace जैसे अक्षर.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Small capital जैसे अक्षर. केवल lowercase अक्षर बदलते हैं.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>घेरे हुए अक्षर और अंक.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>नकारात्मक वृत्त वाले अक्षर और अंक. छोटे अक्षर बड़े अक्षरों में बदलते हैं.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>वर्गाकार अक्षर. छोटे अक्षर बड़े अक्षरों में बदलते हैं. अंक नहीं बदलते.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>नकारात्मक वर्गाकार अक्षर. छोटे अक्षर बड़े अक्षरों में बदलते हैं. अंक नहीं बदलते.</td></tr>
 	</table>
 </div>
 

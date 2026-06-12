@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>산세리프 스타일의 기울임 문자입니다. 숫자는 변환되지 않습니다.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>세리프 스타일의 굵은 문자입니다.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>세리프 스타일의 기울임 문자입니다. 숫자는 변환되지 않습니다.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>필기체처럼 보이는 문자입니다. 숫자는 변환되지 않습니다.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>필기체처럼 보이는 문자입니다. 숫자는 변환되지 않습니다.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Fraktur 스타일의 문자입니다. 숫자는 변환되지 않습니다.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>이중선 문자입니다.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>고정폭처럼 보이는 문자입니다.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>작은 대문자처럼 보이는 문자입니다. 소문자만 변환됩니다.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>원형 문자와 숫자입니다.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>음각 원형 문자와 숫자입니다. 소문자는 대문자로 변환됩니다.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>사각형 문자입니다. 소문자는 대문자로 변환됩니다. 숫자는 변환되지 않습니다.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>음각 사각형 문자입니다. 소문자는 대문자로 변환됩니다. 숫자는 변환되지 않습니다.</td></tr>
 	</table>
 </div>
 

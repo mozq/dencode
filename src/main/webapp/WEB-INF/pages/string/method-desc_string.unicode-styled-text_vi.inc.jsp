@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Ký tự sans-serif in nghiêng. Chữ số không được chuyển đổi.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Ký tự serif in đậm.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Ký tự serif in nghiêng. Chữ số không được chuyển đổi.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Ký tự kiểu chữ viết tay. Chữ số không được chuyển đổi.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Ký tự kiểu chữ viết tay. Chữ số không được chuyển đổi.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Ký tự kiểu Fraktur. Chữ số không được chuyển đổi.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Ký tự double-struck.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Ký tự kiểu monospace.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Ký tự kiểu small capital. Chỉ chữ thường được chuyển đổi.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>Chữ cái và chữ số khoanh tròn.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>Chữ cái và chữ số khoanh tròn âm bản. Chữ thường được chuyển thành chữ hoa.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>Chữ cái dạng ô vuông. Chữ thường được chuyển thành chữ hoa. Chữ số không được chuyển đổi.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>Chữ cái dạng ô vuông âm bản. Chữ thường được chuyển thành chữ hoa. Chữ số không được chuyển đổi.</td></tr>
 	</table>
 </div>
 

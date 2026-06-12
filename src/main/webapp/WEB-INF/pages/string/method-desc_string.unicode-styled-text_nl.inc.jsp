@@ -17,11 +17,15 @@
 		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Cursieve tekens in sans-serifstijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Vette tekens in serifstijl.</td></tr>
 		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Cursieve tekens in serifstijl. Cijfers worden niet geconverteerd.</td></tr>
-		<tr><td>Script</td><td><code>𝒜𝐵𝒞 𝒶𝒷𝒸 123</code></td><td>Tekens in sierlijke schrijfstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Tekens in sierlijke schrijfstijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Tekens in Fraktur-stijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Dubbelgestreepte tekens.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Tekens in monospace-stijl.</td></tr>
 		<tr><td>Small Capital</td><td><code>ABC ᴀʙᴄ 123</code></td><td>Tekens in kleinkapitalenstijl. Alleen kleine letters worden geconverteerd.</td></tr>
+		<tr><td>Circled</td><td><code>ⒶⒷⒸ ⓐⓑⓒ ①②③</code></td><td>Omcirkelde letters en cijfers.</td></tr>
+		<tr><td>Negative Circled</td><td><code>🅐🅑🅒 🅐🅑🅒 ❶❷❸</code></td><td>Negatief omcirkelde letters en cijfers. Kleine letters worden omgezet naar hoofdletters.</td></tr>
+		<tr><td>Squared</td><td><code>🄰🄱🄲 🄰🄱🄲 123</code></td><td>Letters in vierkanten. Kleine letters worden omgezet naar hoofdletters. Cijfers worden niet omgezet.</td></tr>
+		<tr><td>Negative Squared</td><td><code>🅰🅱🅲 🅰🅱🅲 123</code></td><td>Negatieve letters in vierkanten. Kleine letters worden omgezet naar hoofdletters. Cijfers worden niet omgezet.</td></tr>
 	</table>
 </div>
 
