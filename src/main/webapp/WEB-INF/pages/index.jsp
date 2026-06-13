@@ -101,13 +101,13 @@
 					<li><a href="${dc:h(basePath)}/string/snake-case" data-dencode-method="string.snake-case">❯ ${dc:h(msg['string.snake-case.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/kebab-case" data-dencode-method="string.kebab-case">❯ ${dc:h(msg['string.kebab-case.method'])}</a></li>
 					<li><hr /></li>
-					<li><a href="${dc:h(basePath)}/string/character-width" data-dencode-method="string.character-width">${dc:h(msg['string.character-width.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/letter-case" data-dencode-method="string.letter-case">${dc:h(msg['string.letter-case.method'])}</a></li>
-					<li><a href="${dc:h(basePath)}/string/text-reverse" data-dencode-method="string.text-reverse">${dc:h(msg['string.text-reverse.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/character-width" data-dencode-method="string.character-width">${dc:h(msg['string.character-width.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/unicode-normalization" data-dencode-method="string.unicode-normalization">${dc:h(msg['string.unicode-normalization.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/unicode-styled-text" data-dencode-method="string.unicode-styled-text">${dc:h(msg['string.unicode-styled-text.method'])}</a></li>
 					<li><hr /></li>
-					<li><a href="${dc:h(basePath)}/string/unicode-normalization" data-dencode-method="string.unicode-normalization">${dc:h(msg['string.unicode-normalization.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/text-reverse" data-dencode-method="string.text-reverse">${dc:h(msg['string.text-reverse.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/line-sort" data-dencode-method="string.line-sort">${dc:h(msg['string.line-sort.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/line-unique" data-dencode-method="string.line-unique">${dc:h(msg['string.line-unique.method'])}</a></li>
@@ -154,13 +154,17 @@
 					<li><a href="${dc:h(basePath)}/color" data-dencode-method="color.all">${dc:h(msg['color.all.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/color/name" data-dencode-method="color.name">${dc:h(msg['color.name.method'])}</a></li>
+					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/color/rgb" data-dencode-method="color.rgb">${dc:h(msg['color.rgb.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/hsl" data-dencode-method="color.hsl">${dc:h(msg['color.hsl.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/hwb" data-dencode-method="color.hwb">${dc:h(msg['color.hwb.method'])}</a></li>
+					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/color/lab" data-dencode-method="color.lab">${dc:h(msg['color.lab.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/lch" data-dencode-method="color.lch">${dc:h(msg['color.lch.method'])}</a></li>
+					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/color/oklab" data-dencode-method="color.oklab">${dc:h(msg['color.oklab.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/color/oklch" data-dencode-method="color.oklch">${dc:h(msg['color.oklch.method'])}</a></li>
+					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/color/cmyk" data-dencode-method="color.cmyk">${dc:h(msg['color.cmyk.method'])}</a></li>
 				</ul>
 			</li>
@@ -1340,8 +1344,6 @@
 							<c:if test="${methods.contains('string.naming-convention') or methods.contains('string.kebab-case')}"><tr data-dencode-method="string.kebab-case"><th>${dc:h(msg['string.kebab-case.func.encStrLowerKebabCase'])}</th><td><span id="encStrLowerKebabCase" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrHalfWidth'])}</th><td><span id="encStrHalfWidth" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrFullWidth'])}</th><td><span id="encStrFullWidth" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.letter-case')}"><tr data-dencode-method="string.letter-case"><th>${dc:h(msg['string.letter-case.func.encStrUpperCase'])}</th><td><span id="encStrUpperCase" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.letter-case')}"><tr data-dencode-method="string.letter-case"><th>${dc:h(msg['string.letter-case.func.encStrLowerCase'])}</th><td><span id="encStrLowerCase" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.letter-case')}"><tr data-dencode-method="string.letter-case"><th>${dc:h(msg['string.letter-case.func.encStrSwapCase'])}</th><td><span id="encStrSwapCase" class="for-disp"></span></td></tr></c:if>
@@ -1359,7 +1361,10 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('string.text-reverse')}"><tr data-dencode-method="string.text-reverse"><th>${dc:h(msg['string.text-reverse.func.encStrReverse'])}</th><td><span id="encStrReverse" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrHalfWidth'])}</th><td><span id="encStrHalfWidth" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrFullWidth'])}</th><td><span id="encStrFullWidth" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFC'])}</th><td><span id="encStrUnicodeNFC" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFKC'])}</th><td><span id="encStrUnicodeNFKC" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.unicode-styled-text')}"><tr data-dencode-method="string.unicode-styled-text"><th>${dc:h(msg['string.unicode-styled-text.func.encStrUnicodeStyledText'])}</th><td><span id="encStrUnicodeStyledText" class="for-disp"></span>
@@ -1391,8 +1396,7 @@
 							</td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFC'])}</th><td><span id="encStrUnicodeNFC" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFKC'])}</th><td><span id="encStrUnicodeNFKC" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.text-reverse')}"><tr data-dencode-method="string.text-reverse"><th>${dc:h(msg['string.text-reverse.func.encStrReverse'])}</th><td><span id="encStrReverse" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.line-sort')}"><tr data-dencode-method="string.line-sort"><th>${dc:h(msg['string.line-sort.func.encStrLineSort'])}</th><td><span id="encStrLineSort" class="for-disp"></span>
@@ -1555,6 +1559,8 @@
 					<c:if test="${types.contains('color')}">
 						<tbody>
 							<c:if test="${methods.contains('color.name')}"><tr data-dencode-method="color.name"><th>${dc:h(msg['color.name.func.encColorName'])}</th><td><span id="encColorName" class="for-disp"></span></td></tr></c:if>
+						</tbody>
+						<tbody>
 							<c:if test="${methods.contains('color.rgb')}"><tr data-dencode-method="color.rgb"><th>${dc:h(msg['color.rgb.func.encColorRgbHex'])}</th><td><span id="encColorRgbHex" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
@@ -1591,10 +1597,16 @@
 							</td></tr></c:if>
 							<c:if test="${methods.contains('color.hsl')}"><tr data-dencode-method="color.hsl"><th>${dc:h(msg['color.hsl.func.encColorHsl'])}</th><td><span id="encColorHsl" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.hwb')}"><tr data-dencode-method="color.hwb"><th>${dc:h(msg['color.hwb.func.encColorHwb'])}</th><td><span id="encColorHwb" class="for-disp"></span></td></tr></c:if>
+						</tbody>
+						<tbody>
 							<c:if test="${methods.contains('color.lab')}"><tr data-dencode-method="color.lab"><th>${dc:h(msg['color.lab.func.encColorLab'])}</th><td><span id="encColorLab" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.lch')}"><tr data-dencode-method="color.lch"><th>${dc:h(msg['color.lch.func.encColorLch'])}</th><td><span id="encColorLch" class="for-disp"></span></td></tr></c:if>
+						</tbody>
+						<tbody>
 							<c:if test="${methods.contains('color.oklab')}"><tr data-dencode-method="color.oklab"><th>${dc:h(msg['color.oklab.func.encColorOklab'])}</th><td><span id="encColorOklab" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('color.oklch')}"><tr data-dencode-method="color.oklch"><th>${dc:h(msg['color.oklch.func.encColorOklch'])}</th><td><span id="encColorOklch" class="for-disp"></span></td></tr></c:if>
+						</tbody>
+						<tbody>
 							<c:if test="${methods.contains('color.cmyk')}"><tr data-dencode-method="color.cmyk"><th>${dc:h(msg['color.cmyk.func.encColorCmyk'])}</th><td><span id="encColorCmyk" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
