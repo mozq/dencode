@@ -3,7 +3,7 @@
 <p>Conversie naar gestileerde Unicode-tekst vervangt Latijnse letters en cijfers door decoratieve Unicode-tekens. Zo kunt u tekst maken die eruitziet als vet, cursief, sierlijk schrift, Fraktur, dubbelgestreept, monospace, kleinkapitalen en andere stijlen.</p>
 <p>Deze conversie wijzigt geen CSS- of documentlettertype. In plaats daarvan worden ASCII-letters (A-Z, a-z) en cijfers (0-9) in de invoer vervangen door overeenkomstige Unicode-tekens. Als een stijl geen overeenkomstig teken heeft, blijft dat teken ongewijzigd.</p>
 
-<p>Als “Hello, world! 123” bijvoorbeeld naar een sierlijke stijl wordt geconverteerd, ziet het resultaat er als volgt uit.</p>
+<p>Als “Hello, world! 123” bijvoorbeeld naar een sierlijke stijl (Script) wordt geconverteerd, ziet het resultaat er als volgt uit.</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">Stijl</th><th scope="col">Conversievoorbeeld voor “ABC abc 123”</th><th scope="col">Beschrijving</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Tekens in sans-serifstijl.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Vette tekens in sans-serifstijl.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Cursieve tekens in sans-serifstijl. Cijfers worden niet geconverteerd.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Vette tekens in serifstijl.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Cursieve tekens in serifstijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Tekens in sierlijke schrijfstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Script (Vet)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Vette tekens in sierlijke schrijfstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Tekens in sans-serifstijl.</td></tr>
+		<tr><td>Sans-serif (Vet)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Vette tekens in sans-serifstijl.</td></tr>
+		<tr><td>Sans-serif (Cursief)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Cursieve tekens in sans-serifstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Sans-serif (Vet & Cursief)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Vette cursieve tekens in sans-serifstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Serif (Vet)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Vette tekens in serifstijl.</td></tr>
+		<tr><td>Serif (Cursief)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Cursieve tekens in serifstijl. Cijfers worden niet geconverteerd.</td></tr>
+		<tr><td>Serif (Vet & Cursief)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Vette cursieve tekens in serifstijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Tekens in Fraktur-stijl. Cijfers worden niet geconverteerd.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Dubbelgestreepte tekens.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Tekens in monospace-stijl.</td></tr>

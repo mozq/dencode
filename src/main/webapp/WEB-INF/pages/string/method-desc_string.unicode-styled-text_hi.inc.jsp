@@ -3,7 +3,7 @@
 <p>Unicode सजावटी टेक्स्ट रूपांतरण लैटिन अक्षरों और अंकों को सजावटी Unicode अक्षरों से बदलता है। इससे bold, italic, script, Fraktur, double-struck, monospace, small capital आदि जैसे दिखने वाले टेक्स्ट बनाए जा सकते हैं।</p>
 <p>यह CSS या दस्तावेज़ की फ़ॉन्ट सेटिंग नहीं बदलता। इसके बजाय, इनपुट में मौजूद ASCII अक्षरों (A-Z, a-z) और अंकों (0-9) को उनसे मेल खाने वाले Unicode अक्षरों से बदला जाता है। जिस शैली में कोई मेल खाता अक्षर नहीं होता, वह अक्षर वैसा ही रहता है।</p>
 
-<p>उदाहरण के लिए, “Hello, world! 123” को script शैली में बदलने पर परिणाम यह होता है।</p>
+<p>उदाहरण के लिए, “Hello, world! 123” को script (Script) शैली में बदलने पर परिणाम यह होता है।</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">शैली</th><th scope="col">“ABC abc 123” का रूपांतरण उदाहरण</th><th scope="col">विवरण</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Sans-serif जैसे अक्षर.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Sans-serif जैसे bold अक्षर.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Sans-serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Serif जैसे bold अक्षर.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Script जैसे अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Script (बोल्ड)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Bold Script जैसे अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Sans-serif जैसे अक्षर.</td></tr>
+		<tr><td>Sans-serif (बोल्ड)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Sans-serif जैसे bold अक्षर.</td></tr>
+		<tr><td>Sans-serif (इटैलिक)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Sans-serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Sans-serif (बोल्ड और इटैलिक)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Sans-serif जैसे bold italic अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Serif (बोल्ड)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Serif जैसे bold अक्षर.</td></tr>
+		<tr><td>Serif (इटैलिक)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Serif जैसे italic अक्षर. अंक नहीं बदलते.</td></tr>
+		<tr><td>Serif (बोल्ड और इटैलिक)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Serif जैसे bold italic अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Fraktur जैसे अक्षर. अंक नहीं बदलते.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Double-struck अक्षर.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Monospace जैसे अक्षर.</td></tr>

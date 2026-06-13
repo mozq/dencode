@@ -3,7 +3,7 @@
 <p>Unicode styled text conversion replaces Latin letters and digits with decorative Unicode characters. It can create text that looks bold, italic, script-like, Fraktur, double-struck, monospace, small caps, and more.</p>
 <p>This does not change a CSS or document font setting. Instead, ASCII letters (A-Z, a-z) and digits (0-9) in the input are replaced with corresponding Unicode characters. If a style has no corresponding character, that character is left unchanged.</p>
 
-<p>For example, converting “Hello, world! 123” to a script style produces the following.</p>
+<p>For example, converting “Hello, world! 123” to a script (Script) style produces the following.</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">Style</th><th scope="col">Conversion example for “ABC abc 123”</th><th scope="col">Description</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Sans-serif-style characters.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Sans-serif-style bold characters.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Sans-serif-style italic characters. Digits are not converted.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Serif-style bold characters.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Serif-style italic characters. Digits are not converted.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Script-style characters. Digits are not converted.</td></tr>
+		<tr><td>Script (bold)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Bold script-style characters. Digits are not converted.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Sans-serif-style characters.</td></tr>
+		<tr><td>Sans-serif (bold)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Sans-serif-style bold characters.</td></tr>
+		<tr><td>Sans-serif (italic)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Sans-serif-style italic characters. Digits are not converted.</td></tr>
+		<tr><td>Sans-serif (bold & italic)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Sans-serif-style bold italic characters. Digits are not converted.</td></tr>
+		<tr><td>Serif (bold)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Serif-style bold characters.</td></tr>
+		<tr><td>Serif (italic)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Serif-style italic characters. Digits are not converted.</td></tr>
+		<tr><td>Serif (bold & italic)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Serif-style bold italic characters. Digits are not converted.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Fraktur-style characters. Digits are not converted.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Double-struck characters.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Monospace-style characters.</td></tr>

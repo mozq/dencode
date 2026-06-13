@@ -1367,7 +1367,8 @@
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['string.unicode-styled-text.style'])}</span>
 										<select name="string.unicode-styled-text.style" class="dencode-option form-select">
-											<option value="">${dc:h(msg['string.unicode-styled-text.style.none'])}</option>
+											<option value="script">𝒮𝒸𝓇𝒾𝓅𝓉</option>
+											<option value="script-bold">𝓢𝓬𝓻𝓲𝓹𝓽 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="sansserif">𝖲𝖺𝗇𝗌-𝗌𝖾𝗋𝗂𝖿</option>
 											<option value="sansserif-bold">𝗦𝗮𝗻𝘀-𝘀𝗲𝗿𝗶𝗳 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="sansserif-italic">𝘚𝘢𝘯𝘴-𝘴𝘦𝘳𝘪𝘧 (${dc:h(msg['string.unicode-styled-text.style.italic'])})</option>
@@ -1375,8 +1376,6 @@
 											<option value="serif-bold">𝐒𝐞𝐫𝐢𝐟 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="serif-italic">𝑆𝑒𝑟𝑖𝑓 (${dc:h(msg['string.unicode-styled-text.style.italic'])})</option>
 											<option value="serif-bold-italic">𝑺𝒆𝒓𝒊𝒇 (${dc:h(msg['string.unicode-styled-text.style.bold-italic'])})</option>
-											<option value="script">𝒮𝒸𝓇𝒾𝓅𝓉</option>
-											<option value="script-bold">𝓢𝓬𝓻𝓲𝓹𝓽 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="fraktur">𝔉𝔯𝔞𝔨𝔱𝔲𝔯</option>
 											<option value="fraktur-bold">𝕱𝖗𝖆𝖐𝖙𝖚𝖗 (${dc:h(msg['string.unicode-styled-text.style.bold'])})</option>
 											<option value="doublestruck">𝔻𝕠𝕦𝕓𝕝𝕖 𝕊𝕥𝕣𝕦𝕔𝕜</option>

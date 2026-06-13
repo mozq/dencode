@@ -3,7 +3,7 @@
 <p>La conversión de texto Unicode estilizado reemplaza letras latinas y dígitos por caracteres Unicode decorativos. Permite crear texto con apariencia de negrita, cursiva, escritura manuscrita, Fraktur, doble trazo, monoespaciado, versalitas, etc.</p>
 <p>Esta conversión no cambia la configuración de fuente de CSS ni de un documento. En su lugar, sustituye las letras ASCII (A-Z, a-z) y los dígitos (0-9) de la entrada por los caracteres Unicode correspondientes. Si un estilo no tiene un carácter equivalente, ese carácter se deja sin cambios.</p>
 
-<p>Por ejemplo, al convertir “Hello, world! 123” a un estilo manuscrito se obtiene lo siguiente.</p>
+<p>Por ejemplo, al convertir “Hello, world! 123” a un estilo manuscrito (Script) se obtiene lo siguiente.</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">Estilo</th><th scope="col">Ejemplo de conversión para “ABC abc 123”</th><th scope="col">Descripción</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Caracteres con aspecto sans-serif.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Caracteres sans-serif en negrita.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Caracteres sans-serif en cursiva. Los dígitos no se convierten.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Caracteres serif en negrita.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Caracteres serif en cursiva. Los dígitos no se convierten.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Caracteres con aspecto manuscrito. Los dígitos no se convierten.</td></tr>
+		<tr><td>Script (Negrita)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Caracteres manuscritos en negrita. Los dígitos no se convierten.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Caracteres con aspecto sans-serif.</td></tr>
+		<tr><td>Sans-serif (Negrita)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Caracteres sans-serif en negrita.</td></tr>
+		<tr><td>Sans-serif (Cursiva)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Caracteres sans-serif en cursiva. Los dígitos no se convierten.</td></tr>
+		<tr><td>Sans-serif (Negrita y cursiva)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Caracteres sans-serif en negrita y cursiva. Los dígitos no se convierten.</td></tr>
+		<tr><td>Serif (Negrita)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Caracteres serif en negrita.</td></tr>
+		<tr><td>Serif (Cursiva)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Caracteres serif en cursiva. Los dígitos no se convierten.</td></tr>
+		<tr><td>Serif (Negrita y cursiva)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Caracteres serif en negrita y cursiva. Los dígitos no se convierten.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Caracteres con estilo Fraktur. Los dígitos no se convierten.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Caracteres de doble trazo.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Caracteres con aspecto monoespaciado.</td></tr>

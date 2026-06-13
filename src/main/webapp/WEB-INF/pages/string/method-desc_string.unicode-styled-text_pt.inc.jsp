@@ -3,7 +3,7 @@
 <p>A conversão de texto Unicode estilizado substitui letras latinas e dígitos por caracteres Unicode decorativos. Ela permite criar textos com aparência de negrito, itálico, manuscrito, Fraktur, duplo traço, monoespaçado, versalete e outros estilos.</p>
 <p>Essa conversão não altera a fonte definida em CSS nem em um documento. Em vez disso, substitui letras ASCII (A-Z, a-z) e dígitos (0-9) da entrada pelos caracteres Unicode correspondentes. Se um estilo não tiver um caractere correspondente, esse caractere permanece inalterado.</p>
 
-<p>Por exemplo, ao converter “Hello, world! 123” para um estilo manuscrito, o resultado é o seguinte.</p>
+<p>Por exemplo, ao converter “Hello, world! 123” para um estilo manuscrito (Script), o resultado é o seguinte.</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">Estilo</th><th scope="col">Exemplo de conversão para “ABC abc 123”</th><th scope="col">Descrição</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Caracteres com aparência sans-serif.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Caracteres sans-serif em negrito.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Caracteres sans-serif em itálico. Os dígitos não são convertidos.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Caracteres serifados em negrito.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Caracteres serifados em itálico. Os dígitos não são convertidos.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Caracteres com aparência manuscrita. Os dígitos não são convertidos.</td></tr>
+		<tr><td>Script (negrito)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Caracteres manuscritos em negrito. Os dígitos não são convertidos.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Caracteres com aparência sans-serif.</td></tr>
+		<tr><td>Sans-serif (negrito)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Caracteres sans-serif em negrito.</td></tr>
+		<tr><td>Sans-serif (itálico)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Caracteres sans-serif em itálico. Os dígitos não são convertidos.</td></tr>
+		<tr><td>Sans-serif (negrito e itálico)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Caracteres sans-serif em negrito e itálico. Os dígitos não são convertidos.</td></tr>
+		<tr><td>Serif (negrito)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Caracteres serifados em negrito.</td></tr>
+		<tr><td>Serif (itálico)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Caracteres serifados em itálico. Os dígitos não são convertidos.</td></tr>
+		<tr><td>Serif (negrito e itálico)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Caracteres serifados em negrito e itálico. Os dígitos não são convertidos.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Caracteres em estilo Fraktur. Os dígitos não são convertidos.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Caracteres de duplo traço.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Caracteres com aparência monoespaçada.</td></tr>

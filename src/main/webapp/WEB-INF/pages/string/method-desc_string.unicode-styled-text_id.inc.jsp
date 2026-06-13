@@ -3,7 +3,7 @@
 <p>Konversi teks Unicode bergaya mengganti huruf Latin dan digit dengan karakter Unicode dekoratif. Dengan ini, Anda dapat membuat teks yang terlihat seperti tebal, miring, script, Fraktur, double-struck, monospace, small capital, dan gaya lainnya.</p>
 <p>Konversi ini tidak mengubah pengaturan font di CSS atau dokumen. Sebaliknya, huruf ASCII (A-Z, a-z) dan digit (0-9) pada input diganti dengan karakter Unicode yang sesuai. Jika suatu gaya tidak memiliki karakter yang sesuai, karakter tersebut dibiarkan apa adanya.</p>
 
-<p>Misalnya, jika “Hello, world! 123” dikonversi ke gaya script, hasilnya adalah sebagai berikut.</p>
+<p>Misalnya, jika “Hello, world! 123” dikonversi ke gaya script (Script), hasilnya adalah sebagai berikut.</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">Gaya</th><th scope="col">Contoh konversi untuk “ABC abc 123”</th><th scope="col">Keterangan</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Karakter bergaya sans-serif.</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Karakter sans-serif tebal.</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Karakter sans-serif miring. Digit tidak dikonversi.</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Karakter serif tebal.</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Karakter serif miring. Digit tidak dikonversi.</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>Karakter bergaya script. Digit tidak dikonversi.</td></tr>
+		<tr><td>Script (Tebal)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>Karakter script tebal. Digit tidak dikonversi.</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>Karakter bergaya sans-serif.</td></tr>
+		<tr><td>Sans-serif (Tebal)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>Karakter sans-serif tebal.</td></tr>
+		<tr><td>Sans-serif (Miring)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>Karakter sans-serif miring. Digit tidak dikonversi.</td></tr>
+		<tr><td>Sans-serif (Tebal dan miring)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>Karakter sans-serif tebal dan miring. Digit tidak dikonversi.</td></tr>
+		<tr><td>Serif (Tebal)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>Karakter serif tebal.</td></tr>
+		<tr><td>Serif (Miring)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>Karakter serif miring. Digit tidak dikonversi.</td></tr>
+		<tr><td>Serif (Tebal dan miring)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>Karakter serif tebal dan miring. Digit tidak dikonversi.</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>Karakter bergaya Fraktur. Digit tidak dikonversi.</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>Karakter double-struck.</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>Karakter bergaya monospace.</td></tr>

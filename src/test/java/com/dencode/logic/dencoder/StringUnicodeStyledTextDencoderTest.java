@@ -16,12 +16,7 @@
  */
 package com.dencode.logic.dencoder;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.Test;
-
-import com.dencode.logic.DencodeMapper;
 
 public class StringUnicodeStyledTextDencoderTest {
 	private final DencoderTester tester = new DencoderTester(
@@ -33,11 +28,14 @@ public class StringUnicodeStyledTextDencoderTest {
 		// Blank
 		tester.testEncoder("", "");
 
-		// No style
+		// Default style
+		tester.testEncoder("AZaz09", "𝒜𝒵𝒶𝓏09");
 		tester.testEncoder("AZaz09", "AZaz09", tester.options(""));
 		tester.testEncoder("AZaz09", "AZaz09", tester.options("unknown"));
 
 		// Styles
+		tester.testEncoder("AZaz09", "𝒜𝒵𝒶𝓏09", tester.options("script"));
+		tester.testEncoder("AZaz09", "𝓐𝓩𝓪𝔃09", tester.options("script-bold"));
 		tester.testEncoder("AZaz09", "𝖠𝖹𝖺𝗓𝟢𝟫", tester.options("sansserif"));
 		tester.testEncoder("AZaz09", "𝗔𝗭𝗮𝘇𝟬𝟵", tester.options("sansserif-bold"));
 		tester.testEncoder("AZaz09", "𝘈𝘡𝘢𝘻09", tester.options("sansserif-italic"));
@@ -45,8 +43,6 @@ public class StringUnicodeStyledTextDencoderTest {
 		tester.testEncoder("AZaz09", "𝐀𝐙𝐚𝐳𝟎𝟗", tester.options("serif-bold"));
 		tester.testEncoder("AZaz09", "𝐴𝑍𝑎𝑧09", tester.options("serif-italic"));
 		tester.testEncoder("AZaz09", "𝑨𝒁𝒂𝒛09", tester.options("serif-bold-italic"));
-		tester.testEncoder("AZaz09", "𝒜𝒵𝒶𝓏09", tester.options("script"));
-		tester.testEncoder("AZaz09", "𝓐𝓩𝓪𝔃09", tester.options("script-bold"));
 		tester.testEncoder("AZaz09", "𝔄ℨ𝔞𝔷09", tester.options("fraktur"));
 		tester.testEncoder("AZaz09", "𝕬𝖅𝖆𝖟09", tester.options("fraktur-bold"));
 		tester.testEncoder("AZaz09", "𝔸ℤ𝕒𝕫𝟘𝟡", tester.options("doublestruck"));

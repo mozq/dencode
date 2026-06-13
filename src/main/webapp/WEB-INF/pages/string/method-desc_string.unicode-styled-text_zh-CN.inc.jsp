@@ -3,7 +3,7 @@
 <p>Unicode 装饰文字转换会把英文字母和数字替换为装饰性的 Unicode 字符。可以生成看起来像粗体、斜体、手写体、Fraktur、双线体、等宽体、小型大写字母等样式的文本。</p>
 <p>这种转换不会改变 CSS 或文档中的字体设置。它会把输入中的 ASCII 英文字母（A-Z, a-z）和数字（0-9）替换为对应的 Unicode 字符。如果某个样式没有对应字符，该字符会保持原样。</p>
 
-<p>例如，将“Hello, world! 123”转换为手写体样式后如下。</p>
+<p>例如，将“Hello, world! 123”转换为手写体 (Script) 样式后如下。</p>
 
 <pre>ℋℯ𝓁𝓁ℴ, 𝓌ℴ𝓇𝓁𝒹! 123</pre>
 
@@ -12,12 +12,15 @@
 <div class="table-responsive">
 	<table class="table">
 		<tr><th scope="col">样式</th><th scope="col">“ABC abc 123”的转换示例</th><th scope="col">说明</th></tr>
-		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>类似无衬线字体的字符。</td></tr>
-		<tr><td>Sans-serif bold</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>类似无衬线字体的粗体字符。</td></tr>
-		<tr><td>Sans-serif italic</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>类似无衬线字体的斜体字符。数字不会转换。</td></tr>
-		<tr><td>Serif bold</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>类似衬线字体的粗体字符。</td></tr>
-		<tr><td>Serif italic</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>类似衬线字体的斜体字符。数字不会转换。</td></tr>
 		<tr><td>Script</td><td><code>𝒜ℬ𝒞 𝒶𝒷𝒸 123</code></td><td>类似手写体的字符。数字不会转换。</td></tr>
+		<tr><td>Script (粗体)</td><td><code>𝓐𝓑𝓒 𝓪𝓫𝓬 123</code></td><td>类似粗体手写体的字符。数字不会转换。</td></tr>
+		<tr><td>Sans-serif</td><td><code>𝖠𝖡𝖢 𝖺𝖻𝖼 𝟣𝟤𝟥</code></td><td>类似无衬线字体的字符。</td></tr>
+		<tr><td>Sans-serif (粗体)</td><td><code>𝗔𝗕𝗖 𝗮𝗯𝗰 𝟭𝟮𝟯</code></td><td>类似无衬线字体的粗体字符。</td></tr>
+		<tr><td>Sans-serif (斜体)</td><td><code>𝘈𝘉𝘊 𝘢𝘣𝘤 123</code></td><td>类似无衬线字体的斜体字符。数字不会转换。</td></tr>
+		<tr><td>Sans-serif (粗体 & 斜体)</td><td><code>𝘼𝘽𝘾 𝙖𝙗𝙘 123</code></td><td>类似无衬线字体的粗斜体字符。数字不会转换。</td></tr>
+		<tr><td>Serif (粗体)</td><td><code>𝐀𝐁𝐂 𝐚𝐛𝐜 𝟏𝟐𝟑</code></td><td>类似衬线字体的粗体字符。</td></tr>
+		<tr><td>Serif (斜体)</td><td><code>𝐴𝐵𝐶 𝑎𝑏𝑐 123</code></td><td>类似衬线字体的斜体字符。数字不会转换。</td></tr>
+		<tr><td>Serif (粗体 & 斜体)</td><td><code>𝑨𝑩𝑪 𝒂𝒃𝒄 123</code></td><td>类似衬线字体的粗斜体字符。数字不会转换。</td></tr>
 		<tr><td>Fraktur</td><td><code>𝔄𝔅ℭ 𝔞𝔟𝔠 123</code></td><td>类似 Fraktur 的字符。数字不会转换。</td></tr>
 		<tr><td>Double Struck</td><td><code>𝔸𝔹ℂ 𝕒𝕓𝕔 𝟙𝟚𝟛</code></td><td>双线体字符。</td></tr>
 		<tr><td>Monospace</td><td><code>𝙰𝙱𝙲 𝚊𝚋𝚌 𝟷𝟸𝟹</code></td><td>类似等宽字体的字符。</td></tr>
