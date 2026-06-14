@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>基本轉義與全部轉義</h4>
-<p>DenCode 會顯示兩種 HTML 轉義結果：「基本」和「全部」。</p>
+<h4>HTML 跳脫選項</h4>
+<p>DenCode 可以選擇目標、命名字元參照的使用方式，以及數值參照表示法。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">類型</th><th scope="col">說明</th><th scope="col">「A &lt; あ」的轉換例</th></tr>
-		<tr><td>HTML轉義 (基本)</td><td>轉換 <code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> 這 5 個字元。</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTML轉義 (全部)</td><td>有 HTML 命名字元參照的字元會轉換為命名字元參照，其他字元會轉換為十進位數值字元參照。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>目標</caption>
+		<tr><th scope="col">選項</th><th scope="col">說明</th><th scope="col">「A &lt; 😀」的轉換範例</th></tr>
+		<tr><td>基本</td><td>轉換 <code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> 這 5 個字元。</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>基本 + 非ASCII</td><td>轉換 5 個基本字元以及非 ASCII 字元。</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>非英數</td><td>轉換 ASCII 英文字母和數字以外的字元。</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>全部</td><td>轉換所有字元。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>在一般 HTML 顯示中，通常會使用只轉換必要字元的基本轉義。全部轉義適合用於想把字串作為 HTML 字元參照確認，或想用明確的參照形式表示所有字元的情況。</p>
-
-<h4>反轉義</h4>
-<p>HTML 反轉義會把 HTML 字元參照還原為原本的字元。DenCode 可以解碼 <code>&amp;lt;</code>、<code>&amp;amp;</code> 等命名字元參照，也可以解碼 <code>&amp;#12354;</code> 這類十進位數值字元參照，以及 <code>&amp;#x3042;</code> 這類十六進位數值字元參照。</p>
+<p>一般 HTML 顯示通常使用「基本」，因為它只轉換必要的字元。如果想將字串作為 HTML 字元參照檢查，或將每個字元明確表示為參照，可以使用「全部」。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">HTML 字元參照</th><th scope="col">反轉義後</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>命名字元參照</caption>
+		<tr><th scope="col">選項</th><th scope="col">說明</th><th scope="col">範例</th></tr>
+		<tr><td>HTML5</td><td>使用 HTML5 定義的命名字元參照。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>使用 HTML4 定義的命名字元參照。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>使用 <code>&amp;lt;</code>、<code>&amp;gt;</code>、<code>&amp;amp;</code>、<code>&amp;quot;</code>、<code>&amp;apos;</code> 這 5 個參照。</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>無</td><td>不使用命名字元參照，只使用數值參照。</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>數值參照表示法</caption>
+		<tr><th scope="col">選項</th><th scope="col">說明</th><th scope="col">範例</th></tr>
+		<tr><td>十進位</td><td>使用十進位數值參照。</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>十六進位小寫</td><td>使用小寫十六進位數值參照。</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>十六進位大寫</td><td>使用大寫十六進位數值參照。</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

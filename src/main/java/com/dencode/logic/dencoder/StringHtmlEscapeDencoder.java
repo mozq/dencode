@@ -18,6 +18,7 @@ package com.dencode.logic.dencoder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.dencode.logic.dencoder.annotation.Dencoder;
@@ -25,17 +26,31 @@ import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.html-escape", hasEncoder=true, hasDecoder=true, useNl=true)
-public class StringHTMLEscapeDencoder {
+public class StringHtmlEscapeDencoder {
+	private static enum Target {
+		BASIC,
+		NON_ASCII,
+		NON_ALNUM,
+		ALL,
+	}
+
+	private static enum NamedReferences {
+		HTML5,
+		HTML4,
+		XHTML,
+		NONE,
+	}
+
 	private static enum NumericNotation {
 		DECIMAL,
 		UPPER_HEXADECIMAL,
 		LOWER_HEXADECIMAL,
 	}
-	
+
 	private static class Chars {
 		private char char1, char2;
 		private int hash;
-		
+
 		public Chars(char char1) { set(char1); }
 		public Chars(char char1, char char2) { set(char1, char2); }
 		public char char1() { return this.char1; }
@@ -45,7 +60,7 @@ public class StringHTMLEscapeDencoder {
 		@Override public int hashCode() { if (this.hash == -1) { this.hash = (char1 << 16) ^ char2; } return this.hash; }
 		@Override public boolean equals(Object obj) { return (char1 == ((Chars)obj).char1) && (char2 == ((Chars)obj).char2); }
 	}
-	
+
 	/*
 	public static void main(String[] args) throws Exception {
 		String url = "https://html.spec.whatwg.org/entities.json";
@@ -62,7 +77,7 @@ public class StringHTMLEscapeDencoder {
 		}
 	}
 	//*/
-	
+
 	private static final Map<String, Chars> NAME_CHARS_MAP = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -2300,110 +2315,251 @@ public class StringHTMLEscapeDencoder {
 			put("zwnj;", new Chars('\u200C'));
 		}
 	};
-	
+
+	private static final Set<String> HTML4_NAMED_REFERENCES = Set.of(
+			"quot;", "amp;", "lt;", "gt;",
+			"nbsp;", "iexcl;", "cent;", "pound;", "curren;", "yen;", "brvbar;", "sect;", "uml;", "copy;", "ordf;", "laquo;",
+			"not;", "shy;", "reg;", "macr;", "deg;", "plusmn;", "sup2;", "sup3;", "acute;", "micro;", "para;", "middot;",
+			"cedil;", "sup1;", "ordm;", "raquo;", "frac14;", "frac12;", "frac34;", "iquest;", "Agrave;", "Aacute;", "Acirc;", "Atilde;",
+			"Auml;", "Aring;", "AElig;", "Ccedil;", "Egrave;", "Eacute;", "Ecirc;", "Euml;", "Igrave;", "Iacute;", "Icirc;", "Iuml;",
+			"ETH;", "Ntilde;", "Ograve;", "Oacute;", "Ocirc;", "Otilde;", "Ouml;", "times;", "Oslash;", "Ugrave;", "Uacute;", "Ucirc;",
+			"Uuml;", "Yacute;", "THORN;", "szlig;", "agrave;", "aacute;", "acirc;", "atilde;", "auml;", "aring;", "aelig;", "ccedil;",
+			"egrave;", "eacute;", "ecirc;", "euml;", "igrave;", "iacute;", "icirc;", "iuml;", "eth;", "ntilde;", "ograve;", "oacute;",
+			"ocirc;", "otilde;", "ouml;", "divide;", "oslash;", "ugrave;", "uacute;", "ucirc;", "uuml;", "yacute;", "thorn;", "yuml;",
+			"fnof;", "Alpha;", "Beta;", "Gamma;", "Delta;", "Epsilon;", "Zeta;", "Eta;", "Theta;", "Iota;", "Kappa;", "Lambda;",
+			"Mu;", "Nu;", "Xi;", "Omicron;", "Pi;", "Rho;", "Sigma;", "Tau;", "Upsilon;", "Phi;", "Chi;", "Psi;",
+			"Omega;", "alpha;", "beta;", "gamma;", "delta;", "epsilon;", "zeta;", "eta;", "theta;", "iota;", "kappa;", "lambda;",
+			"mu;", "nu;", "xi;", "omicron;", "pi;", "rho;", "sigmaf;", "sigma;", "tau;", "upsilon;", "phi;", "chi;",
+			"psi;", "omega;", "thetasym;", "upsih;", "piv;", "bull;", "hellip;", "prime;", "Prime;", "oline;", "frasl;", "weierp;",
+			"image;", "real;", "trade;", "alefsym;", "larr;", "uarr;", "rarr;", "darr;", "harr;", "crarr;", "lArr;", "uArr;",
+			"rArr;", "dArr;", "hArr;", "forall;", "part;", "exist;", "empty;", "nabla;", "isin;", "notin;", "ni;", "prod;",
+			"sum;", "minus;", "lowast;", "radic;", "prop;", "infin;", "ang;", "and;", "or;", "cap;", "cup;", "int;",
+			"there4;", "sim;", "cong;", "asymp;", "ne;", "equiv;", "le;", "ge;", "sub;", "sup;", "nsub;", "sube;",
+			"supe;", "oplus;", "otimes;", "perp;", "sdot;", "lceil;", "rceil;", "lfloor;", "rfloor;", "lang;", "rang;", "loz;",
+			"spades;", "clubs;", "hearts;", "diams;", "OElig;", "oelig;", "Scaron;", "scaron;", "Yuml;", "circ;", "tilde;", "ensp;",
+			"emsp;", "thinsp;", "zwnj;", "zwj;", "lrm;", "rlm;", "ndash;", "mdash;", "lsquo;", "rsquo;", "sbquo;", "ldquo;",
+			"rdquo;", "bdquo;", "dagger;", "Dagger;", "permil;", "lsaquo;", "rsaquo;", "euro;");
+
+	private static final Map<String, Chars> HTML4_NAME_CHARS_MAP = createHtml4NameCharsMap();
+
 	private static final Map<Chars, String> CHARS_NAME_MAP = NAME_CHARS_MAP.entrySet().stream()
 			.filter((entry) -> entry.getKey().charAt(entry.getKey().length() - 1) == ';')
-			.collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (first, _) -> first));
-	
-	
-	private StringHTMLEscapeDencoder() {
+			.collect(Collectors.toMap(
+					Map.Entry::getValue,
+					Map.Entry::getKey,
+					StringHtmlEscapeDencoder::selectPreferredNamedReference));
+
+	private static final Map<Chars, String> HTML4_CHARS_NAME_MAP = HTML4_NAME_CHARS_MAP.entrySet().stream()
+			.collect(Collectors.toMap(
+					Map.Entry::getValue,
+					Map.Entry::getKey,
+					StringHtmlEscapeDencoder::selectPreferredNamedReference));
+
+
+	private static Map<String, Chars> createHtml4NameCharsMap() {
+		Map<String, Chars> map = new HashMap<>();
+		for (String name : HTML4_NAMED_REFERENCES) {
+			Chars chars = NAME_CHARS_MAP.get(name);
+			if (chars == null) {
+				throw new IllegalStateException("HTML4 named reference is not found: " + name);
+			}
+			map.put(name, chars);
+		}
+
+		map.put("lang;", new Chars('\u2329'));
+		map.put("rang;", new Chars('\u232A'));
+
+		return Map.copyOf(map);
+	}
+
+
+	private StringHtmlEscapeDencoder() {
 		// NOP
 	}
-	
-	
+
+
+	@DencoderFunction
+	public static String encStrHtmlEscape(DencodeCondition cond) {
+		Target target = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.target", "basic")) {
+			case "basic" -> Target.BASIC;
+			case "non-ascii" -> Target.NON_ASCII;
+			case "non-alnum" -> Target.NON_ALNUM;
+			case "all" -> Target.ALL;
+			default -> Target.BASIC;
+		};
+
+		NamedReferences namedRefs = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.named-refs", "html5")) {
+			case "html5" -> NamedReferences.HTML5;
+			case "html4" -> NamedReferences.HTML4;
+			case "xhtml" -> NamedReferences.XHTML;
+			case "none" -> NamedReferences.NONE;
+			default -> NamedReferences.HTML5;
+		};
+
+		NumericNotation numNotation = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.numeric-ref-notation", "decimal")) {
+			case "decimal" -> NumericNotation.DECIMAL;
+			case "hex-lower" -> NumericNotation.LOWER_HEXADECIMAL;
+			case "hex-upper" -> NumericNotation.UPPER_HEXADECIMAL;
+			default -> NumericNotation.DECIMAL;
+		};
+
+		return encStrHtmlEscape(cond.value(), target, namedRefs, numNotation);
+	}
+
+	@Deprecated
 	@DencoderFunction
 	public static String encStrHTMLEscape(DencodeCondition cond) {
-		return encStrHTMLEscape(cond.value(), false, false, null);
+		return encStrHtmlEscape(cond.value(), Target.BASIC, NamedReferences.HTML5, NumericNotation.DECIMAL);
 	}
-	
+
+	@Deprecated
 	@DencoderFunction
 	public static String encStrHTMLEscapeFully(DencodeCondition cond) {
-		return encStrHTMLEscape(cond.value(), true, true, NumericNotation.DECIMAL);
+		return encStrHtmlEscape(cond.value(), Target.ALL, NamedReferences.HTML5, NumericNotation.DECIMAL);
 	}
-	
+
+	@DencoderFunction
+	public static String decStrHtmlEscape(DencodeCondition cond) {
+		return decStrHtmlEscape(cond.value());
+	}
+
+	@Deprecated
 	@DencoderFunction
 	public static String decStrHTMLEscape(DencodeCondition cond) {
-		return decStrHTMLEscape(cond.value());
+		return decStrHtmlEscape(cond.value());
 	}
-	
-	
-	private static String encStrHTMLEscape(String val, boolean encNamedRef, boolean encNumRef, NumericNotation numNotation) {
+
+
+	private static String encStrHtmlEscape(String val, Target target, NamedReferences namedRefs, NumericNotation numNotation) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int len = val.length();
-		
+
 		Chars chars = new Chars('\0', '\0');
-		
+
 		StringBuilder sb = new StringBuilder(len * 2);
 		for (int i = 0; i < len; i++) {
 			char ch1 = val.charAt(i);
-			
-			String basicRef = switch (ch1) {
-				case '<' -> "&lt;";
-				case '>' -> "&gt;";
-				case '&' -> "&amp;";
-				case '"' -> "&quot;";
-				case '\'' -> "&apos;";
-				default -> null;
-			};
-			if (basicRef != null) {
-				sb.append(basicRef);
-				continue;
-			}
-			
-			
-			if (encNamedRef) {
-				char ch2 = DencodeUtils.charAt(val, i + 1);
-				String ref2 = CHARS_NAME_MAP.get(chars.set(ch1, ch2));
-				if (ref2 != null) {
-					sb.append('&').append(ref2);
-					i++;
-					continue;
-				}
-				
-				String ref1 = CHARS_NAME_MAP.get(chars.set(ch1));
-				if (ref1 != null) {
-					sb.append('&').append(ref1);
-					continue;
-				}
+			char ch2 = DencodeUtils.charAt(val, i + 1);
+			int cp;
+			int charCount;
+			if (Character.isHighSurrogate(ch1) && Character.isLowSurrogate(ch2)) {
+				cp = Character.toCodePoint(ch1, ch2);
+				charCount = 2;
+			} else {
+				cp = ch1;
+				charCount = 1;
 			}
 
-			if (encNumRef) {
-				int cp;
-				if (Character.isHighSurrogate(ch1)) {
-					char ch2 = DencodeUtils.charAt(val, i + 1);
-					cp = Character.toCodePoint(ch1, ch2);
-					if (Character.isDefined(cp)) {
-						i++;
-					} else {
-						cp = ch1;
-					}
-				} else {
-					cp = ch1;
-				}
-				
-				switch (numNotation) {
-					case DECIMAL -> sb.append("&#").append(cp).append(';');
-					case UPPER_HEXADECIMAL -> sb.append("&#x").append(Integer.toHexString(cp).toUpperCase()).append(';');
-					case LOWER_HEXADECIMAL -> sb.append("&#x").append(Integer.toHexString(cp)).append(';');
-					default -> throw new RuntimeException("Unknown NumericNotation: " + numNotation);
-				}
+			if (!isHtmlEscapeTarget(target, cp)) {
+				sb.appendCodePoint(cp);
+				i += charCount - 1;
 				continue;
 			}
-			
-			sb.append(ch1);
+
+			String namedRef = getNamedReference(namedRefs, chars, ch1, ch2, charCount);
+			if (namedRef != null) {
+				sb.append('&').append(namedRef);
+				i += charCount - 1;
+				continue;
+			}
+
+			switch (numNotation) {
+				case DECIMAL -> sb.append("&#").append(cp).append(';');
+				case UPPER_HEXADECIMAL -> sb.append("&#x").append(Integer.toHexString(cp).toUpperCase()).append(';');
+				case LOWER_HEXADECIMAL -> sb.append("&#x").append(Integer.toHexString(cp)).append(';');
+				default -> throw new RuntimeException("Unknown NumericNotation: " + numNotation);
+			}
+			i += charCount - 1;
 		}
-		
+
 		return sb.toString();
 	}
-	
-	private static String decStrHTMLEscape(String val) {
+
+	private static boolean isHtmlEscapeTarget(Target target, int cp) {
+		return switch (target) {
+			case BASIC -> isBasicHtmlSpecialChar(cp);
+			case NON_ASCII -> isBasicHtmlSpecialChar(cp) || cp > 0x7F;
+			case NON_ALNUM -> !isAsciiAlnum(cp);
+			case ALL -> true;
+		};
+	}
+
+	private static boolean isBasicHtmlSpecialChar(int cp) {
+		return switch (cp) {
+			case '<', '>', '&', '"', '\'' -> true;
+			default -> false;
+		};
+	}
+
+	private static boolean isAsciiAlnum(int cp) {
+		return ('0' <= cp && cp <= '9') || ('A' <= cp && cp <= 'Z') || ('a' <= cp && cp <= 'z');
+	}
+
+	private static String getNamedReference(NamedReferences namedRefs, Chars chars, char ch1, char ch2, int charCount) {
+		return switch (namedRefs) {
+			case HTML5 -> getHtml5NamedReference(chars, ch1, ch2, charCount);
+			case HTML4 -> getHtml4NamedReference(chars, ch1);
+			case XHTML -> getXhtmlNamedReference(ch1);
+			case NONE -> null;
+		};
+	}
+
+	private static String getHtml5NamedReference(Chars chars, char ch1, char ch2, int charCount) {
+		if (charCount == 2) {
+			String ref2 = CHARS_NAME_MAP.get(chars.set(ch1, ch2));
+			if (ref2 != null) {
+				return ref2;
+			}
+		}
+
+		return CHARS_NAME_MAP.get(chars.set(ch1));
+	}
+
+	private static String selectPreferredNamedReference(String first, String second) {
+		boolean firstLower = isLowerCaseNamedReference(first);
+		boolean secondLower = isLowerCaseNamedReference(second);
+
+		if (firstLower && !secondLower) {
+			return first;
+		}
+		if (!firstLower && secondLower) {
+			return second;
+		}
+
+		if (firstLower && secondLower && first.length() != second.length()) {
+			return (first.length() < second.length()) ? first : second;
+		}
+
+		return first;
+	}
+
+	private static boolean isLowerCaseNamedReference(String name) {
+		return name.chars().noneMatch((ch) -> 'A' <= ch && ch <= 'Z');
+	}
+
+	private static String getXhtmlNamedReference(char ch) {
+		return switch (ch) {
+			case '<' -> "lt;";
+			case '>' -> "gt;";
+			case '&' -> "amp;";
+			case '"' -> "quot;";
+			case '\'' -> "apos;";
+			default -> null;
+		};
+	}
+
+	private static String getHtml4NamedReference(Chars chars, char ch) {
+		return HTML4_CHARS_NAME_MAP.get(chars.set(ch));
+	}
+
+	private static String decStrHtmlEscape(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int beginIdx = val.indexOf('&');
 		if (beginIdx == -1) {
 			return val;
@@ -2414,13 +2570,13 @@ public class StringHTMLEscapeDencoder {
 		StringBuilder sb = new StringBuilder(val.length());
 		do {
 			sb.append(val, idx, beginIdx);
-			
+
 			int refIdx = beginIdx + 1;
 			int endIdx;
 			boolean matched = false;
 			if ((refIdx < len) && val.charAt(refIdx) == '#') {
 				refIdx++;
-				
+
 				int radix;
 				if ((refIdx < len) && (val.charAt(refIdx) == 'x' || val.charAt(refIdx) == 'X')) {
 					// Hexadecimal numeric character references
@@ -2430,8 +2586,8 @@ public class StringHTMLEscapeDencoder {
 					// Decimal numeric character references
 					radix = 10;
 				}
-					
-					
+
+
 				char c = '\0';
 				for (endIdx = refIdx; endIdx < len; endIdx++) {
 					c = val.charAt(endIdx);
@@ -2440,7 +2596,7 @@ public class StringHTMLEscapeDencoder {
 						break;
 					}
 				}
-				
+
 				if (refIdx < endIdx) {
 					try {
 						int cp = Integer.parseInt(val, refIdx, endIdx, radix);
@@ -2452,13 +2608,13 @@ public class StringHTMLEscapeDencoder {
 						// NOP
 					}
 				}
-				
+
 				if (c == ';') {
 					endIdx++;
 				}
 			} else {
 				// Named character references
-				
+
 				for (endIdx = refIdx; endIdx < len; endIdx++) {
 					char c = val.charAt(endIdx);
 					if (!(('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9'))) {
@@ -2468,7 +2624,7 @@ public class StringHTMLEscapeDencoder {
 						break;
 					}
 				}
-				
+
 				if (refIdx < endIdx) {
 					String name = val.substring(refIdx, endIdx);
 					Chars chars = NAME_CHARS_MAP.get(name);
@@ -2481,16 +2637,16 @@ public class StringHTMLEscapeDencoder {
 					}
 				}
 			}
-			
+
 			if (!matched) {
 				sb.append(val, beginIdx, endIdx);
 			}
-			
+
 			idx = endIdx;
 		} while (idx < len && (beginIdx = val.indexOf('&', idx)) != -1);
-		
+
 		sb.append(val, idx, val.length());
-		
+
 		return sb.toString();
 	}
 }

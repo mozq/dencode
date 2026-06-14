@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>기본 이스케이프와 전체 이스케이프</h4>
-<p>DenCode에서는 HTML 이스케이프 결과로 “기본”과 “모두” 두 종류를 표시합니다.</p>
+<h4>HTML 이스케이프 옵션</h4>
+<p>DenCode에서는 대상, 이름 있는 문자 참조의 사용 방식, 숫자 참조 표기를 선택할 수 있습니다.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">종류</th><th scope="col">설명</th><th scope="col">“A &lt; あ”의 변환 예</th></tr>
-		<tr><td>HTML 이스케이프 (기본)</td><td><code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code>, <code>'</code> 다섯 문자를 변환합니다.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTML 이스케이프 (모두)</td><td>HTML 이름 문자 참조가 있는 문자는 이름 문자 참조로, 그 외 문자는 10진수 숫자 문자 참조로 변환합니다.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>대상</caption>
+		<tr><th scope="col">옵션</th><th scope="col">설명</th><th scope="col">“A &lt; 😀” 변환 예</th></tr>
+		<tr><td>기본</td><td><code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code>, <code>'</code> 다섯 문자를 변환합니다.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>기본 + 비ASCII</td><td>기본 다섯 문자와 비ASCII 문자를 변환합니다.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>영숫자 제외</td><td>ASCII 영문자와 숫자가 아닌 문자를 변환합니다.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>전체</td><td>모든 문자를 변환합니다.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>일반적인 HTML 표시에서는 필요한 문자만 변환하는 기본 이스케이프가 주로 사용됩니다. 전체 이스케이프는 문자열을 HTML 문자 참조로 확인하거나 모든 문자를 명시적인 참조 형식으로 나타내고 싶을 때 사용할 수 있습니다.</p>
-
-<h4>언이스케이프</h4>
-<p>HTML 언이스케이프는 HTML 문자 참조를 원래 문자로 되돌립니다. DenCode에서는 <code>&amp;lt;</code>, <code>&amp;amp;</code> 같은 이름 문자 참조뿐만 아니라 <code>&amp;#12354;</code> 같은 10진수 숫자 문자 참조와 <code>&amp;#x3042;</code> 같은 16진수 숫자 문자 참조도 디코드할 수 있습니다.</p>
+<p>일반적인 HTML 표시에는 필요한 문자만 변환하는 “기본”이 자주 사용됩니다. 문자열을 HTML 문자 참조로 확인하거나 모든 문자를 명시적인 참조 형식으로 나타내려면 “전체”를 사용할 수 있습니다.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">HTML 문자 참조</th><th scope="col">언이스케이프 후</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>이름 있는 문자 참조</caption>
+		<tr><th scope="col">옵션</th><th scope="col">설명</th><th scope="col">예</th></tr>
+		<tr><td>HTML5</td><td>HTML5에 정의된 이름 있는 문자 참조를 사용합니다.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>HTML4에 정의된 이름 있는 문자 참조를 사용합니다.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td><code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;apos;</code> 다섯 참조를 사용합니다.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>없음</td><td>이름 있는 문자 참조를 사용하지 않고 숫자 참조만 사용합니다.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>숫자 참조 표기</caption>
+		<tr><th scope="col">옵션</th><th scope="col">설명</th><th scope="col">예</th></tr>
+		<tr><td>10진수</td><td>10진수 숫자 참조를 사용합니다.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>16진수 소문자</td><td>소문자 16진수 숫자 참조를 사용합니다.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>16진수 대문자</td><td>대문자 16진수 숫자 참조를 사용합니다.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

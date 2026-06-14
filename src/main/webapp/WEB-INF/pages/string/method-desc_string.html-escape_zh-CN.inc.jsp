@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>基本转义与全部转义</h4>
-<p>DenCode 会显示两种 HTML 转义结果：“基本”和“全部”。</p>
+<h4>HTML 转义选项</h4>
+<p>DenCode 可以选择目标字符、命名字符引用的使用方式，以及数字引用表示法。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">类型</th><th scope="col">说明</th><th scope="col">“A &lt; あ”的转换示例</th></tr>
-		<tr><td>HTML转义 (基本)</td><td>转换 <code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> 这 5 个字符。</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTML转义 (全部)</td><td>有 HTML 命名字符引用的字符会转换为命名字符引用，其他字符会转换为十进制数字字符引用。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>目标</caption>
+		<tr><th scope="col">选项</th><th scope="col">说明</th><th scope="col">“A &lt; 😀” 的转换示例</th></tr>
+		<tr><td>基本</td><td>转换 <code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> 这 5 个字符。</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>基本 + 非ASCII</td><td>转换 5 个基本字符以及非 ASCII 字符。</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>非字母数字</td><td>转换 ASCII 字母和数字以外的字符。</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>全部</td><td>转换所有字符。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>在普通 HTML 显示中，通常使用只转换必要字符的基本转义。全部转义适用于想把字符串作为 HTML 字符引用进行确认，或想用明确的引用形式表示所有字符的场景。</p>
-
-<h4>反转义</h4>
-<p>HTML 反转义会把 HTML 字符引用还原为原来的字符。DenCode 可以解码 <code>&amp;lt;</code>、<code>&amp;amp;</code> 等命名字符引用，也可以解码 <code>&amp;#12354;</code> 这样的十进制数字字符引用，以及 <code>&amp;#x3042;</code> 这样的十六进制数字字符引用。</p>
+<p>在普通 HTML 显示中，通常使用“基本”，因为它只转换必要的字符。如果想将字符串作为 HTML 字符引用检查，或将每个字符明确表示为引用，可以使用“全部”。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">HTML 字符引用</th><th scope="col">反转义后</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>命名字符引用</caption>
+		<tr><th scope="col">选项</th><th scope="col">说明</th><th scope="col">示例</th></tr>
+		<tr><td>HTML5</td><td>使用 HTML5 定义的命名字符引用。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>使用 HTML4 定义的命名字符引用。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>使用 <code>&amp;lt;</code>、<code>&amp;gt;</code>、<code>&amp;amp;</code>、<code>&amp;quot;</code>、<code>&amp;apos;</code> 这 5 个引用。</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>无</td><td>不使用命名字符引用，只使用数字引用。</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>数字引用表示法</caption>
+		<tr><th scope="col">选项</th><th scope="col">说明</th><th scope="col">示例</th></tr>
+		<tr><td>十进制</td><td>使用十进制数字引用。</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>十六进制小写</td><td>使用小写十六进制数字引用。</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>十六进制大写</td><td>使用大写十六进制数字引用。</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

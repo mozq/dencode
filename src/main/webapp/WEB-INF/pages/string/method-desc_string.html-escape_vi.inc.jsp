@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Escape cơ bản và escape toàn bộ</h4>
-<p>DenCode hiển thị hai kết quả HTML Escape: “Cơ bản” và “Tất cả”.</p>
+<h4>Tùy chọn thoát HTML</h4>
+<p>DenCode cho phép chọn đối tượng, cách dùng tham chiếu ký tự có tên và ký pháp tham chiếu dạng số.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Loại</th><th scope="col">Mô tả</th><th scope="col">Ví dụ cho “A &lt; あ”</th></tr>
-		<tr><td>HTML Escape (Cơ bản)</td><td>Chuyển đổi năm ký tự <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> và <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTML Escape (Tất cả)</td><td>Dùng tham chiếu ký tự có tên nếu có, và dùng tham chiếu ký tự số thập phân cho các ký tự còn lại.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Đối tượng</caption>
+		<tr><th scope="col">Tùy chọn</th><th scope="col">Mô tả</th><th scope="col">Ví dụ cho “A &lt; 😀”</th></tr>
+		<tr><td>Cơ bản</td><td>Chuyển đổi năm ký tự <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> và <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Cơ bản + không phải ASCII</td><td>Chuyển đổi năm ký tự cơ bản và các ký tự không phải ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Không phải chữ và số</td><td>Chuyển đổi các ký tự không phải chữ cái hoặc chữ số ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Tất cả</td><td>Chuyển đổi tất cả ký tự.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Trong hiển thị HTML thông thường, escape cơ bản, chỉ chuyển đổi các ký tự cần thiết, thường được sử dụng. Escape toàn bộ hữu ích khi muốn kiểm tra chuỗi dưới dạng tham chiếu ký tự HTML hoặc biểu diễn rõ ràng từng ký tự dưới dạng tham chiếu.</p>
-
-<h4>Unescape</h4>
-<p>HTML Unescape chuyển các tham chiếu ký tự HTML trở lại ký tự gốc. DenCode có thể giải mã các tham chiếu ký tự có tên như <code>&amp;lt;</code> và <code>&amp;amp;</code>, tham chiếu ký tự số thập phân như <code>&amp;#12354;</code>, cũng như tham chiếu ký tự số thập lục phân như <code>&amp;#x3042;</code>.</p>
+<p>Để hiển thị HTML thông thường, “Cơ bản” thường được dùng vì chỉ chuyển đổi các ký tự cần thiết. Dùng “Tất cả” khi muốn kiểm tra chuỗi dưới dạng tham chiếu ký tự HTML hoặc biểu diễn rõ từng ký tự dưới dạng tham chiếu.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Tham chiếu ký tự HTML</th><th scope="col">Sau Unescape</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Tham chiếu ký tự có tên</caption>
+		<tr><th scope="col">Tùy chọn</th><th scope="col">Mô tả</th><th scope="col">Ví dụ</th></tr>
+		<tr><td>HTML5</td><td>Dùng các tham chiếu ký tự có tên được HTML5 định nghĩa.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Dùng các tham chiếu ký tự có tên được HTML4 định nghĩa.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Dùng năm tham chiếu <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code> và <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Không có</td><td>Không dùng tham chiếu có tên; chỉ dùng tham chiếu dạng số.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Ký pháp tham chiếu dạng số</caption>
+		<tr><th scope="col">Tùy chọn</th><th scope="col">Mô tả</th><th scope="col">Ví dụ</th></tr>
+		<tr><td>Thập phân</td><td>Dùng tham chiếu dạng số thập phân.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Thập lục phân chữ thường</td><td>Dùng tham chiếu dạng số thập lục phân với chữ thường.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Thập lục phân chữ hoa</td><td>Dùng tham chiếu dạng số thập lục phân với chữ hoa.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

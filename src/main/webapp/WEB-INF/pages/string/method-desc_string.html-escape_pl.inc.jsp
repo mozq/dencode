@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Escapowanie podstawowe i pełne</h4>
-<p>DenCode pokazuje dwa wyniki escapowania HTML: „Podstawowy” i „Pełny”.</p>
+<h4>Opcje ucieczki HTML</h4>
+<p>DenCode pozwala wybrać zakres, sposób użycia nazwanych odwołań znakowych oraz notację odwołań numerycznych.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Typ</th><th scope="col">Opis</th><th scope="col">Przykład dla „A &lt; あ”</th></tr>
-		<tr><td>Escapowanie HTML (Podstawowy)</td><td>Zamienia pięć znaków: <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> i <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>Escapowanie HTML (Pełny)</td><td>Używa nazwanych referencji znakowych, jeśli istnieją, a dla pozostałych znaków dziesiętnych numerycznych referencji znakowych.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Zakres</caption>
+		<tr><th scope="col">Opcja</th><th scope="col">Opis</th><th scope="col">Przykład dla „A &lt; 😀”</th></tr>
+		<tr><td>Podstawowe</td><td>Konwertuje pięć znaków <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> i <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Podstawowe + spoza ASCII</td><td>Konwertuje pięć znaków podstawowych oraz znaki spoza ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Niealfanumeryczne</td><td>Konwertuje znaki inne niż litery i cyfry ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Wszystko</td><td>Konwertuje wszystkie znaki.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Do zwykłego wyświetlania HTML najczęściej używa się escapowania podstawowego, które zamienia tylko niezbędne znaki. Escapowanie pełne przydaje się, gdy chcesz sprawdzić ciąg jako referencje znakowe HTML albo zapisać każdy znak jawnie w postaci referencji.</p>
-
-<h4>Odwracanie escapowania</h4>
-<p>Odwracanie escapowania HTML zamienia referencje znakowe HTML z powrotem na pierwotne znaki. DenCode potrafi dekodować nazwane referencje znakowe, takie jak <code>&amp;lt;</code> i <code>&amp;amp;</code>, dziesiętne numeryczne referencje znakowe, takie jak <code>&amp;#12354;</code>, oraz szesnastkowe numeryczne referencje znakowe, takie jak <code>&amp;#x3042;</code>.</p>
+<p>Do zwykłego wyświetlania HTML często używa się opcji „Podstawowe”, ponieważ konwertuje tylko potrzebne znaki. Użyj opcji „Wszystko”, gdy chcesz sprawdzić ciąg jako odwołania znakowe HTML albo przedstawić każdy znak jawnie jako odwołanie.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Referencja znakowa HTML</th><th scope="col">Po odwróceniu escapowania</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Nazwane odwołania znakowe</caption>
+		<tr><th scope="col">Opcja</th><th scope="col">Opis</th><th scope="col">Przykład</th></tr>
+		<tr><td>HTML5</td><td>Używa nazwanych odwołań znakowych zdefiniowanych w HTML5.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Używa nazwanych odwołań znakowych zdefiniowanych w HTML4.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Używa pięciu odwołań <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code> i <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Brak</td><td>Nie używa nazwanych odwołań; stosowane są tylko odwołania numeryczne.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Notacja odwołań numerycznych</caption>
+		<tr><th scope="col">Opcja</th><th scope="col">Opis</th><th scope="col">Przykład</th></tr>
+		<tr><td>Dziesiętne</td><td>Używa dziesiętnych odwołań numerycznych.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Szesnastkowe małymi literami</td><td>Używa szesnastkowych odwołań numerycznych z małymi literami.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Szesnastkowe wielkimi literami</td><td>Używa szesnastkowych odwołań numerycznych z wielkimi literami.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

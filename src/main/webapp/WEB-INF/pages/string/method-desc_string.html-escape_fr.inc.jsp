@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Échappement de base et échappement complet</h4>
-<p>DenCode affiche deux résultats pour l’échappement HTML : « Basique » et « Complet ».</p>
+<h4>Options d'échappement HTML</h4>
+<p>DenCode permet de choisir la cible, la manière d'utiliser les références de caractères nommées et la notation des références numériques.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Type</th><th scope="col">Description</th><th scope="col">Exemple pour « A &lt; あ »</th></tr>
-		<tr><td>Échappement HTML (Basique)</td><td>Convertit les cinq caractères <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> et <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>Échappement HTML (Complet)</td><td>Utilise les références de caractères nommées lorsqu’elles existent, et des références numériques décimales pour les autres caractères.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Cible</caption>
+		<tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Exemple pour « A &lt; 😀 »</th></tr>
+		<tr><td>Basique</td><td>Convertit les cinq caractères <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> et <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Basique + non-ASCII</td><td>Convertit les cinq caractères de base ainsi que les caractères non ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Non alphanumérique</td><td>Convertit les caractères autres que les lettres et chiffres ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Tout</td><td>Convertit tous les caractères.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Pour l’affichage HTML courant, on utilise généralement l’échappement de base, qui ne convertit que les caractères nécessaires. L’échappement complet est utile pour vérifier une chaîne sous forme de références de caractères HTML ou pour représenter explicitement chaque caractère.</p>
-
-<h4>Déséchappement</h4>
-<p>Le déséchappement HTML reconvertit les références de caractères HTML en caractères d’origine. DenCode peut décoder les références nommées comme <code>&amp;lt;</code> et <code>&amp;amp;</code>, les références numériques décimales comme <code>&amp;#12354;</code>, ainsi que les références numériques hexadécimales comme <code>&amp;#x3042;</code>.</p>
+<p>Pour l'affichage HTML courant, « Basique » est souvent utilisé, car il ne convertit que les caractères nécessaires. Utilisez « Tout » lorsque vous voulez examiner une chaîne sous forme de références de caractères HTML ou représenter chaque caractère explicitement comme une référence.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Référence de caractère HTML</th><th scope="col">Après déséchappement</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Références de caractères nommées</caption>
+		<tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Exemple</th></tr>
+		<tr><td>HTML5</td><td>Utilise les références de caractères nommées définies par HTML5.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Utilise les références de caractères nommées définies par HTML4.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Utilise les cinq références <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code> et <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Aucune</td><td>N'utilise pas de références nommées ; seules les références numériques sont utilisées.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Notation des références numériques</caption>
+		<tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Exemple</th></tr>
+		<tr><td>Décimal</td><td>Utilise des références numériques décimales.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Hexadécimal minuscule</td><td>Utilise des références numériques hexadécimales en minuscules.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Hexadécimal majuscule</td><td>Utilise des références numériques hexadécimales en majuscules.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

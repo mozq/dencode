@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Escape básico e escape completo</h4>
-<p>DenCode mostra dois resultados de Escape HTML: “Básico” e “Total”.</p>
+<h4>Opções de escape HTML</h4>
+<p>O DenCode permite escolher o alvo, como as referências de caracteres nomeadas são usadas e a notação de referências numéricas.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Tipo</th><th scope="col">Descrição</th><th scope="col">Exemplo para “A &lt; あ”</th></tr>
-		<tr><td>Escape HTML (Básico)</td><td>Converte os cinco caracteres <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> e <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>Escape HTML (Total)</td><td>Usa referências de caracteres nomeadas quando disponíveis e referências numéricas decimais para os demais caracteres.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Alvo</caption>
+		<tr><th scope="col">Opção</th><th scope="col">Descrição</th><th scope="col">Exemplo para “A &lt; 😀”</th></tr>
+		<tr><td>Básico</td><td>Converte os cinco caracteres <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> e <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Básico + não ASCII</td><td>Converte os cinco caracteres básicos e os caracteres não ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Não alfanuméricos</td><td>Converte caracteres que não sejam letras ou dígitos ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Tudo</td><td>Converte todos os caracteres.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Para a exibição HTML normal, geralmente é usado o escape básico, que converte apenas os caracteres necessários. O escape completo é útil para verificar uma string como referências de caracteres HTML ou para representar todos os caracteres explicitamente como referências.</p>
-
-<h4>Unescape</h4>
-<p>HTML Unescape converte referências de caracteres HTML de volta aos caracteres originais. DenCode pode decodificar referências nomeadas como <code>&amp;lt;</code> e <code>&amp;amp;</code>, referências numéricas decimais como <code>&amp;#12354;</code> e referências numéricas hexadecimais como <code>&amp;#x3042;</code>.</p>
+<p>Para a exibição HTML comum, “Básico” é usado com frequência porque converte apenas os caracteres necessários. Use “Tudo” quando quiser inspecionar uma string como referências de caracteres HTML ou representar todos os caracteres explicitamente como referência.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Referência de caractere HTML</th><th scope="col">Após Unescape</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Referências de caracteres nomeadas</caption>
+		<tr><th scope="col">Opção</th><th scope="col">Descrição</th><th scope="col">Exemplo</th></tr>
+		<tr><td>HTML5</td><td>Usa as referências de caracteres nomeadas definidas pelo HTML5.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Usa as referências de caracteres nomeadas definidas pelo HTML4.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Usa as cinco referências <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code> e <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Nenhuma</td><td>Não usa referências nomeadas; apenas referências numéricas são usadas.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Notação de referências numéricas</caption>
+		<tr><th scope="col">Opção</th><th scope="col">Descrição</th><th scope="col">Exemplo</th></tr>
+		<tr><td>Decimal</td><td>Usa referências numéricas decimais.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Hexadecimal minúsculo</td><td>Usa referências numéricas hexadecimais com letras minúsculas.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Hexadecimal maiúsculo</td><td>Usa referências numéricas hexadecimais com letras maiúsculas.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

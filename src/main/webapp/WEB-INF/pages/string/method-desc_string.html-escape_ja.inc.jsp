@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>基本エスケープと全てエスケープ</h4>
-<p>DenCodeでは、HTMLエスケープの結果として「基本」と「全て」の2種類を表示します。</p>
+<h4>HTMLエスケープのオプション</h4>
+<p>DenCodeでは、変換対象、名前文字参照の使い方、数値参照の表記を選択できます。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">種類</th><th scope="col">説明</th><th scope="col">「A &lt; あ」の変換例</th></tr>
-		<tr><td>HTMLエスケープ (基本)</td><td><code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> の5文字を変換します。</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTMLエスケープ (全て)</td><td>HTML名前文字参照がある文字は名前文字参照に、その他の文字は10進数の数値文字参照に変換します。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>対象</caption>
+		<tr><th scope="col">オプション</th><th scope="col">説明</th><th scope="col">「A &lt; 😀」の変換例</th></tr>
+		<tr><td>基本</td><td><code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>'</code> の5文字を変換します。</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>基本 + 非ASCII</td><td>基本5文字に加えて、非ASCII文字を変換します。</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>英数字以外</td><td>ASCII英数字以外の文字を変換します。</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>すべて</td><td>すべての文字を変換します。</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>通常のHTML表示では、必要な文字だけを変換する基本エスケープがよく使われます。全てエスケープは、文字列をHTML文字参照として確認したい場合や、すべての文字を明示的な参照形式で表したい場合に使用できます。</p>
-
-<h4>アンエスケープ</h4>
-<p>HTMLアンエスケープは、HTML文字参照を元の文字に戻します。DenCodeでは、<code>&amp;lt;</code> や <code>&amp;amp;</code> などの名前文字参照に加えて、<code>&amp;#12354;</code> のような10進数の数値文字参照、<code>&amp;#x3042;</code> のような16進数の数値文字参照もデコードできます。</p>
+<p>通常のHTML表示では、必要な文字だけを変換する「基本」がよく使われます。文字列をHTML文字参照として確認したい場合や、すべての文字を明示的な参照形式で表したい場合は、「すべて」を使用できます。</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">HTML文字参照</th><th scope="col">アンエスケープ後</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>名前文字参照</caption>
+		<tr><th scope="col">オプション</th><th scope="col">説明</th><th scope="col">例</th></tr>
+		<tr><td>HTML5</td><td>HTML5で定義されている名前文字参照を使用します。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>HTML4で定義されている名前文字参照を使用します。</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td><code>&amp;lt;</code>、<code>&amp;gt;</code>、<code>&amp;amp;</code>、<code>&amp;quot;</code>、<code>&amp;apos;</code> の5つを使用します。</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>なし</td><td>名前文字参照を使わず、数値参照だけで変換します。</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>数値参照の表記</caption>
+		<tr><th scope="col">オプション</th><th scope="col">説明</th><th scope="col">例</th></tr>
+		<tr><td>10進</td><td>10進数の数値文字参照で表します。</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>16進小文字</td><td>16進数の数値文字参照を小文字で表します。</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>16進大文字</td><td>16進数の数値文字参照を大文字で表します。</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

@@ -341,7 +341,7 @@
 							<c:if test="${methods.contains('string.hex')}"><tr data-dencode-method="string.hex"><th>${dc:h(msg['string.hex.func.decStrHex'])}</th><td><span id="decStrHex" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.decStrHTMLEscape'])}</th><td><span id="decStrHTMLEscape" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.decStrHtmlEscape'])}</th><td><span id="decStrHtmlEscape" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.decStrURLEncoding'])}</th><td><span id="decStrURLEncoding" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.punycode')}"><tr data-dencode-method="string.punycode"><th>${dc:h(msg['string.punycode.func.decStrPunycode'])}</th><td><span id="decStrPunycode" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.base32')}"><tr data-dencode-method="string.base32"><th>${dc:h(msg['string.base32.func.decStrBase32'])}</th><td><span id="decStrBase32" class="for-disp"></span></td></tr></c:if>
@@ -1218,8 +1218,36 @@
 							</td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.encStrHTMLEscape'])}</th><td><span id="encStrHTMLEscape" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.encStrHTMLEscapeFully'])}</th><td><span id="encStrHTMLEscapeFully" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.encStrHtmlEscape'])}</th><td><span id="encStrHtmlEscape" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['string.html-escape.target'])}</span>
+										<select name="string.html-escape.target" class="dencode-option form-select">
+											<option value="basic">${dc:h(msg['string.html-escape.target.basic'])}</option>
+											<option value="non-ascii">${dc:h(msg['string.html-escape.target.non-ascii'])}</option>
+											<option value="non-alnum">${dc:h(msg['string.html-escape.target.non-alnum'])}</option>
+											<option value="all">${dc:h(msg['string.html-escape.target.all'])}</option>
+										</select>
+									</div>
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['string.html-escape.named-refs'])}</span>
+										<select name="string.html-escape.named-refs" class="dencode-option form-select">
+											<option value="html5">${dc:h(msg['string.html-escape.named-refs.html5'])}</option>
+											<option value="html4">${dc:h(msg['string.html-escape.named-refs.html4'])}</option>
+											<option value="xhtml">${dc:h(msg['string.html-escape.named-refs.xhtml'])}</option>
+											<option value="none">${dc:h(msg['string.html-escape.named-refs.none'])}</option>
+										</select>
+									</div>
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['string.html-escape.numeric-ref-notation'])}</span>
+										<select name="string.html-escape.numeric-ref-notation" class="dencode-option form-select">
+											<option value="decimal">${dc:h(msg['string.html-escape.numeric-ref-notation.decimal'])}</option>
+											<option value="hex-lower">${dc:h(msg['string.html-escape.numeric-ref-notation.hex-lower'])}</option>
+											<option value="hex-upper">${dc:h(msg['string.html-escape.numeric-ref-notation.hex-upper'])}</option>
+										</select>
+									</div>
+								</div>
+							</td></tr></c:if>
 							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.encStrURLEncoding'])}</th><td><span id="encStrURLEncoding" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">

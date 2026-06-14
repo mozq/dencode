@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Escape dasar dan escape penuh</h4>
-<p>DenCode menampilkan dua hasil HTML escape: “Dasar” dan “Semua”.</p>
+<h4>Opsi escape HTML</h4>
+<p>DenCode memungkinkan Anda memilih sasaran, cara penggunaan referensi karakter bernama, dan notasi referensi numerik.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Jenis</th><th scope="col">Deskripsi</th><th scope="col">Contoh untuk “A &lt; あ”</th></tr>
-		<tr><td>HTML Escape (Dasar)</td><td>Mengubah lima karakter <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code>, dan <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>HTML Escape (Semua)</td><td>Menggunakan referensi karakter bernama jika tersedia, dan referensi karakter numerik desimal untuk karakter lainnya.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Sasaran</caption>
+		<tr><th scope="col">Opsi</th><th scope="col">Deskripsi</th><th scope="col">Contoh untuk “A &lt; 😀”</th></tr>
+		<tr><td>Dasar</td><td>Mengonversi lima karakter <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code>, dan <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Dasar + non-ASCII</td><td>Mengonversi lima karakter dasar dan karakter non-ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Non-alfanumerik</td><td>Mengonversi karakter selain huruf dan angka ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Semua</td><td>Mengonversi semua karakter.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Untuk tampilan HTML biasa, escape dasar yang hanya mengubah karakter yang diperlukan umumnya digunakan. Escape penuh berguna ketika Anda ingin memeriksa string sebagai referensi karakter HTML atau menampilkan setiap karakter secara eksplisit sebagai referensi.</p>
-
-<h4>Unescape</h4>
-<p>HTML unescape mengubah referensi karakter HTML kembali menjadi karakter aslinya. DenCode dapat mendekode referensi karakter bernama seperti <code>&amp;lt;</code> dan <code>&amp;amp;</code>, referensi karakter numerik desimal seperti <code>&amp;#12354;</code>, serta referensi karakter numerik heksadesimal seperti <code>&amp;#x3042;</code>.</p>
+<p>Untuk tampilan HTML biasa, “Dasar” sering digunakan karena hanya mengonversi karakter yang diperlukan. Gunakan “Semua” saat Anda ingin memeriksa string sebagai referensi karakter HTML atau menampilkan setiap karakter secara eksplisit sebagai referensi.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Referensi karakter HTML</th><th scope="col">Setelah unescape</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Referensi karakter bernama</caption>
+		<tr><th scope="col">Opsi</th><th scope="col">Deskripsi</th><th scope="col">Contoh</th></tr>
+		<tr><td>HTML5</td><td>Menggunakan referensi karakter bernama yang didefinisikan oleh HTML5.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Menggunakan referensi karakter bernama yang didefinisikan oleh HTML4.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Menggunakan lima referensi <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, dan <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Tidak ada</td><td>Tidak menggunakan referensi bernama; hanya referensi numerik yang digunakan.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Notasi referensi numerik</caption>
+		<tr><th scope="col">Opsi</th><th scope="col">Deskripsi</th><th scope="col">Contoh</th></tr>
+		<tr><td>Desimal</td><td>Menggunakan referensi numerik desimal.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Heksadesimal huruf kecil</td><td>Menggunakan referensi numerik heksadesimal dengan huruf kecil.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Heksadesimal huruf besar</td><td>Menggunakan referensi numerik heksadesimal dengan huruf besar.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>

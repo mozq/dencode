@@ -18,27 +18,39 @@
 	</table>
 </div>
 
-<h4>Базовое и полное экранирование</h4>
-<p>DenCode показывает два результата экранирования HTML: «базовое» и «полное».</p>
+<h4>Параметры HTML-экранирования</h4>
+<p>DenCode позволяет выбрать цель преобразования, способ использования именованных ссылок на символы и запись числовых ссылок.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">Тип</th><th scope="col">Описание</th><th scope="col">Пример для «A &lt; あ»</th></tr>
-		<tr><td>Экранирование HTML (базовое)</td><td>Преобразует пять символов: <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> и <code>'</code>.</td><td><code>A &amp;lt; あ</code></td></tr>
-		<tr><td>Экранирование HTML (полное)</td><td>Использует именованные символьные ссылки, если они существуют, а для остальных символов — десятичные числовые символьные ссылки.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#12354;</code></td></tr>
+		<caption>Цель</caption>
+		<tr><th scope="col">Параметр</th><th scope="col">Описание</th><th scope="col">Пример для «A &lt; 😀»</th></tr>
+		<tr><td>Базовые</td><td>Преобразует пять символов <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code> и <code>'</code>.</td><td><code>A &amp;lt; 😀</code></td></tr>
+		<tr><td>Базовые + не-ASCII</td><td>Преобразует пять базовых символов и символы вне ASCII.</td><td><code>A &amp;lt; &amp;#128512;</code></td></tr>
+		<tr><td>Не буквенно-цифровые</td><td>Преобразует символы, кроме букв и цифр ASCII.</td><td><code>A&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
+		<tr><td>Все</td><td>Преобразует все символы.</td><td><code>&amp;#65;&amp;#32;&amp;lt;&amp;#32;&amp;#128512;</code></td></tr>
 	</table>
 </div>
 
-<p>Для обычного отображения HTML чаще всего используется базовое экранирование, которое преобразует только необходимые символы. Полное экранирование удобно, когда нужно проверить строку как HTML-символьные ссылки или явно представить каждый символ в виде ссылки.</p>
-
-<h4>Снятие экранирования</h4>
-<p>Снятие экранирования HTML преобразует HTML-символьные ссылки обратно в исходные символы. DenCode может декодировать именованные символьные ссылки, такие как <code>&amp;lt;</code> и <code>&amp;amp;</code>, десятичные числовые символьные ссылки, такие как <code>&amp;#12354;</code>, а также шестнадцатеричные числовые символьные ссылки, такие как <code>&amp;#x3042;</code>.</p>
+<p>Для обычного отображения HTML часто используется «Базовые», так как этот вариант преобразует только необходимые символы. Используйте «Все», если нужно проверить строку как HTML-ссылки на символы или явно представить каждый символ в виде ссылки.</p>
 
 <div class="table-responsive">
 	<table class="table">
-		<tr><th scope="col">HTML-символьная ссылка</th><th scope="col">После снятия экранирования</th></tr>
-		<tr><td><code>&amp;lt;p&amp;gt;</code></td><td><code>&lt;p&gt;</code></td></tr>
-		<tr><td><code>&amp;#12354;</code></td><td><code>あ</code></td></tr>
-		<tr><td><code>&amp;#x3042;</code></td><td><code>あ</code></td></tr>
+		<caption>Именованные ссылки на символы</caption>
+		<tr><th scope="col">Параметр</th><th scope="col">Описание</th><th scope="col">Пример</th></tr>
+		<tr><td>HTML5</td><td>Использует именованные ссылки на символы, определенные в HTML5.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>HTML4</td><td>Использует именованные ссылки на символы, определенные в HTML4.</td><td><code>&amp;copy;</code></td></tr>
+		<tr><td>XHTML</td><td>Использует пять ссылок <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code> и <code>&amp;apos;</code>.</td><td><code>&amp;apos;</code></td></tr>
+		<tr><td>Нет</td><td>Не использует именованные ссылки; применяются только числовые ссылки.</td><td><code>&amp;#169;</code></td></tr>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table">
+		<caption>Запись числовых ссылок</caption>
+		<tr><th scope="col">Параметр</th><th scope="col">Описание</th><th scope="col">Пример</th></tr>
+		<tr><td>Десятичные</td><td>Использует десятичные числовые ссылки.</td><td><code>&amp;#169;</code></td></tr>
+		<tr><td>Шестнадцатеричные строчные</td><td>Использует шестнадцатеричные числовые ссылки со строчными буквами.</td><td><code>&amp;#xa9;</code></td></tr>
+		<tr><td>Шестнадцатеричные прописные</td><td>Использует шестнадцатеричные числовые ссылки с прописными буквами.</td><td><code>&amp;#xA9;</code></td></tr>
 	</table>
 </div>
