@@ -342,7 +342,7 @@
 						</tbody>
 						<tbody>
 							<c:if test="${methods.contains('string.html-escape')}"><tr data-dencode-method="string.html-escape"><th>${dc:h(msg['string.html-escape.func.decStrHtmlEscape'])}</th><td><span id="decStrHtmlEscape" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.decStrURLEncoding'])}</th><td><span id="decStrURLEncoding" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.decStrUrlEncoding'])}</th><td><span id="decStrUrlEncoding" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.punycode')}"><tr data-dencode-method="string.punycode"><th>${dc:h(msg['string.punycode.func.decStrPunycode'])}</th><td><span id="decStrPunycode" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.base32')}"><tr data-dencode-method="string.base32"><th>${dc:h(msg['string.base32.func.decStrBase32'])}</th><td><span id="decStrBase32" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.base45')}"><tr data-dencode-method="string.base45"><th>${dc:h(msg['string.base45.func.decStrBase45'])}</th><td><span id="decStrBase45" class="for-disp"></span></td></tr></c:if>
@@ -1248,7 +1248,7 @@
 									</div>
 								</div>
 							</td></tr></c:if>
-							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.encStrURLEncoding'])}</th><td><span id="encStrURLEncoding" class="for-disp"></span>
+							<c:if test="${methods.contains('string.url-encoding')}"><tr data-dencode-method="string.url-encoding"><th>${dc:h(msg['string.url-encoding.func.encStrUrlEncoding'])}</th><td><span id="encStrUrlEncoding" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['string.url-encoding.space'])}</span>

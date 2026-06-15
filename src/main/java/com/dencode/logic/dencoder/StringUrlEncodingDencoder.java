@@ -25,32 +25,44 @@ import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.url-encoding", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
-public class StringURLEncodingDencoder {
-	
+public class StringUrlEncodingDencoder {
+
 	private static final char[] DECODING_SYMBOLS = {'%', '+'};
-	
-	private StringURLEncodingDencoder() {
+
+	private StringUrlEncodingDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
-	public static String encStrURLEncoding(DencodeCondition cond) {
-		return encStrURLEncoding(
+	public static String encStrUrlEncoding(DencodeCondition cond) {
+		return encStrUrlEncoding(
 				cond.valueAsBinary(),
 				DencodeUtils.getOption(cond.options(), "string.url-encoding.space", "").equals("form")
 				);
 	}
-	
+
+	@DencoderFunction
+	public static String decStrUrlEncoding(DencodeCondition cond) {
+		return decStrUrlEncoding(cond.value(), cond.charset());
+	}
+
+	@Deprecated
+	@DencoderFunction
+	public static String encStrURLEncoding(DencodeCondition cond) {
+		return encStrUrlEncoding(cond);
+	}
+
+	@Deprecated
 	@DencoderFunction
 	public static String decStrURLEncoding(DencodeCondition cond) {
-		return decStrURLEncoding(cond.value(), cond.charset());
+		return decStrUrlEncoding(cond);
 	}
-	
-	
-	private static String encStrURLEncoding(byte[] binValue,  boolean formSpace) {
+
+
+	private static String encStrUrlEncoding(byte[] binValue,  boolean formSpace) {
 		StringBuilder sb = new StringBuilder(binValue.length * 3);
-		
+
 		for (byte b : binValue) {
 			if (((byte)'A' <= b && b <= (byte)'Z')
 					|| ((byte)'a' <= b && b <= (byte)'z')
@@ -73,26 +85,26 @@ public class StringURLEncodingDencoder {
 				sb.append(DencodeUtils.numToDigit(low, true));
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
-	private static String decStrURLEncoding(String val, Charset charset) {
+
+	private static String decStrUrlEncoding(String val, Charset charset) {
 		if (!DencodeUtils.isASCII(val)) {
 			return null;
 		}
-		
+
 		int sidx = DencodeUtils.indexOf(val, DECODING_SYMBOLS);
 		if (sidx == -1) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		ByteArrayOutputStream binBuf = new ByteArrayOutputStream(len);
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (ch == '%') {
 				try {
 					int high = DencodeUtils.hexDigitToNum(val.charAt(++i));
@@ -111,7 +123,7 @@ public class StringURLEncodingDencoder {
 				binBuf.write((byte)ch);
 			}
 		}
-		
+
 		return binBuf.toString(charset);
 	}
 }

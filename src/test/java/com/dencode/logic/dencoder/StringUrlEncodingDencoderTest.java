@@ -20,10 +20,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class StringURLEncodingDencoderTest {
+public class StringUrlEncodingDencoderTest {
 	private final DencoderTester tester = new DencoderTester(
-			StringURLEncodingDencoder::encStrURLEncoding,
-			StringURLEncodingDencoder::decStrURLEncoding,
+			StringUrlEncodingDencoder::encStrUrlEncoding,
+			StringUrlEncodingDencoder::decStrUrlEncoding,
 			"string.url-encoding.space");
 
 	@Test
