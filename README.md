@@ -126,6 +126,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [SHA-256](https://dencode.com/hash/sha256)
     - [SHA-384](https://dencode.com/hash/sha384)
     - [SHA-512](https://dencode.com/hash/sha512)
+    - [SHA-3](https://dencode.com/hash/sha3)
     - [CRC32](https://dencode.com/hash/crc32)
 
 ## I18n support
