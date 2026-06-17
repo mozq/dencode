@@ -26,7 +26,7 @@ import com.dencode.logic.model.DencodeCondition;
 @Dencoder(type="string", method="string.unicode-styled-text", hasEncoder=true, hasDecoder=false)
 public class StringUnicodeStyledTextDencoder {
 	private static final String DEFAULT_STYLE = "script";
-	
+
 	private static final Map<String, int[][]> MAPS_DEF = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -49,7 +49,7 @@ public class StringUnicodeStyledTextDencoder {
 			put("squared", maps("🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉", "🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉", null));
 			put("negative-squared", maps("🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉", "🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉", null));
 		}
-		
+
 		private static int[][] maps(String ualpha, String lalpha, String num) {
 			return new int[][]{
 				(ualpha == null) ? null : ualpha.codePoints().toArray(),
@@ -58,38 +58,38 @@ public class StringUnicodeStyledTextDencoder {
 				};
 		}
 	};
-	
+
 	private StringUnicodeStyledTextDencoder() {
 		// NOP
 	}
-	
+
 	@DencoderFunction
 	public static String encStrUnicodeStyledText(DencodeCondition cond) {
 		return encStrUnicodeStyledText(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "string.unicode-styled-text.style", DEFAULT_STYLE)
+				cond.option("string.unicode-styled-text.style", DEFAULT_STYLE)
 				);
 	}
-	
+
 	private static String encStrUnicodeStyledText(String val, String style) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int[][] maps = MAPS_DEF.get(style);
 		if (maps == null) {
 			return val;
 		}
-		
+
 		int[] UPPER_ALPHA_MAP = maps[0];
 		int[] LOWER_ALPHA_MAP = maps[1];
 		int[] NUMBER_MAP = maps[2];
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len * 2);
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			int cp = -1;
 			if ('A' <= ch && ch <= 'Z') {
 				if (UPPER_ALPHA_MAP != null) {
@@ -104,14 +104,14 @@ public class StringUnicodeStyledTextDencoder {
 					cp = NUMBER_MAP[ch - '0'];
 				}
 			}
-			
+
 			if (cp != -1) {
 				sb.appendCodePoint(cp);
 			} else {
 				sb.append(ch);
 			}
 		}
-		
+
 		return sb.toString();
 	}
 }

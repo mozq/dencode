@@ -27,20 +27,20 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.line-sort", hasEncoder=true, hasDecoder=false)
 public class StringLineSortDencoder {
-	
+
 	private StringLineSortDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrLineSort(DencodeCondition cond) {
 		return encStrLineSort(
 				cond.valueAsLines(),
-				DencodeUtils.getOption(cond.options(), "string.line-sort.order", "asc")
+				cond.option("string.line-sort.order", "asc")
 				);
 	}
-	
+
 
 	private static String encStrLineSort(List<String> varLines, String order) {
 		switch (order) {
@@ -49,19 +49,19 @@ public class StringLineSortDencoder {
 		default: return encStrLineSortAsc(varLines);
 		}
 	}
-	
+
 	private static String encStrLineSortAsc(List<String> varLines) {
 		return varLines.stream()
 				.sorted()
 				.collect(Collectors.joining("\n"));
 	}
-	
+
 	private static String encStrLineSortDesc(List<String> varLines) {
 		return varLines.stream()
 				.sorted(Collections.reverseOrder())
 				.collect(Collectors.joining("\n"));
 	}
-	
+
 	private static String encStrLineSortReverse(List<String> varLines) {
 		List<String> list = new ArrayList<>(varLines);
 		Collections.reverse(list);

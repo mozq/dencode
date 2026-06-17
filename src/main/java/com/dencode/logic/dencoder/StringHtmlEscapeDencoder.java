@@ -2380,7 +2380,7 @@ public class StringHtmlEscapeDencoder {
 
 	@DencoderFunction
 	public static String encStrHtmlEscape(DencodeCondition cond) {
-		Target target = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.target", "basic")) {
+		Target target = switch (cond.option("string.html-escape.target", "basic")) {
 			case "basic" -> Target.BASIC;
 			case "non-ascii" -> Target.NON_ASCII;
 			case "non-alnum" -> Target.NON_ALNUM;
@@ -2388,7 +2388,7 @@ public class StringHtmlEscapeDencoder {
 			default -> Target.BASIC;
 		};
 
-		NamedReferences namedRefs = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.named-refs", "html5")) {
+		NamedReferences namedRefs = switch (cond.option("string.html-escape.named-refs", "html5")) {
 			case "html5" -> NamedReferences.HTML5;
 			case "html4" -> NamedReferences.HTML4;
 			case "xhtml" -> NamedReferences.XHTML;
@@ -2396,7 +2396,7 @@ public class StringHtmlEscapeDencoder {
 			default -> NamedReferences.HTML5;
 		};
 
-		NumericNotation numNotation = switch (DencodeUtils.getOption(cond.options(), "string.html-escape.numeric-ref-notation", "decimal")) {
+		NumericNotation numNotation = switch (cond.option("string.html-escape.numeric-ref-notation", "decimal")) {
 			case "decimal" -> NumericNotation.DECIMAL;
 			case "hex-lower" -> NumericNotation.LOWER_HEXADECIMAL;
 			case "hex-upper" -> NumericNotation.UPPER_HEXADECIMAL;

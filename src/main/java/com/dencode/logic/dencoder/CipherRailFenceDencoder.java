@@ -26,49 +26,49 @@ public class CipherRailFenceDencoder {
 	private CipherRailFenceDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherRailFence(DencodeCondition cond) {
 		return encCipherRailFence(
 				cond.valueAsCodePointsWithLf(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.rail-fence.key", 2)
+				cond.optionAsInt("cipher.rail-fence.key", 2)
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decCipherRailFence(DencodeCondition cond) {
 		return decCipherRailFence(
 				cond.valueAsCodePointsWithLf(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.rail-fence.key", 2)
+				cond.optionAsInt("cipher.rail-fence.key", 2)
 				);
 	}
-	
-	
+
+
 	private static String encCipherRailFence(int[] cps, int key) {
 		if (cps == null) {
 			return null;
 		}
-		
+
 		int len = cps.length;
-		
+
 		if (len == 0) {
 			return "";
 		}
-		
+
 		if (key < 2) {
 			return new String(cps, 0, len);
 		}
-		
+
 		StringBuilder sb = new StringBuilder(len); // Extends automatically if surrogate pairs are included
-		
+
 		int maxY = key;
 		int cycleX = maxY * 2 - 2;
-		
+
 		for (int yi = 0; yi < maxY; yi++) {
 			for (int xi = yi; xi < len; xi += cycleX) {
 				sb.appendCodePoint(cps[xi]);
-				
+
 				if (yi != 0 && (yi + 1) != maxY) {
 					int nxi = xi + (cycleX - (2 * yi));
 					if (nxi < len) {
@@ -77,34 +77,34 @@ public class CipherRailFenceDencoder {
 				}
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decCipherRailFence(int[] cps, int key) {
 		if (cps == null) {
 			return null;
 		}
-		
+
 		int len = cps.length;
-		
+
 		if (len == 0) {
 			return "";
 		}
-		
+
 		if (key < 2) {
 			return new String(cps, 0, len);
 		}
-		
+
 		int maxY = key;
 		int cycleX = maxY * 2 - 2;
 		int[] newCPs = new int[len];
-		
+
 		int idx = 0;
 		for (int yi = 0; yi < maxY; yi++) {
 			for (int xi = yi; xi < len; xi += cycleX) {
 				newCPs[xi] = cps[idx++];
-				
+
 				if (yi != 0 && (yi + 1) != maxY) {
 					int nxi = xi + (cycleX - (2 * yi));
 					if (nxi < len) {
@@ -113,7 +113,7 @@ public class CipherRailFenceDencoder {
 				}
 			}
 		}
-		
+
 		return new String(newCPs, 0, len);
 	}
 }

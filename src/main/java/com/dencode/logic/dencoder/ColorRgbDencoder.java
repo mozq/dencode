@@ -53,7 +53,7 @@ public class ColorRgbDencoder {
 	public static String encColorRgbHex(DencodeCondition cond) {
 		return encColorRgbHex(
 				cond.valueAsColors(),
-				DencodeUtils.getOption(cond.options(), "color.rgb.hex-notation", "rrggbbaa")
+				cond.option("color.rgb.hex-notation", "rrggbbaa")
 				);
 	}
 
@@ -61,8 +61,8 @@ public class ColorRgbDencoder {
 	public static String encColorRgb(DencodeCondition cond) {
 		return encColorRgb(
 				cond.valueAsColors(),
-				DencodeUtils.getOption(cond.options(), "color.rgb.color-space", "rgb"),
-				DencodeUtils.getOption(cond.options(), "color.rgb.notation", "number")
+				cond.option("color.rgb.color-space", "rgb"),
+				cond.option("color.rgb.notation", "number")
 				);
 	}
 

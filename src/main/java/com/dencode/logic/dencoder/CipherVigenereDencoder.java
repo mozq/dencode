@@ -24,46 +24,46 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="cipher", method="cipher.vigenere", hasEncoder=true, hasDecoder=true)
 public class CipherVigenereDencoder {
-	
+
 	private static final int[] BLANK_KEY_INDEXES = new int[0];
-	
+
 	private CipherVigenereDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherVigenere(DencodeCondition cond) {
 		return encCipherVigenere(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "cipher.vigenere.key", "")
+				cond.option("cipher.vigenere.key", "")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decCipherVigenere(DencodeCondition cond) {
 		return decCipherVigenere(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "cipher.vigenere.key", "")
+				cond.option("cipher.vigenere.key", "")
 				);
 	}
-	
+
 	private static String encCipherVigenere(String val, String key) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int[] keyIndexes = keyToIndexes(key);
 		if (keyIndexes.length == 0) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0, ki = 0; i < len; i++) {
 			char ch = val.charAt(i);
 			int keyIndex = keyIndexes[ki];
-			
+
 			boolean encoded = true;
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
@@ -81,9 +81,9 @@ public class CipherVigenereDencoder {
 				// Others
 				encoded = false;
 			}
-			
+
 			sb.append(ch);
-			
+
 			if (encoded) {
 				ki++;
 				if (keyIndexes.length <= ki) {
@@ -91,26 +91,26 @@ public class CipherVigenereDencoder {
 				}
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decCipherVigenere(String val, String key) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int[] keyIndexes = keyToIndexes(key);
 		if (keyIndexes.length == 0) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0, ki = 0; i < len; i++) {
 			char ch = val.charAt(i);
 			int keyIndex = keyIndexes[ki];
-			
+
 			boolean decoded = true;
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
@@ -128,9 +128,9 @@ public class CipherVigenereDencoder {
 				// Others
 				decoded = false;
 			}
-			
+
 			sb.append(ch);
-			
+
 			if (decoded) {
 				ki++;
 				if (keyIndexes.length <= ki) {
@@ -138,44 +138,44 @@ public class CipherVigenereDencoder {
 				}
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static char enc(char ch, char baseCh, int keyIndex, int m) {
 		int x = ch - baseCh;
-		
+
 		int n = (x + keyIndex) % m;
 		if (n < 0) {
 			n += m;
 		}
-		
+
 		return (char)(baseCh + n);
 	}
-	
+
 	private static char dec(char ch, char baseCh, int keyIndex, int m) {
 		int x = ch - baseCh;
-		
+
 		int n = (x - keyIndex) % m;
 		if (n < 0) {
 			n += m;
 		}
-		
+
 		return (char)(baseCh + n);
 	}
-	
+
 	private static int[] keyToIndexes(String key) {
 		if (key == null || key.isEmpty()) {
 			return BLANK_KEY_INDEXES;
 		}
-		
+
 		int keyLen = key.length();
 		int[] indexes = new int[keyLen];
 		int indexLen = 0;
 		boolean hasIndex = false;
 		for (int i = 0; i < keyLen; i++) {
 			char ch = key.charAt(i);
-			
+
 			int index;
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
@@ -192,20 +192,20 @@ public class CipherVigenereDencoder {
 			} else {
 				continue;
 			}
-			
+
 			indexes[indexLen++] = index;
 			hasIndex |= (index != 0);
 		}
-		
+
 		if (!hasIndex) {
 			return BLANK_KEY_INDEXES;
 		}
-		
+
 		if (indexLen < keyLen) {
 			// Resize array
 			indexes = Arrays.copyOf(indexes, indexLen);
 		}
-		
+
 		return indexes;
 	}
 }

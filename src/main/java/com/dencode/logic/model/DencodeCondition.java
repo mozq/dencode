@@ -32,112 +32,112 @@ import com.dencode.logic.parser.DateParser;
 import com.dencode.logic.parser.NumberParser;
 
 public class DencodeCondition {
-	
+
 	private String value;
 	private Charset charset;
 	private String lineBreak;
 	private ZoneId zone;
-	
+
 	private List<String> linesValue;
 	private int textLengthDiff;
-	
+
 	private byte[] binaryValue;
-	
+
 	private boolean codePointsWithLfValueParsed;
 	private int[] codePointsWithLfValue;
-	
+
 	private boolean numberValueParsed;
 	private BigDecimal numberValue;
-	
+
 	private boolean numbersValueParsed;
 	private List<BigDecimal> numbersValue;
-	
+
 	private boolean dateValueParsed;
 	private ZonedDateTime dateValue;
-	
+
 	private boolean datesValueParsed;
 	private List<ZonedDateTime> datesValue;
-	
+
 	private boolean colorValueParsed;
 	private Color colorValue;
-	
+
 	private boolean colorsValueParsed;
 	private List<Color> colorsValue;
-	
+
 	private Map<String, String> options;
-	
+
 	public DencodeCondition(String value, Charset charset, String lineBreak, ZoneId zone, Map<String, String> options) {
 		if (value == null) {
 			throw new NullPointerException("value is null");
 		}
-		
+
 		this.value = value;
 		this.charset = charset;
 		this.lineBreak = lineBreak;
 		this.zone = zone;
-		
+
 		this.linesValue = List.of(this.value.split("\r?\n", -1));
 		if (1 < this.linesValue.size()) {
 			this.value = String.join(this.lineBreak, this.linesValue);
 		}
-		
+
 		this.textLengthDiff = (this.linesValue.isEmpty()) ? 0 : -((this.lineBreak.length() - 1) * (this.linesValue.size() - 1));
-		
+
 		this.binaryValue = this.value.getBytes(this.charset);
-		
+
 		this.codePointsWithLfValueParsed = false;
 		this.codePointsWithLfValue = null;
-		
+
 		this.numberValueParsed = false;
 		this.numberValue = null;
-		
+
 		this.numbersValueParsed = false;
 		this.numbersValue = null;
-		
+
 		this.dateValueParsed = false;
 		this.dateValue = null;
-		
+
 		this.datesValueParsed = false;
 		this.datesValue = null;
-		
+
 		this.colorValueParsed = false;
 		this.colorValue = null;
-		
+
 		this.colorsValueParsed = false;
 		this.colorsValue = null;
-		
+
 		this.options = (options == null) ? Collections.emptyMap() : Collections.unmodifiableMap(options);
 	}
-	
-	
+
+
 	public String value() {
 		return value;
 	}
-	
+
 	public Charset charset() {
 		return charset;
 	}
-	
+
 	public String lineBreak() {
 		return lineBreak;
 	}
-	
+
 	public ZoneId zone() {
 		return zone;
 	}
-	
+
 	public int textLengthDiff() {
 		return textLengthDiff;
 	}
-	
+
 	public List<String> valueAsLines() {
 		return linesValue;
 	}
-	
+
 	public byte[] valueAsBinary() {
 		return binaryValue;
 	}
-	
+
 	public int[] valueAsCodePointsWithLf() {
 		if (!this.codePointsWithLfValueParsed) {
 			String value = value();
@@ -149,7 +149,7 @@ public class DencodeCondition {
 		}
 		return this.codePointsWithLfValue;
 	}
-	
+
 	public BigDecimal valueAsNumber() {
 		if (!this.numberValueParsed) {
 			this.numberValue = NumberParser.parse(value());
@@ -157,7 +157,7 @@ public class DencodeCondition {
 		}
 		return this.numberValue;
 	}
-	
+
 	public List<BigDecimal> valueAsNumbers() {
 		if (!this.numbersValueParsed) {
 			this.numbersValue = valueAsParsedLines((val) -> NumberParser.parse(val));
@@ -165,7 +165,7 @@ public class DencodeCondition {
 		}
 		return this.numbersValue;
 	}
-	
+
 	public ZonedDateTime valueAsDate() {
 		if (!this.dateValueParsed) {
 			this.dateValue = DateParser.parseDateAsZonedDateTime(value(), zone());
@@ -173,7 +173,7 @@ public class DencodeCondition {
 		}
 		return this.dateValue;
 	}
-	
+
 	public List<ZonedDateTime> valueAsDates() {
 		if (!this.datesValueParsed) {
 			this.datesValue = valueAsParsedLines((val) -> DateParser.parseDateAsZonedDateTime(val, zone()));
@@ -181,7 +181,7 @@ public class DencodeCondition {
 		}
 		return this.datesValue;
 	}
-	
+
 	public Color valueAsColor() {
 		if (!this.colorValueParsed) {
 			this.colorValue = ColorParser.parseColor(value());
@@ -189,7 +189,7 @@ public class DencodeCondition {
 		}
 		return this.colorValue;
 	}
-	
+
 	public List<Color> valueAsColors() {
 		if (!this.colorsValueParsed) {
 			this.colorsValue = valueAsParsedLines((val) -> ColorParser.parseColor(val));
@@ -197,20 +197,62 @@ public class DencodeCondition {
 		}
 		return this.colorsValue;
 	}
-	
+
 	public <T> List<T> valueAsParsedLines(Function<String, T> func) {
 		return parse(valueAsLines(), func);
 	}
-	
+
+	public String option(String key, String defaultValue) {
+		String value = this.options.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return value;
+	}
+
+	public int optionAsInt(String key, int defaultValue) {
+		String value = this.options.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
+	public int optionAsInt(String key, int defaultValue, int defaultEmptyValue) {
+		String value = this.options.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value.isEmpty()) {
+			return defaultEmptyValue;
+		}
+
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
 	public Map<String, String> options() {
 		return options;
 	}
-	
+
 	private static <R> List<R> parse(List<String> vals, Function<String, R> func) {
 		if (vals == null) {
 			return null;
 		}
-		
+
 		int parsedCount = 0;
 		List<R> parsedVals = new ArrayList<R>(vals.size());
 		for (String val : vals) {
@@ -228,11 +270,11 @@ public class DencodeCondition {
 			}
 			parsedVals.add(parsedVal);
 		}
-		
+
 		if (parsedCount == 0) {
 			return null;
 		}
-		
+
 		return parsedVals;
 	}
 }

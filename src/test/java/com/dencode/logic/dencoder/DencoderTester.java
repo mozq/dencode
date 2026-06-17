@@ -28,7 +28,7 @@ import java.util.function.Function;
 import com.dencode.logic.model.DencodeCondition;
 
 class DencoderTester {
-	
+
 	private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 	private static final String DEFAULT_LINE_BREAK = "\n";
 	private static final ZoneId DEFAULT_ZONE = null;
@@ -168,7 +168,7 @@ class DencoderTester {
 		if (zone == null) {
 			zone = DEFAULT_ZONE;
 		}
-		
+
 		return new DencodeCondition(value, charset, lineBreak, zone, new HashMap<>(options));
 	}
 

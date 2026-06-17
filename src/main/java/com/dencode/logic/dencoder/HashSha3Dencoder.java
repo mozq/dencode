@@ -35,7 +35,7 @@ public class HashSha3Dencoder {
 
 	@DencoderFunction
 	public static String encHashSha3(DencodeCondition cond) {
-		String function = normalizeFunction(DencodeUtils.getOption(cond.options(), "hash.sha3.function", DEFAULT_FUNCTION));
+		String function = normalizeFunction(cond.option("hash.sha3.function", DEFAULT_FUNCTION));
 		return DencodeUtils.encHash(cond.valueAsBinary(), function);
 	}
 

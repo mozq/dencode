@@ -26,32 +26,32 @@ import com.dencode.logic.util.JapaneseNumberUtils;
 
 @Dencoder(type="number", method="number.japanese", hasEncoder=true, hasDecoder=true)
 public class NumberJapaneseDencoder {
-	
+
 	private NumberJapaneseDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encNumJapanese(DencodeCondition cond) {
 		return encNumJapanese(
 				cond.valueAsNumbers(),
-				DencodeUtils.getOption(cond.options(), "number.japanese.variant", "standard").equals("daiji")
+				cond.option("number.japanese.variant", "standard").equals("daiji")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decNumJapanese(DencodeCondition cond) {
 		return decNumJapanese(cond.valueAsLines());
 	}
-	
-	
+
+
 	private static String encNumJapanese(List<BigDecimal> vals, boolean useDaiji) {
 		return DencodeUtils.dencodeLines(vals, (bigDec) -> {
 			if (bigDec == null) {
 				return null;
 			}
-			
+
 			try {
 				return JapaneseNumberUtils.toJPNum(bigDec, useDaiji, useDaiji, false);
 			} catch (IllegalArgumentException e) {
@@ -59,7 +59,7 @@ public class NumberJapaneseDencoder {
 			}
 		});
 	}
-	
+
 	private static String decNumJapanese(List<String> vals) {
 		return DencodeUtils.dencodeLines(vals, (val) -> {
 			BigDecimal bigDec;
@@ -68,7 +68,7 @@ public class NumberJapaneseDencoder {
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
-			
+
 			if (bigDec == null) {
 				return null;
 			}

@@ -31,7 +31,7 @@ public class StringAscii85Dencoder {
 	private static final int BASE_N_P2 = BASE_N * BASE_N;
 	private static final int BASE_N_P3 = BASE_N_P2 * BASE_N;
 	private static final int BASE_N_P4 = BASE_N_P3 * BASE_N;
-	
+
 	private static final char[] ENCODE_TABLE = {
 			'!', '\"', '#', '$', '%', '&', '\'', '(', ')', '*',
 			'+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
@@ -54,7 +54,7 @@ public class StringAscii85Dencoder {
 			'*', '?', '&', '<', '>', '(', ')', '[', ']', '{',
 			'}', '@', '%', '$', '#'
 			};
-	
+
 	private static final int[] DECODE_TABLE = new int['u' + 1];
 	private static final int[] DECODE_TABLE_Z85 = new int['}' + 1];
 	static {
@@ -65,22 +65,22 @@ public class StringAscii85Dencoder {
 			DECODE_TABLE_Z85[(int)ENCODE_TABLE_Z85[i]] = i;
 		}
 	}
-	
+
 	private static final int RAW_CHUNK_SIZE = 4;
 	private static final int ENCODED_CHUNK_SIZE = 5;
-	
+
 	private static final Pattern BTOA_TRAILER_SIZE_PATTERN = Pattern.compile("xbtoa End N ([0-9]+)");
 	private static final Pattern BTOA_HEADER_TRAILER_PATTERN = Pattern.compile("(?:^xbtoa.*? Begin\\r?\\n)|(?:\\r?\\nxbtoa End.*$)|\\s");
 	private static final Pattern ADOBE_HEADER_TRAILER_PATTERN = Pattern.compile("(?:^<~)|(?:~>$)|\\s");
-	
+
 	private StringAscii85Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrAscii85(DencodeCondition cond) {
-		String variant = DencodeUtils.getOption(cond.options(), "string.ascii85.variant", "z85");
+		String variant = cond.option("string.ascii85.variant", "z85");
 		switch (variant) {
 		case "btoa":
 			return encodeAscii85(
@@ -124,11 +124,11 @@ public class StringAscii85Dencoder {
 					);
 		}
 	}
-	
+
 	@DencoderFunction
 	public static String decStrAscii85(DencodeCondition cond) {
 		String val = cond.value();
-		
+
 		if (val.contains("xbtoa")) {
 			// btoa
 			int size = -1;
@@ -147,12 +147,12 @@ public class StringAscii85Dencoder {
 			return toString(decodeAscii85(cond.value(), DECODE_TABLE_Z85, ENCODE_TABLE_Z85, false, false, false, -1), cond.charset());
 		}
 	}
-	
+
 	private static String encodeAscii85(byte[] binValue, char[] encodeTable, boolean compressZeros, boolean compressSpaces, boolean pad, String lineBreak, int lineBreakPer, boolean lineBreakWithPrefix, String prefix, String suffix) {
 		int len = binValue.length;
 		int cf = len / RAW_CHUNK_SIZE;
 		int bufLen = (cf + 1) * ENCODED_CHUNK_SIZE;
-		
+
 		int additionalLen = 0;
 		boolean enableLineBreak = lineBreak != null && 0 < lineBreakPer;
 		if (enableLineBreak) {
@@ -164,7 +164,7 @@ public class StringAscii85Dencoder {
 		if (suffix != null) {
 			additionalLen += suffix.length();
 		}
-		
+
 		int dl = 0;
 		StringBuilder sb = new StringBuilder(bufLen + additionalLen);
 		if (prefix != null) {
@@ -173,7 +173,7 @@ public class StringAscii85Dencoder {
 				dl += prefix.length();
 			}
 		}
-		
+
 		for (int i = 0; i < len; ) {
 			long n = 0L;
 			int cnt = 1;
@@ -184,11 +184,11 @@ public class StringAscii85Dencoder {
 					cnt++;
 				}
 			}
-			
+
 			if (pad) {
 				cnt = ENCODED_CHUNK_SIZE;
 			}
-			
+
 			if (compressZeros && n == 0x00000000L && cnt == ENCODED_CHUNK_SIZE) {
 				if (enableLineBreak && dl != 0 && dl % lineBreakPer == 0) {
 					sb.append(lineBreak);
@@ -249,14 +249,14 @@ public class StringAscii85Dencoder {
 				}
 			}
 		}
-		
+
 		if (suffix != null) {
 			sb.append(suffix);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static byte[] decodeAscii85(String val, int[] decodeTable, char[] encodeTable, boolean compressZeros, boolean compressSpaces, boolean padded, int size) {
 		int len = val.length();
 		int cz = 0;
@@ -265,33 +265,33 @@ public class StringAscii85Dencoder {
 		}
 		int cf = ((len - cz) / ENCODED_CHUNK_SIZE) + cz;
 		int cp = (len - cz) % ENCODED_CHUNK_SIZE;
-		
+
 		if (cp == 1) {
 			// Illegal chunk size
 			return null;
 		}
-		
+
 		int bufLen = (0 <= size) ? size :
 				(cf * RAW_CHUNK_SIZE) + ((cp == 0) ? 0 : cp - (ENCODED_CHUNK_SIZE - RAW_CHUNK_SIZE));
-		
+
 		byte[] buf = new byte[bufLen];
 		int bufIdx = 0;
-		
+
 		for (int i = 0; i < len; ) {
 			long n = 0;
 			int cnt = -(ENCODED_CHUNK_SIZE - RAW_CHUNK_SIZE);
 			boolean lastChunk = (len <= i + ENCODED_CHUNK_SIZE + 1);
 			for (int j = 0; j < ENCODED_CHUNK_SIZE; j++) {
 				boolean hasBits = (i < len);
-				
+
 				char ch = (hasBits) ? val.charAt(i++) : encodeTable[encodeTable.length - 1];
-				
+
 				if (decodeTable.length <= ch) {
 					if (j != 0) {
 						// Unsupported value
 						return null;
 					}
-					
+
 					if (compressZeros && ch == 'z') {
 						n = 0x00000000L;
 						cnt = RAW_CHUNK_SIZE;
@@ -305,13 +305,13 @@ public class StringAscii85Dencoder {
 						return null;
 					}
 				}
-				
+
 				int nx = decodeTable[ch];
 				if (nx < 0) {
 					// Unsupported value
 					return null;
 				}
-				
+
 				n = (n * BASE_N) + nx;
 				if (hasBits) {
 					cnt++;
@@ -322,7 +322,7 @@ public class StringAscii85Dencoder {
 			byte b2 = (byte)((n >> 16) & 0xFFL);
 			byte b3 = (byte)((n >> 8) & 0xFFL);
 			byte b4 = (byte)(n & 0xFFL);
-			
+
 			if (lastChunk && padded && size < 0) {
 				// trim last zeros
 				if (b4 == 0) {
@@ -335,7 +335,7 @@ public class StringAscii85Dencoder {
 					cnt--;
 				}
 			}
-			
+
 			if ((1 <= cnt) && (bufIdx < bufLen)) {
 				buf[bufIdx++] = b1;
 			}
@@ -349,24 +349,24 @@ public class StringAscii85Dencoder {
 				buf[bufIdx++] = b4;
 			}
 		}
-		
+
 		if (bufLen != bufIdx) {
 			byte[] buf2 = new byte[bufIdx];
 			System.arraycopy(buf, 0, buf2, 0, bufIdx);
 			buf = buf2;
 		}
-		
+
 		return buf;
 	}
-	
+
 	private static String buildBTOASuffix(byte[] x, String lineBreak) {
 		int eor = 0;
 		int sum = 0;
 		int rot = 0;
-		
+
 		for (int i = 0; i < x.length; i++) {
 			int c = 0xFF & x[i];
-			
+
 			eor ^= c;
 			sum += c;
 			sum++;
@@ -378,15 +378,15 @@ public class StringAscii85Dencoder {
 			}
 			rot += c;
 		}
-		
+
 		return String.format("%sxbtoa End N %d %x E %x S %x R %x%s", lineBreak, x.length, x.length, eor, sum, rot, lineBreak);
 	}
-	
+
 	private static String toString(byte[] val, Charset charset) {
 		if (val == null) {
 			return null;
 		}
-		
+
 		return new String(val, charset);
 	}
 }

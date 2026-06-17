@@ -49,7 +49,7 @@ public class ColorCmykDencoder {
 	public static String encColorCmyk(DencodeCondition cond) {
 		return encColorCmyk(
 				cond.valueAsColors(),
-				DencodeUtils.getOption(cond.options(), "color.cmyk.profile", "naive")
+				cond.option("color.cmyk.profile", "naive")
 				);
 	}
 

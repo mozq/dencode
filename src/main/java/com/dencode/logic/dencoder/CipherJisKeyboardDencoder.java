@@ -22,37 +22,37 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="cipher", method="cipher.jis-keyboard", hasEncoder=true, hasDecoder=false)
 public class CipherJisKeyboardDencoder {
-	
+
 	private CipherJisKeyboardDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherJisKeyboard(DencodeCondition cond) {
 		return encCipherJisKeyboard(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "cipher.jis-keyboard.mode", "lenient").equals("lenient"),
+				cond.option("cipher.jis-keyboard.mode", "lenient").equals("lenient"),
 				true
 				);
 	}
-	
-	
+
+
 	private static String encCipherJisKeyboard(String value, boolean lenient, boolean combineVoicedSoundMark) {
 		if (value == null || value.isEmpty()) {
 			return value;
 		}
-		
+
 		int len = value.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++) {
 			char ch = value.charAt(i);
 			mapAndAppend(sb, ch, lenient, combineVoicedSoundMark);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static void mapAndAppend(StringBuilder sb, char ch, boolean lenient, boolean combineVoicedSoundMark) {
 		switch (ch) {
 		case '1': sb.append('ぬ'); break;
@@ -75,7 +75,7 @@ public class CipherJisKeyboardDencoder {
 		case '-': sb.append('ほ'); break;
 		case '^': sb.append('へ'); break;
 		case '|': sb.append('ー'); break;
-		
+
 		case 'q': sb.append('た'); break;
 		case 'w': sb.append('て'); break;
 		case 'e': sb.append('い'); break;
@@ -102,7 +102,7 @@ public class CipherJisKeyboardDencoder {
 			}
 			break;
 		case '{': sb.append('「'); break;
-		
+
 		case 'a': sb.append('ち'); break;
 		case 's': sb.append('と'); break;
 		case 'd': sb.append('し'); break;
@@ -116,7 +116,7 @@ public class CipherJisKeyboardDencoder {
 		case ':': sb.append('け'); break;
 		case ']': sb.append('む'); break;
 		case '}': sb.append('」'); break;
-		
+
 		case 'z': sb.append('つ'); break;
 		case 'Z': sb.append('っ'); break;
 		case 'x': sb.append('さ'); break;
@@ -132,7 +132,7 @@ public class CipherJisKeyboardDencoder {
 		case '/': sb.append('め'); break;
 		case '?': sb.append('・'); break;
 		case '\\': sb.append('ろ'); break;
-		
+
 		case 'ぬ': sb.append('1'); break;
 		case 'ふ': sb.append('2'); break;
 		case 'ぶ': sb.append('2').append('@'); break;
@@ -160,7 +160,7 @@ public class CipherJisKeyboardDencoder {
 		case 'べ': sb.append('^').append('@'); break;
 		case 'ぺ': sb.append('^').append('['); break;
 		case 'ー': sb.append('|'); break;
-		
+
 		case 'た': sb.append('q'); break;
 		case 'だ': sb.append('q').append('@'); break;
 		case 'て': sb.append('w'); break;
@@ -182,7 +182,7 @@ public class CipherJisKeyboardDencoder {
 		case '゜': // FALLTHRU
 		case '\u309A': sb.append('['); break;
 		case '「': sb.append('{'); break;
-		
+
 		case 'ち': sb.append('a'); break;
 		case 'ぢ': sb.append('a').append('@'); break;
 		case 'と': sb.append('s'); break;
@@ -204,7 +204,7 @@ public class CipherJisKeyboardDencoder {
 		case 'げ': sb.append(':').append('@'); break;
 		case 'む': sb.append(']'); break;
 		case '」': sb.append('}'); break;
-		
+
 		case 'つ': sb.append('z'); break;
 		case 'づ': sb.append('z').append('@'); break;
 		case 'っ': sb.append('Z'); break;
@@ -226,7 +226,7 @@ public class CipherJisKeyboardDencoder {
 		case 'め': sb.append('/'); break;
 		case '・': sb.append('?'); break;
 		case 'ろ': sb.append('\\'); break;
-		
+
 		default:
 			if (lenient) {
 				switch (ch) {
@@ -239,7 +239,7 @@ public class CipherJisKeyboardDencoder {
 				case 'I': sb.append('に'); break;
 				case 'O': sb.append('ら'); break;
 				case 'P': sb.append('せ'); break;
-				
+
 				case 'A': sb.append('ち'); break;
 				case 'S': sb.append('と'); break;
 				case 'D': sb.append('し'); break;
@@ -249,14 +249,14 @@ public class CipherJisKeyboardDencoder {
 				case 'J': sb.append('ま'); break;
 				case 'K': sb.append('の'); break;
 				case 'L': sb.append('り'); break;
-				
+
 				case 'X': sb.append('さ'); break;
 				case 'C': sb.append('そ'); break;
 				case 'V': sb.append('ひ'); break;
 				case 'B': sb.append('こ'); break;
 				case 'N': sb.append('み'); break;
 				case 'M': sb.append('も'); break;
-				
+
 				case 'ヌ': sb.append('1'); break;
 				case 'フ': sb.append('2'); break;
 				case 'ブ': sb.append('2').append('@'); break;
@@ -283,7 +283,7 @@ public class CipherJisKeyboardDencoder {
 				case 'ヘ': sb.append('^'); break;
 				case 'ベ': sb.append('^').append('@'); break;
 				case 'ペ': sb.append('^').append('['); break;
-				
+
 				case 'タ': sb.append('q'); break;
 				case 'ダ': sb.append('q').append('@'); break;
 				case 'テ': sb.append('w'); break;
@@ -300,7 +300,7 @@ public class CipherJisKeyboardDencoder {
 				case 'ラ': sb.append('o'); break;
 				case 'セ': sb.append('p'); break;
 				case 'ゼ': sb.append('p').append('@'); break;
-				
+
 				case 'チ': sb.append('a'); break;
 				case 'ヂ': sb.append('a').append('@'); break;
 				case 'ト': sb.append('s'); break;
@@ -321,7 +321,7 @@ public class CipherJisKeyboardDencoder {
 				case 'ケ': sb.append(':'); break;
 				case 'ゲ': sb.append(':').append('@'); break;
 				case 'ム': sb.append(']'); break;
-				
+
 				case 'ツ': sb.append('z'); break;
 				case 'ヅ': sb.append('z').append('@'); break;
 				case 'ッ': sb.append('Z'); break;

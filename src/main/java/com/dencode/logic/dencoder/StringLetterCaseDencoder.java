@@ -24,36 +24,36 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.letter-case", hasEncoder=true, hasDecoder=false)
 public class StringLetterCaseDencoder {
-	
+
 	private StringLetterCaseDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrUpperCase(DencodeCondition cond) {
 		return encStrUpperCase(cond.value());
 	}
-	
+
 	@DencoderFunction
 	public static String encStrLowerCase(DencodeCondition cond) {
 		return encStrLowerCase(cond.value());
 	}
-	
+
 	@DencoderFunction
 	public static String encStrSwapCase(DencodeCondition cond) {
 		return encStrSwapCase(cond.value());
 	}
-	
+
 	@DencoderFunction
 	public static String encStrCapitalize(DencodeCondition cond) {
 		return encStrCapitalize(cond.value());
 	}
-	
+
 	@DencoderFunction
 	public static String encStrAlternatingCaps(DencodeCondition cond) {
-		String variant = DencodeUtils.getOption(cond.options(), "string.letter-case.alt-variant", "lower-upper");
-		
+		String variant = cond.option("string.letter-case.alt-variant", "lower-upper");
+
 		return switch (variant) {
 			case "vowels-upper" -> encStrAlternatingCaps_Vowels(cond.value(), true);
 			case "vowels-lower" -> encStrAlternatingCaps_Vowels(cond.value(), false);
@@ -61,40 +61,40 @@ public class StringLetterCaseDencoder {
 			default /* lower-upper */ -> encStrAlternatingCaps(cond.value(), false);
 		};
 	}
-	
-	
+
+
 	private static String encStrUpperCase(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		return val.toUpperCase(Locale.US);
 	}
-	
+
 	private static String encStrLowerCase(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		return val.toLowerCase(Locale.US);
 	}
-	
+
 	private static String encStrSwapCase(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		boolean first = true;
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; ) {
 			int cp = val.codePointAt(i);
-			
+
 			if (Character.isWhitespace(cp)) {
 				first = true;
 			} else {
 				first = false;
-				
+
 				if (Character.isLowerCase(cp)) {
 					if (first) {
 						cp = Character.toTitleCase(cp);
@@ -107,49 +107,49 @@ public class StringLetterCaseDencoder {
 					// NOP
 				}
 			}
-			
+
 			sb.appendCodePoint(cp);
-			
+
 			i += Character.charCount(cp);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String encStrCapitalize(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		boolean first = true;
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; ) {
 			int cp = val.codePointAt(i);
-			
+
 			if (first) {
 				sb.appendCodePoint(Character.toTitleCase(cp));
 			} else {
 				sb.appendCodePoint(cp);
 			}
-			
+
 			first = Character.isWhitespace(cp);
-			
+
 			i += Character.charCount(cp);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String encStrAlternatingCaps(String val, boolean firstUpper) {
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
-		
+
 		boolean upper = firstUpper;
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (Character.isWhitespace(ch)) {
 				sb.append(ch);
 			} else {
@@ -163,21 +163,21 @@ public class StringLetterCaseDencoder {
 					// Other non-letters
 					sb.append(ch);
 				}
-				
+
 				upper = !upper;
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String encStrAlternatingCaps_Vowels(String val, boolean vowelsUpper) {
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
 				boolean vowels = switch (ch) {
 					case 'A', 'E', 'I', 'O', 'U' -> true; // Half-width
@@ -185,7 +185,7 @@ public class StringLetterCaseDencoder {
 					case 'А', 'Э', 'О', 'У', 'Ы', 'Я', 'Е', 'Ё', 'Ю', 'И' -> true; // Russian
 					default -> false;
 				};
-				
+
 				if ((vowels && !vowelsUpper) || (!vowels && vowelsUpper)) {
 					// To lower
 					sb.append(Character.toLowerCase(ch));
@@ -200,7 +200,7 @@ public class StringLetterCaseDencoder {
 					case 'а', 'э', 'о', 'у', 'ы', 'я', 'е', 'ё', 'ю', 'и' -> true; // Russian
 					default -> false;
 				};
-				
+
 				if ((vowels && vowelsUpper) || (!vowels && !vowelsUpper)) {
 					// To upper
 					sb.append(Character.toUpperCase(ch));
@@ -213,7 +213,7 @@ public class StringLetterCaseDencoder {
 				sb.append(ch);
 			}
 		}
-		
+
 		return sb.toString();
 	}
 }

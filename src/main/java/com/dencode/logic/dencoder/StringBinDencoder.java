@@ -24,54 +24,54 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.bin", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
 public class StringBinDencoder {
-	
+
 	private StringBinDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrBin(DencodeCondition cond) {
 		return encStrBin(
 				cond.valueAsBinary(),
-				DencodeUtils.getOption(cond.options(), "string.bin.separator-each", "")
+				cond.option("string.bin.separator-each", "")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrBin(DencodeCondition cond) {
 		return decStrBin(cond.value(), cond.charset());
 	}
-	
-	
+
+
 	private static String encStrBin(byte[] binValue, String separatorEach) {
 		return toBinString(binValue, separatorEach);
 	}
-	
+
 	private static String decStrBin(String val, Charset charset) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		byte[] binValue = new byte[len / 8 + 1];
 		int binIdx = -1;
 		int digits = 0;
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (Character.isWhitespace(ch)) {
 				continue;
 			}
-			
+
 			int b;
 			switch (ch) {
 				case '0': b = 0; break;
 				case '1': b = 1; break;
 				default: return null;
 			}
-			
+
 			if (digits == 0) {
 				binValue[++binIdx] = (byte)b;
 				digits = 1;
@@ -83,14 +83,14 @@ public class StringBinDencoder {
 				}
 			}
 		}
-		
+
 		if (digits != 0) {
 			binValue[binIdx] = (byte)((binValue[binIdx] << (8 - digits)));
 		}
-		
+
 		return new String(binValue, 0, binIdx + 1, charset);
 	}
-	
+
 	private static String toBinString(byte[] binary, String separatorEach) {
 		if (binary == null) {
 			return null;
@@ -98,20 +98,20 @@ public class StringBinDencoder {
 		if (binary.length == 0) {
 			return "";
 		}
-		
+
 		int separatorEachBit = DencodeUtils.parseDataSizeAsBit(separatorEach);
 		int separatorEachByte = (separatorEachBit + 7) / 8; // Round UP
-		
+
 		int len = binary.length;
-		
+
 		StringBuilder sb = new StringBuilder(len * 10);
 		for (int i = 0; i < len; i++) {
 			byte b = binary[i];
-			
+
 			if (i != 0 && 0 < separatorEachByte && (i % separatorEachByte) == 0) {
 				sb.append(' ');
 			}
-			
+
 			sb.append(((b & 0x80) == 0) ? '0' : '1');
 			sb.append(((b & 0x40) == 0) ? '0' : '1');
 			sb.append(((b & 0x20) == 0) ? '0' : '1');

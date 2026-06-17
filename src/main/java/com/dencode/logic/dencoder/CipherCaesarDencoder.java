@@ -24,68 +24,68 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="cipher", method="cipher.caesar", hasEncoder=true, hasDecoder=true)
 public class CipherCaesarDencoder {
-	
+
 	private CipherCaesarDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherCaesar(DencodeCondition cond) {
 		return encCipherCaesar(
 				cond.value(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.caesar.shift", -3)
+				cond.optionAsInt("cipher.caesar.shift", -3)
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decCipherCaesar(DencodeCondition cond) {
 		return decCipherCaesar(
 				cond.value(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.caesar.shift", -3)
+				cond.optionAsInt("cipher.caesar.shift", -3)
 				);
 	}
-	
-	
+
+
 	private static String encCipherCaesar(String val, int shift) {
 		return dencCipherCaesar(val, shift);
 	}
-	
+
 	private static String decCipherCaesar(String val, int shift) {
 		return dencCipherCaesar(val, -shift);
 	}
-	
+
 	private static String dencCipherCaesar(String val, int shift) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		if (shift == 0) {
 			return val;
 		}
-		
+
 		int shiftLatin = shift % 26;
 		if (shiftLatin < 0) {
 			shiftLatin += 26;
 		}
-		
+
 		int shiftCyrillic = shift % 32;
 		if (shiftCyrillic < 0) {
 			shiftCyrillic += 32;
 		}
-		
+
 		int shiftJapanese = shift % 84;
 		if (shiftJapanese < 0) {
 			shiftJapanese += 84;
 		}
-		
+
 		val = Normalizer.normalize(val, Normalizer.Form.NFD);
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
 				ch = (char)((ch - 'A' + shiftLatin) % 26 + 'A');
@@ -117,16 +117,16 @@ public class CipherCaesarDencoder {
 				}
 				ch = (char)((ch - 'а' + shiftCyrillic) % 32 + 'а');
 			}
-			
+
 			sb.append(ch);
 		}
 		val = Normalizer.normalize(sb.toString(), Normalizer.Form.NFC);
-		
+
 		len = val.length();
 		sb.setLength(0);
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if ('ぁ' <= ch && ch <= 'ゔ') {
 				// Japanese Hiragana
 				ch = (char)((ch - 'ぁ' + shiftJapanese) % 84 + 'ぁ');
@@ -134,11 +134,11 @@ public class CipherCaesarDencoder {
 				// Japanese Katakana
 				ch = (char)((ch - 'ァ' + shiftJapanese) % 84 + 'ァ');
 			}
-			
+
 			sb.append(ch);
 		}
 		val = sb.toString();
-		
+
 		return val;
 	}
 }

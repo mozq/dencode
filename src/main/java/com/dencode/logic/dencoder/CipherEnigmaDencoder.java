@@ -31,65 +31,65 @@ import net.mozq.enigma4j.scrambler.WiringPair;
 
 @Dencoder(type="cipher", method="cipher.enigma", hasEncoder=true, hasDecoder=true)
 public class CipherEnigmaDencoder {
-	
+
 	private CipherEnigmaDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherEnigma(DencodeCondition cond) {
 		return dencCipherEnigma(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.machine", "I"),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.reflector", "UKW-A"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.reflector-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.reflector-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor4", "Beta"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor4-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor4-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor3", "III"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor3-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor3-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor2", "II"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor2-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor2-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor1", "I"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor1-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor1-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.plugboard", ""),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.uhr", 0),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.ukwd", "")
+				cond.option("cipher.enigma.machine", "I"),
+				cond.option("cipher.enigma.reflector", "UKW-A"),
+				cond.optionAsInt("cipher.enigma.reflector-ring", 1),
+				cond.optionAsInt("cipher.enigma.reflector-position", 1),
+				cond.option("cipher.enigma.rotor4", "Beta"),
+				cond.optionAsInt("cipher.enigma.rotor4-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor4-position", 1),
+				cond.option("cipher.enigma.rotor3", "III"),
+				cond.optionAsInt("cipher.enigma.rotor3-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor3-position", 1),
+				cond.option("cipher.enigma.rotor2", "II"),
+				cond.optionAsInt("cipher.enigma.rotor2-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor2-position", 1),
+				cond.option("cipher.enigma.rotor1", "I"),
+				cond.optionAsInt("cipher.enigma.rotor1-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor1-position", 1),
+				cond.option("cipher.enigma.plugboard", ""),
+				cond.optionAsInt("cipher.enigma.uhr", 0),
+				cond.option("cipher.enigma.ukwd", "")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decCipherEnigma(DencodeCondition cond) {
 		return dencCipherEnigma(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.machine", "I"),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.reflector", "UKW-A"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.reflector-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.reflector-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor4", "Beta"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor4-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor4-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor3", "III"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor3-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor3-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor2", "II"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor2-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor2-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.rotor1", "I"),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor1-ring", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.rotor1-position", 1),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.plugboard", ""),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.enigma.uhr", 0),
-				DencodeUtils.getOption(cond.options(), "cipher.enigma.ukwd", "")
+				cond.option("cipher.enigma.machine", "I"),
+				cond.option("cipher.enigma.reflector", "UKW-A"),
+				cond.optionAsInt("cipher.enigma.reflector-ring", 1),
+				cond.optionAsInt("cipher.enigma.reflector-position", 1),
+				cond.option("cipher.enigma.rotor4", "Beta"),
+				cond.optionAsInt("cipher.enigma.rotor4-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor4-position", 1),
+				cond.option("cipher.enigma.rotor3", "III"),
+				cond.optionAsInt("cipher.enigma.rotor3-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor3-position", 1),
+				cond.option("cipher.enigma.rotor2", "II"),
+				cond.optionAsInt("cipher.enigma.rotor2-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor2-position", 1),
+				cond.option("cipher.enigma.rotor1", "I"),
+				cond.optionAsInt("cipher.enigma.rotor1-ring", 1),
+				cond.optionAsInt("cipher.enigma.rotor1-position", 1),
+				cond.option("cipher.enigma.plugboard", ""),
+				cond.optionAsInt("cipher.enigma.uhr", 0),
+				cond.option("cipher.enigma.ukwd", "")
 				);
 	}
-	
-	
+
+
 	private static String dencCipherEnigma(
 			String val,
 			String machine,
@@ -102,18 +102,18 @@ public class CipherEnigmaDencoder {
 			int uhr,
 			String ukwd
 			) {
-		
+
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		if (machine.isEmpty()) {
 			return "";
 		}
-		
+
 		try {
 			EnigmaMachine m = Enigma.machine(machine);
-			
+
 			// Reflector
 			if (reflector.equals("UKW-D")) {
 				m.reflector(Reflector.UKW_D(ukwd.toUpperCase()));
@@ -122,7 +122,7 @@ public class CipherEnigmaDencoder {
 			} else {
 				m.reflector(reflector);
 			}
-	
+
 			// Rotors
 			if (m.spec().isSupportFourthRotor() && !reflector.equals("UKW-D")) {
 				m.rotor(4, rotor4, rotor4Ring, rotor4Position);
@@ -130,7 +130,7 @@ public class CipherEnigmaDencoder {
 			m.rotor(3, rotor3, rotor3Ring, rotor3Position);
 			m.rotor(2, rotor2, rotor2Ring, rotor2Position);
 			m.rotor(1, rotor1, rotor1Ring, rotor1Position);
-			
+
 			// Plugboard, Uhr
 			if (m.spec().hasFeature(EnigmaFeature.PLUGBOARD)) {
 				List<WiringPair> plugboardPairs = WiringPair.toPairs(plugboard.toUpperCase());
@@ -142,7 +142,7 @@ public class CipherEnigmaDencoder {
 					m.plugboard(plugboardPairs);
 				}
 			}
-			
+
 			return m.translate(val);
 		} catch (IllegalArgumentException e) {
 			return "";

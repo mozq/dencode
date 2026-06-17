@@ -24,55 +24,55 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.hex", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
 public class StringHexDencoder {
-	
+
 	private StringHexDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrHex(DencodeCondition cond) {
 		return encStrHex(
 				cond.valueAsBinary(),
-				DencodeUtils.getOption(cond.options(), "string.hex.separator-each", ""),
-				DencodeUtils.getOption(cond.options(), "string.hex.case", "lower")
+				cond.option("string.hex.separator-each", ""),
+				cond.option("string.hex.case", "lower")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrHex(DencodeCondition cond) {
 		return decStrHex(cond.value(), cond.charset());
 	}
-	
-	
+
+
 	private static String encStrHex(byte[] binValue, String separatorEach, String hexCase) {
 		return toHexString(binValue, separatorEach, hexCase.equals("upper"));
 	}
-	
+
 	private static String decStrHex(String val, Charset charset) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		byte[] binValue = new byte[len / 2 + 1];
 		int binIdx = -1;
 		int digits = 0;
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (Character.isWhitespace(ch)) {
 				continue;
 			}
-			
+
 			int b;
 			try {
 				b = DencodeUtils.hexDigitToNum(ch);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
-			
+
 			if (digits == 0) {
 				binValue[++binIdx] = (byte)b;
 				digits = 4;
@@ -81,14 +81,14 @@ public class StringHexDencoder {
 				digits = 0;
 			}
 		}
-		
+
 		if (digits != 0) {
 			binValue[binIdx] = (byte)((binValue[binIdx] << (8 - digits)));
 		}
-		
+
 		return new String(binValue, 0, binIdx + 1, charset);
 	}
-	
+
 	private static String toHexString(byte[] binary, String separatorEach, boolean upperCase) {
 		if (binary == null) {
 			return null;
@@ -96,17 +96,17 @@ public class StringHexDencoder {
 		if (binary.length == 0) {
 			return "";
 		}
-		
+
 		int separatorEachByte = DencodeUtils.parseDataSizeAsByte(separatorEach);
-		
+
 		int len = binary.length;
-		
+
 		char baseCharA = (upperCase) ? 'A' : 'a';
-		
+
 		StringBuilder sb = new StringBuilder(len * 3);
 		for (int i = 0; i < len; i++) {
 			byte b = binary[i];
-			
+
 			if (i != 0 && 0 < separatorEachByte && (i % separatorEachByte) == 0) {
 				sb.append(' ');
 			}

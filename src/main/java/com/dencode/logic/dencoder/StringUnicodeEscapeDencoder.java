@@ -27,17 +27,17 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.unicode-escape", hasEncoder=true, hasDecoder=true, useNl=true)
 public class StringUnicodeEscapeDencoder {
-	
+
 	private static final char[] NOTATION_PREFIXES = new char[]{'\\', '%', '&', '0', 'U'};
 	private static final Pattern NOTATION_PATTERN_CODE = Pattern.compile("\\\\u([0-9a-fA-F]{1,4})|\\\\U([0-9a-fA-F]{1,8})|\\\\u\\{([0-9a-fA-F]{1,6})\\}|\\\\x\\{([0-9a-fA-F]{1,6})\\}|\\\\([0-9a-fA-F]{1,6}) ?|&#x([0-9a-fA-F]{1,6});?|%u([0-9a-fA-F]{1,4})|0x([0-9a-fA-F]{1,6}) ?|U\\+([0-9a-fA-F]{1,6}) ?");
 	private static final Pattern NOTATION_PATTERN_NAME = Pattern.compile("\\\\N\\{(.+?)\\}");
-	
+
 	private static final String TYPE_CODE_UNIT = "cu";
 	private static final String TYPE_CODE_POINT = "cp";
 	private static final String TYPE_CHAR_NAME = "cn";
-	
+
 	private static final String DEFAULT_NOTATION = "cubu";
-	
+
 	private static final Map<String, String[]> NOTATION_FORMATS = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -56,54 +56,54 @@ public class StringUnicodeEscapeDencoder {
 			put("cnbNb", new String[] {TYPE_CHAR_NAME, "\\N{%s}", "\\N{%s}", "\\N{%s}", "\\N{%s}", null}); // Character name / backslash + "N" + braces
 		}
 	};
-	
+
 	private StringUnicodeEscapeDencoder() {
 		// NOP
 	}
-	
+
 	@DencoderFunction
 	public static String encStrUnicodeEscape(DencodeCondition cond) {
 		return encStrUnicodeEscape(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "string.unicode-escape.notation", DEFAULT_NOTATION),
-				!DencodeUtils.getOption(cond.options(), "string.unicode-escape.case", "upper").equals("lower")
+				cond.option("string.unicode-escape.notation", DEFAULT_NOTATION),
+				!cond.option("string.unicode-escape.case", "upper").equals("lower")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrUnicodeEscape(DencodeCondition cond) {
 		return decStrUnicodeEscape(cond.value());
 	}
-	
+
 	private static String encStrUnicodeEscape(String val, String notation, boolean upperCase) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		String[] formats = NOTATION_FORMATS.get(notation);
 		if (formats == null) {
 			formats = NOTATION_FORMATS.get(DEFAULT_NOTATION); // Default format
 		}
-		
+
 		String type = formats[0];
 		String bmpFormat = (upperCase) ? formats[1] : formats[2];
 		String nbmpFormat = (upperCase) ? formats[3] : formats[4];
 		String separator = formats[5];
 		boolean hasSpFormat = (nbmpFormat != null);
-		
+
 		int len = val.length();
-		
+
 		StringBuilder sb = new StringBuilder(len * 6);
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (i != 0 && separator != null) {
 				sb.append(separator);
 			}
-			
+
 			int codePoint = (hasSpFormat) ? val.codePointAt(i) : (int)ch;
-			
+
 			String format;
 			if (Character.isBmpCodePoint(codePoint)) {
 				// BMP
@@ -113,7 +113,7 @@ public class StringUnicodeEscapeDencoder {
 				format = nbmpFormat;
 				i++;
 			}
-			
+
 			if (type.equals(TYPE_CHAR_NAME)) {
 				// Character name
 				String name = Character.getName(codePoint);
@@ -128,31 +128,31 @@ public class StringUnicodeEscapeDencoder {
 				sb.append(String.format(format, codePoint));
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decStrUnicodeEscape(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int idx = DencodeUtils.indexOf(val, NOTATION_PREFIXES);
 		if (idx == -1) {
 			return val;
 		}
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		sb.append(val, 0, idx);
-		
+
 		Matcher codeMatcher = NOTATION_PATTERN_CODE.matcher(val);
 		Matcher nameMatcher = NOTATION_PATTERN_NAME.matcher(val);
-		
+
 		char prevCh = '\0';
 		for (int i = idx; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (ch == '\\' || ch == '%' || ch == '&' || ch == '0' || ch == 'U') {
 				if (ch == '\\' && prevCh == '\\') {
 					// Escaped "\"
@@ -160,7 +160,7 @@ public class StringUnicodeEscapeDencoder {
 				} else if (codeMatcher.region(i, len).lookingAt()) {
 					// Code point / Code unit
 					String code = findMatchedGroup(codeMatcher);
-					
+
 					try {
 						int cp = Integer.parseInt(code, 16);
 						sb.appendCodePoint(cp);
@@ -173,7 +173,7 @@ public class StringUnicodeEscapeDencoder {
 				} else if (nameMatcher.region(i, len).lookingAt()) {
 					// Character name
 					String name = findMatchedGroup(nameMatcher);
-					
+
 					try {
 						int cp = Character.codePointOf(name);
 						sb.appendCodePoint(cp);
@@ -192,10 +192,10 @@ public class StringUnicodeEscapeDencoder {
 				prevCh = ch;
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String findMatchedGroup(Matcher matcher) {
 		String v = null;
 		for (int i = 1; i <= matcher.groupCount(); i++) {
@@ -204,7 +204,7 @@ public class StringUnicodeEscapeDencoder {
 				break;
 			}
 		}
-		
+
 		return v;
 	}
 }

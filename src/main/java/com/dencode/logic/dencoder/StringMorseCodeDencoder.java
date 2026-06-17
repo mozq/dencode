@@ -26,7 +26,7 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.morse-code", hasEncoder=true, hasDecoder=true)
 public class StringMorseCodeDencoder {
-	
+
 	private static class Notation {
 		public String dit, dah, gap, letterSpace, wordSpace;
 		public Notation(String dit, String dah, String gap, String letterSpace, String wordSpace) {
@@ -37,36 +37,36 @@ public class StringMorseCodeDencoder {
 			this.wordSpace = wordSpace;
 		}
 	}
-	
+
 	private static class Char {
 		public char value;
-		
+
 		public Char(char value) { this.value = value; }
 		@Override public int hashCode() { return Objects.hash(value); }
 		@Override public boolean equals(Object obj) { return (value == ((Char)obj).value); }
 	}
-	
+
 	private static class MorseTreeNode {
 		public char value;
 		public MorseTreeNode dit = null;
 		public MorseTreeNode dah = null;
-		
+
 		public MorseTreeNode(char value) { this.value = value; }
 	}
-	
+
 	public static final char CHAR_UNDEF = '\0';
-	
+
 	private static final String JAPANESE_VOICED_SOUND_MARK_CHARS = "ガギグゲゴザジズゼゾダヂヅデドバビブベボヴがぎぐげござじずぜぞだぢづでどばびぶべぼゔ";
 	private static final String JAPANESE_UN_VOICED_SOUND_MARK_CHARS = "カキクケコサシスセソタチツテトハヒフヘホウかきくけこさしすせそたちつてとはひふへほう";
 	private static final String JAPANESE_SEMI_VOICED_SOUND_MARK_CHARS = "パピプペポぱぴぷぺぽ";
 	private static final String JAPANESE_UN_SEMI_VOICED_SOUND_MARK_CHARS = "ハヒフヘホはひふへほ";
-	
+
 	private static final Map<String, char[]> MAP_INTERNATIONAL = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
 			// See: https://en.wikipedia.org/wiki/Morse_code
 			// See: https://www.itu.int/dms_pubrec/itu-r/rec/m/R-REC-M.1677-1-200910-I!!PDF-E.pdf
-			
+
 			put(".-", new char[] {'A', 'a'});
 			put("-...", new char[] {'B', 'b'});
 			put("-.-.", new char[] {'C', 'c'});
@@ -93,7 +93,7 @@ public class StringMorseCodeDencoder {
 			put("-..-", new char[] {'X', 'x', '×'});
 			put("-.--", new char[] {'Y', 'y'});
 			put("--..", new char[] {'Z', 'z'});
-			
+
 			put(".----", new char[] {'1'});
 			put("..---", new char[] {'2'});
 			put("...--", new char[] {'3'});
@@ -104,7 +104,7 @@ public class StringMorseCodeDencoder {
 			put("---..", new char[] {'8'});
 			put("----.", new char[] {'9'});
 			put("-----", new char[] {'0'});
-			
+
 			put(".-.-.-", new char[] {'.'});
 			put("--..--", new char[] {','});
 			put("---...", new char[] {':'});
@@ -118,7 +118,7 @@ public class StringMorseCodeDencoder {
 			put("-...-", new char[] {'='});
 			put(".-.-.", new char[] {'+'});
 			put(".--.-.", new char[] {'@'});
-			
+
 			// No standard
 			put("-.-.--", new char[] {'!'});
 			put(".-...", new char[] {'&'});
@@ -126,7 +126,7 @@ public class StringMorseCodeDencoder {
 			put("..--.-", new char[] {'_'});
 			put("...-..-", new char[] {'$'});
 			put("......", new char[] {'^'});
-			
+
 			// Non-Latin extensions
 			put(".--.-", new char[] {'À', 'à', 'Å', 'å'});
 			put(".-.-", new char[] {'Ä', 'ä', 'Æ', 'æ', 'Ą', 'ą'});
@@ -147,12 +147,12 @@ public class StringMorseCodeDencoder {
 			put("--..-", new char[] {'Ż', 'ż'});
 		}
 	};
-	
+
 	private static final Map<String, char[]> MAP_JAPANESE = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
 			// See: https://en.wikipedia.org/wiki/Wabun_code
-			
+
 			put(".-", new char[] {'イ', 'ィ', 'い', 'ぃ'});
 			put(".-.-", new char[] {'ロ', 'ろ'});
 			put("-...", new char[] {'ハ', 'は'});
@@ -201,7 +201,7 @@ public class StringMorseCodeDencoder {
 			put(".---.", new char[] {'セ', 'せ'});
 			put("---.-", new char[] {'ス', 'す'});
 			put(".-.-.", new char[] {'ン', 'ん'});
-			
+
 			put(".----", new char[] {'１', '1'});
 			put("..---", new char[] {'２', '2'});
 			put("...--", new char[] {'３', '3'});
@@ -212,7 +212,7 @@ public class StringMorseCodeDencoder {
 			put("---..", new char[] {'８', '8'});
 			put("----.", new char[] {'９', '9'});
 			put("-----", new char[] {'０', '0'});
-			
+
 			put("..", new char[] {'゛', '\u3099'});
 			put("..--.", new char[] {'゜', '\u309A'});
 			put(".--.-", new char[] {'ー'});
@@ -222,12 +222,12 @@ public class StringMorseCodeDencoder {
 			put(".-..-.", new char[] {'）', ')'});
 		}
 	};
-	
+
 	private static final Map<String, char[]> MAP_RUSSIAN = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
 			// See: https://en.wikipedia.org/wiki/Russian_Morse_code
-			
+
 			put(".-", new char[] {'А', 'а'});
 			put("-...", new char[] {'Б', 'б'});
 			put(".--", new char[] {'В', 'в'});
@@ -260,7 +260,7 @@ public class StringMorseCodeDencoder {
 			put("..-..", new char[] {'Э', 'э', 'Ѣ', 'ѣ'});
 			put("..--", new char[] {'Ю', 'ю'});
 			put(".-.-", new char[] {'Я', 'я'});
-			
+
 			put(".----", new char[] {'1'});
 			put("..---", new char[] {'2'});
 			put("...--", new char[] {'3'});
@@ -271,7 +271,7 @@ public class StringMorseCodeDencoder {
 			put("---..", new char[] {'8'});
 			put("----.", new char[] {'9'});
 			put("-----", new char[] {'0'});
-			
+
 			put("......", new char[] {'.'});
 			put(".-.-.-", new char[] {','});
 			put("---...", new char[] {':'});
@@ -287,16 +287,16 @@ public class StringMorseCodeDencoder {
 			put(".--.-.", new char[] {'@'});
 		}
 	};
-	
+
 	private static final Map<Char, String> ENC_MAP_INTERNATIONAL = toEncodingMap(MAP_INTERNATIONAL);
 	private static final MorseTreeNode DEC_NODE_INTERNATIONAL = toDecodingNode(MAP_INTERNATIONAL);
-	
+
 	private static final Map<Char, String> ENC_MAP_JAPANESE = toEncodingMap(MAP_JAPANESE);
 	private static final MorseTreeNode DEC_NODE_JAPANESE = toDecodingNode(MAP_JAPANESE);
-	
+
 	private static final Map<Char, String> ENC_MAP_RUSSIAN = toEncodingMap(MAP_RUSSIAN);
 	private static final MorseTreeNode DEC_NODE_RUSSIAN = toDecodingNode(MAP_RUSSIAN);
-	
+
 	private static final Map<String, Notation> NOTATION_MAP = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 		{
@@ -306,83 +306,83 @@ public class StringMorseCodeDencoder {
 			put("signals-01", new Notation("1", "111", "0", "000", "0000000"));
 		}
 	};
-	
+
 	private StringMorseCodeDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrMorseCode(DencodeCondition cond) {
-		String variant = DencodeUtils.getOption(cond.options(), "string.morse-code.variant", "international");
-		String notationId = DencodeUtils.getOption(cond.options(), "string.morse-code.notation", "code");
-		
+		String variant = cond.option("string.morse-code.variant", "international");
+		String notationId = cond.option("string.morse-code.notation", "code");
+
 		Map<Char, String> encMap = switch (variant) {
 			case "international" -> ENC_MAP_INTERNATIONAL;
 			case "japanese" -> ENC_MAP_JAPANESE;
 			case "russian" -> ENC_MAP_RUSSIAN;
 			default -> ENC_MAP_INTERNATIONAL;
 		};
-		
+
 		Notation notation = NOTATION_MAP.get(notationId);
 		if (notation == null) {
 			notation = NOTATION_MAP.get("code");
 		}
-		
+
 		return encStrMorseCode(cond.value(), encMap, notation);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrMorseCode(DencodeCondition cond) {
-		String variant = DencodeUtils.getOption(cond.options(), "string.morse-code.variant", "international");
-		
+		String variant = cond.option("string.morse-code.variant", "international");
+
 		MorseTreeNode node = switch (variant) {
 			case "international" -> DEC_NODE_INTERNATIONAL;
 			case "japanese" -> DEC_NODE_JAPANESE;
 			case "russian" -> DEC_NODE_RUSSIAN;
 			default -> DEC_NODE_INTERNATIONAL;
 		};
-		
+
 		return decStrMorseCode(cond.value(), node, ' ');
 	}
-	
-	
+
+
 	private static String encStrMorseCode(String value, Map<Char, String> encMap, Notation notation) {
 		if (value == null || value.isEmpty()) {
 			return "";
 		}
-		
+
 		boolean isSignals = (notation.gap != null);
-		
+
 		int len = value.length();
 		Char c = new Char(CHAR_UNDEF);
-		
+
 		boolean needsLetterSpace = false;
 		StringBuilder sb = new StringBuilder(len * 5);
 		for (int i = 0; i < len; i++) {
 			char ch = value.charAt(i);
-			
+
 			if (isNewLine(ch)) {
 				sb.append(ch);
 				needsLetterSpace = false;
 				continue;
 			}
-			
+
 			if (isWhitespace(ch)) {
 				if (!isSignals && needsLetterSpace) {
 					sb.append(notation.letterSpace);
 				}
-				
+
 				sb.append(notation.wordSpace);
 				needsLetterSpace = !isSignals;
 				continue;
 			}
-			
+
 			if (needsLetterSpace) {
 				sb.append(notation.letterSpace);
 			}
 			needsLetterSpace = true;
-			
+
 			char ch1;
 			char ch2;
 			if (hasVoicedSoundMark(ch)) {
@@ -403,7 +403,7 @@ public class StringMorseCodeDencoder {
 				sb.append(ch);
 			} else {
 				appendCode(sb, code, notation.dit, notation.dah, notation.gap);
-				
+
 				if (ch2 != CHAR_UNDEF) {
 					c.value = ch2;
 					code = encMap.get(c);
@@ -417,27 +417,27 @@ public class StringMorseCodeDencoder {
 				}
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decStrMorseCode(String value, MorseTreeNode rootNode, char decodedWordSpace) {
 		if (value == null || value.isEmpty()) {
 			return "";
 		}
-		
+
 		boolean isSignals = isSignals(value, 100);
-		
+
 		int len = value.length();
 		int lastIdx = len - 1;
-		
+
 		StringBuilder sb = new StringBuilder(len);
 		MorseTreeNode node = rootNode;
 		int codeStartIdx = -1;
 		for (int i = 0; i <= lastIdx; i++) {
 			char ch = value.charAt(i);
 			boolean isLast = (i == lastIdx);
-			
+
 			boolean isEndOfWord = isLast;
 			int nch = -1;
 			if (isNewLine(ch)) {
@@ -445,7 +445,7 @@ public class StringMorseCodeDencoder {
 				isEndOfWord = true;
 			} else if (isSignals) {
 				// Notation: signal
-				
+
 				int cntOn = countSignalOn(value, i, 3);
 				if (1 <= cntOn && cntOn <= 2) {
 					// Dit (1)
@@ -490,7 +490,7 @@ public class StringMorseCodeDencoder {
 				}
 			} else {
 				// Notation: code
-				
+
 				if (isDit(ch)) {
 					if (node != null) {
 						node = node.dit;
@@ -517,7 +517,7 @@ public class StringMorseCodeDencoder {
 					isEndOfWord = true;
 				}
 			}
-			
+
 			if (isEndOfWord) {
 				if (node != rootNode) {
 					if (node != null) {
@@ -536,20 +536,20 @@ public class StringMorseCodeDencoder {
 						}
 					}
 				}
-				
+
 				// Unsupported letter
 				if (0 <= nch) {
 					sb.append((char)nch);
 				}
-				
+
 				node = rootNode;
 				codeStartIdx = -1;
 			}
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static Map<Char, String> toEncodingMap(Map<String, char[]> map) {
 		Map<Char, String> m = new HashMap<>(map.size() * 2);
 		for (Map.Entry<String, char[]> entry : map.entrySet()) {
@@ -559,20 +559,20 @@ public class StringMorseCodeDencoder {
 		}
 		return m;
 	}
-	
+
 	private static MorseTreeNode toDecodingNode(Map<String, char[]> map) {
 		MorseTreeNode rootNode = new MorseTreeNode(CHAR_UNDEF);
-		
+
 		for (Map.Entry<String, char[]> entry : map.entrySet()) {
 			String codes = entry.getKey();
 			char ch = entry.getValue()[0];
-			
+
 			MorseTreeNode node = rootNode;
 			int lastIdx = codes.length() - 1;
 			for (int i = 0; i <= lastIdx; i++) {
 				char code = codes.charAt(i);
 				boolean isLast = (i == lastIdx);
-				
+
 				if (isDit(code)) {
 					if (node.dit == null) {
 						node.dit = new MorseTreeNode((isLast) ? ch : CHAR_UNDEF);
@@ -598,16 +598,16 @@ public class StringMorseCodeDencoder {
 				}
 			}
 		}
-		
+
 		return rootNode;
 	}
-	
+
 	private static boolean isSignals(String value, int maxScanLen) {
 		int len = Math.min(value.length(), maxScanLen);
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = value.charAt(i);
-			
+
 			if (isWhitespace(ch)) {
 				continue;
 			} else if (isSignalOn(ch) || isSignalOff(ch)) {
@@ -616,25 +616,25 @@ public class StringMorseCodeDencoder {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	private static boolean isSignalOn(char ch) {
 		return (ch == '▄' || ch == '1');
 	}
-	
+
 	private static boolean isSignalOff(char ch) {
 		return (isWhitespace(ch) || ch == '0');
 	}
-	
+
 	private static boolean isDit(char ch) {
 		return (ch == '.' ||  // U+002E FULL STOP
 				ch == '·' ||  // U+00B7 MIDDLE DOT
 				ch == '・'  // U+30FB KATAKANA MIDDLE DOT
 				);
 	}
-	
+
 	private static boolean isDah(char ch) {
 		return (ch == '-' ||  // U+002D HYPHEN-MINUS
 				ch == '_' ||  // U+005F LOW LINE
@@ -644,23 +644,23 @@ public class StringMorseCodeDencoder {
 				ch == '－'  // U+FF0D FULLWIDTH HYPHEN-MINUS
 				);
 	}
-	
+
 	private static boolean isLetterSpace(char ch) {
 		return (ch == ' ' || ch == '　');
 	}
-	
+
 	private static boolean isWordSpace(char ch) {
 		return (ch == '/' || ch == '／');
 	}
-	
+
 	private static boolean isWhitespace(char ch) {
 		return Character.isWhitespace(ch) || ch == '　';
 	}
-	
+
 	private static boolean isNewLine(char ch) {
 		return (ch == '\r' || ch == '\n');
 	}
-	
+
 	private static int countSignalOn(String value, int idx, int maxCount) {
 		int lastIdx = Math.min(idx + maxCount, value.length());
 		int cnt = 0;
@@ -673,7 +673,7 @@ public class StringMorseCodeDencoder {
 		}
 		return cnt;
 	}
-	
+
 	private static int countSignalOff(String value, int idx, int maxCount) {
 		int lastIdx = Math.min(idx + maxCount, value.length());
 		int cnt = 0;
@@ -686,43 +686,43 @@ public class StringMorseCodeDencoder {
 		}
 		return cnt;
 	}
-	
+
 	private static void appendCode(StringBuilder sb, String code, String dit, String dah, String gap) {
 		int len = code.length();
 		for (int i = 0; i < len; i++) {
 			char ch = code.charAt(i);
-			
+
 			if (i != 0 && gap != null) {
 				sb.append(gap);
 			}
-			
+
 			sb.append(isDit(ch) ? dit : dah);
 		}
 	}
-	
+
 	private static boolean hasVoicedSoundMark(char ch) {
 		return JAPANESE_VOICED_SOUND_MARK_CHARS.indexOf(ch) != -1;
 	}
-	
+
 	private static boolean hasSemiVoicedSoundMark(char ch) {
 		return JAPANESE_SEMI_VOICED_SOUND_MARK_CHARS.indexOf(ch) != -1;
 	}
-	
+
 	private static char removeVoicedSoundMark(char ch) {
 		int idx = JAPANESE_VOICED_SOUND_MARK_CHARS.indexOf(ch);
 		if (idx == -1) {
 			return ch;
 		}
-		
+
 		return JAPANESE_UN_VOICED_SOUND_MARK_CHARS.charAt(idx);
 	}
-	
+
 	private static char removeSemiVoicedSoundMark(char ch) {
 		int idx = JAPANESE_SEMI_VOICED_SOUND_MARK_CHARS.indexOf(ch);
 		if (idx == -1) {
 			return ch;
 		}
-		
+
 		return JAPANESE_UN_SEMI_VOICED_SOUND_MARK_CHARS.charAt(idx);
 	}
 }

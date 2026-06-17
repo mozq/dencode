@@ -34,34 +34,34 @@ public class NumberNAryDencoder {
 
 	private static final int DEC_RADIX = 10;
 	private static final int DEC_MAX_SCALE = 100;
-	
+
 	private static final int MAX_REPETEND_COUNT = 3;
-	
+
 	private static final Pattern PARSABLE_NUM_PATTERN = Pattern.compile("[\\+\\-]?[0-9A-Za-z\\.]+");
-	
+
 	private NumberNAryDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encNumNAry(DencodeCondition cond) {
 		return encNumNAry(
 				cond.valueAsNumbers(),
 				cond.valueAsLines(),
-				normalizeRadix(DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
+				normalizeRadix(cond.optionAsInt("number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decNumNAry(DencodeCondition cond) {
 		return decNumNAry(
 				cond.valueAsLines(),
-				normalizeRadix(DencodeUtils.getOptionAsInt(cond.options(), "number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
+				normalizeRadix(cond.optionAsInt("number.n-ary.radix", DEFAULT_RADIX, DEFAULT_RADIX))
 				);
 	}
-	
-	
+
+
 	private static int normalizeRadix(int radix) {
 		if (radix < MIN_RADIX || MAX_RADIX < radix) {
 			return DEFAULT_RADIX;
@@ -74,7 +74,7 @@ public class NumberNAryDencoder {
 			return DencodeUtils.numToString(bigDec, NumberParser.isTruncatedDecimal(strVal), radix, DEC_MAX_SCALE, MAX_REPETEND_COUNT);
 		});
 	}
-	
+
 	private static String decNumNAry(List<String> vals, int radix) {
 		return DencodeUtils.dencodeLines(vals, (val) -> {
 			BigDecimal bigDec = NumberParser.parseN(val, radix);
@@ -87,7 +87,7 @@ public class NumberNAryDencoder {
 					return null;
 				}
 			}
-			
+
 			int maxScale = DencodeUtils.digitsOf(DEC_MAX_SCALE, radix);
 			return DencodeUtils.numToString(bigDec, NumberParser.isTruncatedDecimal(val), DEC_RADIX, maxScale, MAX_REPETEND_COUNT);
 		});

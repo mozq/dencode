@@ -47,11 +47,29 @@ public class DencodeConditionTest {
 
 	@Test
 	public void test_options() {
-		DencodeCondition cond = new DencodeCondition("x", StandardCharsets.UTF_8, "\n", UTC, Map.of("k", "v"));
-		assertEquals(Map.of("k", "v"), cond.options());
+		DencodeCondition cond = new DencodeCondition("x", StandardCharsets.UTF_8, "\n", UTC, Map.of(
+				"k", "v",
+				"number", "123",
+				"invalid-number", "x",
+				"empty", ""
+				));
+		assertEquals("v", cond.option("k", "default"));
+		assertEquals("default", cond.option("missing", "default"));
+		assertEquals(123, cond.optionAsInt("number", 0));
+		assertEquals(0, cond.optionAsInt("missing-number", 0));
+		assertEquals(0, cond.optionAsInt("invalid-number", 0));
+		assertEquals(9, cond.optionAsInt("empty", 0, 9));
+		assertEquals(0, cond.optionAsInt("missing-empty-number", 0, 9));
+		assertEquals(Map.of(
+				"k", "v",
+				"number", "123",
+				"invalid-number", "x",
+				"empty", ""
+				), cond.options());
 		assertThrows(UnsupportedOperationException.class, () -> cond.options().put("x", "y"));
 
 		DencodeCondition noOptions = new DencodeCondition("x", StandardCharsets.UTF_8, "\n", UTC, null);
+		assertEquals("default", noOptions.option("k", "default"));
 		assertEquals(Map.of(), noOptions.options());
 	}
 

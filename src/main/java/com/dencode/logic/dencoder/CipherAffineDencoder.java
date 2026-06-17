@@ -22,48 +22,48 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="cipher", method="cipher.affine", hasEncoder=true, hasDecoder=true)
 public class CipherAffineDencoder {
-	
+
 	private CipherAffineDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encCipherAffine(DencodeCondition cond) {
 		return encCipherAffine(
 				cond.value(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.affine.a", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.affine.b", 0)
+				cond.optionAsInt("cipher.affine.a", 1),
+				cond.optionAsInt("cipher.affine.b", 0)
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decCipherAffine(DencodeCondition cond) {
 		return decCipherAffine(
 				cond.value(),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.affine.a", 1),
-				DencodeUtils.getOptionAsInt(cond.options(), "cipher.affine.b", 0)
+				cond.optionAsInt("cipher.affine.a", 1),
+				cond.optionAsInt("cipher.affine.b", 0)
 				);
 	}
-	
+
 	private static String encCipherAffine(String val, int a, int b) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		if (a == 1 && b == 0) {
 			return val;
 		}
-		
+
 		boolean coprime26 = isCoprime(a, 26);
 		boolean coprime32 = isCoprime(a, 32);
 		boolean coprime84 = isCoprime(a, 84);
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
 				ch = (coprime26) ? enc(ch, 'A', a, b, 26) : ch;
@@ -92,31 +92,31 @@ public class CipherAffineDencoder {
 				// Others
 				// NOP
 			}
-			
+
 			sb.append(ch);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decCipherAffine(String val, int a, int b) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		if (a == 1 && b == 0) {
 			return val;
 		}
-		
+
 		int modInv26 = modInv(a, 26);
 		int modInv32 = modInv(a, 32);
 		int modInv84 = modInv(a, 84);
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			if ('A' <= ch && ch <= 'Z') {
 				// Half-width Latin upper alphabets
 				ch = (modInv26 == 0) ? ch : dec(ch, 'A', a, b, 26, modInv26);
@@ -145,60 +145,60 @@ public class CipherAffineDencoder {
 				// Others
 				// NOP
 			}
-			
+
 			sb.append(ch);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static char enc(char ch, char baseCh, int a, int b, int m) {
 		int x = ch - baseCh;
-		
+
 		int n = (a * x + b) % m;
 		if (n < 0) {
 			n += m;
 		}
-		
+
 		return (char)(baseCh + n);
 	}
-	
+
 	private static char dec(char ch, char baseCh, int a, int b, int m, int modInv) {
 		int x = ch - baseCh;
-		
+
 		int n = (modInv * (x - b)) % m;
 		if (n < 0) {
 			n += m;
 		}
-		
+
 		return (char)(baseCh + n);
 	}
-	
+
 	private static int modInv(int a, int m) {
 		a %= m;
-		
+
 		boolean sign = (a < 0);
 		if (sign) {
 			a = -a;
 		}
-		
+
 		if (!isCoprime(a, m)) {
 			return 0;
 		}
-		
+
 		for (int x = 1; x < m; x++) {
 			if ((a * x) % m == 1) {
 				return (sign) ? -x : x;
 			}
 		}
-		
+
 		return 0;
 	}
-	
+
 	private static int gcd(int a, int b) {
 		return (b == 0) ? a : gcd(b, a % b);
 	}
-	
+
 	private static boolean isCoprime(int a, int b) {
 		int gcd = gcd(a, b);
 		return (gcd == 1 || gcd == -1);

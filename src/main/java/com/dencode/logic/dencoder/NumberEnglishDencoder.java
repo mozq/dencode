@@ -26,41 +26,41 @@ import com.dencode.logic.util.EnglishNumberUtils;
 
 @Dencoder(type="number", method="number.english", hasEncoder=true, hasDecoder=true)
 public class NumberEnglishDencoder {
-	
+
 	private NumberEnglishDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encNumEnglish(DencodeCondition cond) {
 		return encNumEnglish(
 				cond.valueAsNumbers(),
-				DencodeUtils.getOption(cond.options(), "number.english.decimal-notation", ""),
-				DencodeUtils.getOption(cond.options(), "number.english.system", "")
+				cond.option("number.english.decimal-notation", ""),
+				cond.option("number.english.system", "")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decNumEnglish(DencodeCondition cond) {
 		return decNumEnglish(cond.valueAsLines());
 	}
-	
-	
+
+
 	private static String encNumEnglish(List<BigDecimal> vals, String optDecimalNotation, String optSystem) {
 		EnglishNumberUtils.DecimalNotation decimalNotation = (optDecimalNotation.equals("fraction"))
 				? EnglishNumberUtils.DecimalNotation.FRACTION
 				: EnglishNumberUtils.DecimalNotation.POINT;
-		
+
 		EnglishNumberUtils.System system = (optSystem.equals("cw"))
 				? EnglishNumberUtils.System.CONWAY_WECHSLER
 				: EnglishNumberUtils.System.CW4EN;
-		
+
 		return DencodeUtils.dencodeLines(vals, (bigDec) -> {
 			if (bigDec == null) {
 				return null;
 			}
-			
+
 			try {
 				return EnglishNumberUtils.toEnNum(bigDec, decimalNotation, system);
 			} catch (IllegalArgumentException e) {
@@ -68,7 +68,7 @@ public class NumberEnglishDencoder {
 			}
 		});
 	}
-	
+
 	private static String decNumEnglish(List<String> vals) {
 		return DencodeUtils.dencodeLines(vals, (val) -> {
 			BigDecimal bigDec;
@@ -77,7 +77,7 @@ public class NumberEnglishDencoder {
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
-			
+
 			if (bigDec == null) {
 				return null;
 			}

@@ -37,7 +37,7 @@ import tools.jackson.databind.json.JsonMapper;
 
 @Dencoder(type="string", method="string.base64", hasEncoder=true, hasDecoder=true, useOe=true, useNl=true)
 public class StringBase64Dencoder {
-	
+
 	private static final int[] BASE64_BITS = {
 			// 62nd = '+', 63rd = '/' : RFC 4648 Base64, RFC 2045
 			// 62nd = '-', 63rd = '_' : RFC 4648 Base64url
@@ -55,44 +55,44 @@ public class StringBase64Dencoder {
 			39, 40, 41, 42, 43, 44, 45, 46, 47, 48, // 110: 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
 			49, 50, 51, -1, -1, -1, -1, -1,         // 120: 'x', 'y', 'z',
 			};
-	
+
 	private static final byte[] LINE_SEPARATOR = {'\r', '\n'};
-	
+
 	private static final Pattern RFC2047_SPACE = Pattern.compile("\\?=\\s+=\\?");
 	private static final Pattern RFC2047_BASE64 = Pattern.compile("=\\?(.+?)(?:\\*.+?)?\\?B\\?(.+?)\\?=", Pattern.CASE_INSENSITIVE); // Also supports RFC 2231
-	
+
 	private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 	private static final ObjectWriter JSON_WRITER = JSON_MAPPER.writerWithDefaultPrettyPrinter();
-	
+
 	private StringBase64Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrBase64(DencodeCondition cond) {
 		return encStrBase64(
 				cond.valueAsBinary(),
-				DencodeUtils.getOptionAsInt(cond.options(), "string.base64.line-break-each", 0, 0)
+				cond.optionAsInt("string.base64.line-break-each", 0, 0)
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrBase64(DencodeCondition cond) {
 		return decStrBase64(cond.value(), cond.charset());
 	}
-	
-	
+
+
 	private static String encStrBase64(byte[] binValue, int lineBreakEach) {
 		Encoder base64Encoder = (lineBreakEach == 0) ? Base64.getEncoder() : Base64.getMimeEncoder(lineBreakEach, LINE_SEPARATOR);
 		return base64Encoder.encodeToString(binValue);
 	}
-	
+
 	private static String decStrBase64(String val, Charset charset) {
 		if (!DencodeUtils.isASCII(val)) {
 			return null;
 		}
-		
+
 		if (val.contains("=?")) {
 			// RFC 2047
 			return decodeRfc2047(val);
@@ -103,17 +103,17 @@ public class StringBase64Dencoder {
 			return decode(val, 0, val.length(), charset);
 		}
 	}
-	
+
 	private static String decodeRfc2047(String val) {
 		val = RFC2047_SPACE.matcher(val).replaceAll("?==?");
-		
+
 		StringBuilder sb = new StringBuilder(val.length());
-		
+
 		Matcher m = RFC2047_BASE64.matcher(val);
 		if (!m.find()) {
 			return null;
 		}
-		
+
 		do {
 			Charset cs;
 			try {
@@ -121,48 +121,48 @@ public class StringBase64Dencoder {
 			} catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
 				return null;
 			}
-			
+
 			String v = m.group(2);
-			
+
 			String decodedValue = decode(v, 0, v.length(), cs);
 			if (decodedValue == null) {
 				return null;
 			}
-			
+
 			m.appendReplacement(sb, "");
 			sb.append(decodedValue);
 		} while (m.find());
 		m.appendTail(sb);
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decodeJwt(String val) {
 		int dot1 = val.indexOf('.');
 		if (dot1 < 0) {
 			return null;
 		}
-		
+
 		int dot2 = val.indexOf('.', dot1 + 1);
 		if (dot2 < 0) {
 			return null;
 		}
-		
+
 		try {
 			String headerJson = decode(val, 0, dot1, StandardCharsets.UTF_8);
 			String payloadJson = decode(val, dot1 + 1, dot2, StandardCharsets.UTF_8);
-			
+
 			if (headerJson == null || payloadJson == null) {
 				return null;
 			}
-			
+
 			JsonNode headerNode = JSON_MAPPER.readTree(headerJson);
 			JsonNode payloadNode = JSON_MAPPER.readTree(payloadJson);
-			
+
 			if (!headerNode.isObject() || !payloadNode.isObject()) {
 				return null;
 			}
-			
+
 			return JSON_WRITER.writeValueAsString(headerNode) +
 					"\n" +
 					JSON_WRITER.writeValueAsString(payloadNode);
@@ -170,10 +170,10 @@ public class StringBase64Dencoder {
 			return null;
 		}
 	}
-	
+
 	private static String decode(String val, int startIdx, int endIdx, Charset charset) {
 		int lastIdx = endIdx;
-		
+
 		// Ignore trailing padding and white-spaces
 		for (int i = lastIdx - 1; startIdx <= i; i--) {
 			char ch = val.charAt(i);
@@ -182,35 +182,35 @@ public class StringBase64Dencoder {
 				break;
 			}
 		}
-		
+
 		byte[] binBuf = new byte[(lastIdx - startIdx) * 3 / 4]; // Max decoded size
 		int binBufIdx = 0;
 		int bitsBuf = 0;
 		int bitCount = 0;
 		for (int i = startIdx; i < lastIdx; i++) {
 			char ch = val.charAt(i);
-			
+
 			if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') {
 				// Ignore white-spaces
 				continue;
 			}
-			
+
 			int bits = BASE64_BITS[ch];
 			if (bits == -1) {
 				// Unsupported code
 				return null;
 			}
-			
+
 			bitsBuf = (bitsBuf << 6) | bits;
 			bitCount += 6;
-			
+
 			if (8 <= bitCount) {
 				byte b = (byte)((bitsBuf >>> (bitCount - 8)) & 0b11111111);
 				binBuf[binBufIdx++] = b;
 				bitCount -= 8;
 			}
 		}
-		
+
 		return new String(binBuf, 0, binBufIdx, charset);
 	}
 }

@@ -22,49 +22,49 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="string", method="string.literal", hasEncoder=true, hasDecoder=true, useNl=true)
 public class StringLiteralDencoder {
-	
+
 	private static final char ESCAPE_CHAR = '\\';
-	
+
 	private StringLiteralDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encStrLiteral(DencodeCondition cond) {
 		return encStrLiteral(
 				cond.value(),
-				DencodeUtils.getOption(cond.options(), "string.literal.quotes", "double")
+				cond.option("string.literal.quotes", "double")
 				);
 	}
-	
+
 	@DencoderFunction
 	public static String decStrLiteral(DencodeCondition cond) {
 		return decStrLiteral(cond.value());
 	}
-	
+
 	private static String encStrLiteral(String val, String quotes) {
 		if (val == null) {
 			return null;
 		}
-		
+
 		char quoteChar = switch (quotes) {
 			case "double" -> '\"';
 			case "single" -> '\'';
 			case "backtick" -> '`';
 			default -> '\0';
 		};
-		
+
 		int len = val.length();
 		StringBuilder sb = new StringBuilder(len);
-		
+
 		if (quoteChar != '\0') {
 			sb.append(quoteChar);
 		}
-		
+
 		for (int i = 0; i < len; i++) {
 			char ch = val.charAt(i);
-			
+
 			switch (ch) {
 				case '\0' -> sb.append(ESCAPE_CHAR).append('0');
 				case '\u0007' -> sb.append(ESCAPE_CHAR).append('a');
@@ -83,21 +83,21 @@ public class StringLiteralDencoder {
 				}
 			}
 		}
-		
+
 		if (quoteChar != '\0') {
 			sb.append(quoteChar);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	private static String decStrLiteral(String val) {
 		if (val == null || val.isEmpty()) {
 			return val;
 		}
-		
+
 		int len = val.length();
-		
+
 		if (2 <= len) {
 			char fc = val.charAt(0);
 			char lc = val.charAt(len - 1);
@@ -109,27 +109,27 @@ public class StringLiteralDencoder {
 				len = val.length();
 			}
 		}
-		
+
 		int beginIdx = val.indexOf(ESCAPE_CHAR);
 		if (beginIdx == -1) {
 			return val;
 		}
-		
+
 		int idx = 0;
 		StringBuilder sb = new StringBuilder(len);
 		do {
 			sb.append(val, idx, beginIdx);
-			
+
 			int refIdx = beginIdx + 1;
 			if (len <= refIdx) {
 				idx = beginIdx;
 				break;
 			}
-			
+
 			char escCh = val.charAt(refIdx++);
 			if (escCh == 'u' || escCh == 'x' || escCh == 'U') {
 				// Unicode escape
-				
+
 				int endIdx;
 				boolean hasBrace = false;
 				if (escCh == 'u' || escCh == 'x') {
@@ -149,16 +149,16 @@ public class StringLiteralDencoder {
 					// UXXXXXXXX
 					endIdx = refIdx + 8;
 				}
-				
+
 				if (len < endIdx || 8 < endIdx - refIdx) {
 					endIdx = -1;
 				}
-				
+
 				if (endIdx != -1) {
 					try {
 						int cp = (int)Long.parseLong(val, refIdx, endIdx, 16);
 						sb.appendCodePoint(cp);
-						
+
 						if (hasBrace) {
 							endIdx++;
 						}
@@ -167,7 +167,7 @@ public class StringLiteralDencoder {
 						endIdx = -1;
 					}
 				}
-				
+
 				if (endIdx == -1) {
 					// Unmatched
 					sb.append(escCh);
@@ -192,9 +192,9 @@ public class StringLiteralDencoder {
 				idx = refIdx;
 			}
 		} while (idx < len && (beginIdx = val.indexOf(ESCAPE_CHAR, idx)) != -1);
-		
+
 		sb.append(val, idx, len);
-		
+
 		return sb.toString();
 	}
 }
