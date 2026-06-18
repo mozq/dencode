@@ -2406,29 +2406,10 @@ public class StringHtmlEscapeDencoder {
 		return encStrHtmlEscape(cond.value(), target, namedRefs, numNotation);
 	}
 
-	@Deprecated
-	@DencoderFunction
-	public static String encStrHTMLEscape(DencodeCondition cond) {
-		return encStrHtmlEscape(cond.value(), Target.BASIC, NamedReferences.HTML5, NumericNotation.DECIMAL);
-	}
-
-	@Deprecated
-	@DencoderFunction
-	public static String encStrHTMLEscapeFully(DencodeCondition cond) {
-		return encStrHtmlEscape(cond.value(), Target.ALL, NamedReferences.HTML5, NumericNotation.DECIMAL);
-	}
-
 	@DencoderFunction
 	public static String decStrHtmlEscape(DencodeCondition cond) {
 		return decStrHtmlEscape(cond.value());
 	}
-
-	@Deprecated
-	@DencoderFunction
-	public static String decStrHTMLEscape(DencodeCondition cond) {
-		return decStrHtmlEscape(cond.value());
-	}
-
 
 	private static String encStrHtmlEscape(String val, Target target, NamedReferences namedRefs, NumericNotation numNotation) {
 		if (val == null || val.isEmpty()) {

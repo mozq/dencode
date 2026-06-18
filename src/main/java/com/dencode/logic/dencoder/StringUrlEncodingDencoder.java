@@ -47,19 +47,6 @@ public class StringUrlEncodingDencoder {
 		return decStrUrlEncoding(cond.value(), cond.charset());
 	}
 
-	@Deprecated
-	@DencoderFunction
-	public static String encStrURLEncoding(DencodeCondition cond) {
-		return encStrUrlEncoding(cond);
-	}
-
-	@Deprecated
-	@DencoderFunction
-	public static String decStrURLEncoding(DencodeCondition cond) {
-		return decStrUrlEncoding(cond);
-	}
-
-
 	private static String encStrUrlEncoding(byte[] binValue,  boolean formSpace) {
 		StringBuilder sb = new StringBuilder(binValue.length * 3);
 
