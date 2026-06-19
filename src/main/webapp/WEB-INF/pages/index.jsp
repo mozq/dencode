@@ -32,8 +32,8 @@
 	<link rel="manifest" href="${pageContext.request.contextPath}/manifest.json" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css?v=${dc:fileLastModified(pageContext, '/static/css/main.css')}" />
 	<script defer src="${pageContext.request.contextPath}/static/js/all.min.js?v=${dc:fileLastModified(pageContext, '/static/js/all.min.js')}"></script>
-	<script id="scriptTesseract" data-src="https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js" integrity="sha256-EP/3hIQGd1nEMCigKnLXbQuQ6xcwK7I7WKnsVBC8kos=" crossorigin="anonymous"></script>
-	<script id="scriptZXing" data-src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js" integrity="sha256-18yPad1wvc86wAya5XK/KsufQTK6N5xy34QuTbkYZS0=" crossorigin="anonymous"></script>
+	<script id="scriptTesseract" data-src="https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js" integrity="sha256-AAwn2c0N72Vfd7NscqOJwKsTeTqjHLTXqrVtCcCvvH4=" crossorigin="anonymous"></script>
+	<script id="scriptZXing" data-src="https://cdn.jsdelivr.net/npm/@zxing/library@0.23.0/umd/index.min.js" integrity="sha256-Pt6UFT+wxbZ6Etet/23s2CfCsicU/cb67PJ6jyCTfqY=" crossorigin="anonymous"></script>
 	<script>
 		document.documentElement.setAttribute("data-ui-theme", (window.matchMedia?.("(prefers-color-scheme:dark)")?.matches) ? "dark" : "light");
 	</script>
