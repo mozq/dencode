@@ -20,16 +20,23 @@ import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="hash", method="hash.md5", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
-public class HashMD5Dencoder {
+@Dencoder(type="hash", method="hash.sha1", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
+public class HashSha1Dencoder {
 
-	private HashMD5Dencoder() {
+	private HashSha1Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
-	public static String encHashMD5(DencodeCondition cond) {
-		return DencodeUtils.encHash(cond.valueAsBinary(), "MD5");
+	public static String encHashSha1(DencodeCondition cond) {
+		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-1");
+	}
+
+
+	@Deprecated
+	@DencoderFunction
+	public static String encHashSHA1(DencodeCondition cond) {
+		return encHashSha1(cond);
 	}
 }

@@ -16,29 +16,27 @@
  */
 package com.dencode.logic.dencoder;
 
-import java.util.zip.CRC32;
-
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="hash", method="hash.crc32", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
-public class HashCRC32Dencoder {
-	
-	private HashCRC32Dencoder() {
+@Dencoder(type="hash", method="hash.md5", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
+public class HashMd5Dencoder {
+
+	private HashMd5Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
-	public static String encHashCRC32(DencodeCondition cond) {
-		return encHashCRC32(cond.valueAsBinary());
+	public static String encHashMd5(DencodeCondition cond) {
+		return DencodeUtils.encHash(cond.valueAsBinary(), "MD5");
 	}
-	
-	
-	private static String encHashCRC32(byte[] binValue) {
-		CRC32 crc = new CRC32();
-		crc.update(binValue, 0, binValue.length);
-		return Long.toHexString(crc.getValue());
+
+
+	@Deprecated
+	@DencoderFunction
+	public static String encHashMD5(DencodeCondition cond) {
+		return encHashMd5(cond);
 	}
 }

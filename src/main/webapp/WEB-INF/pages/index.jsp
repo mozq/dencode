@@ -2392,14 +2392,14 @@
 					</c:if>
 					<c:if test="${types.contains('hash')}">
 						<tbody>
-							<c:if test="${methods.contains('hash.md2')}"><tr data-dencode-method="hash.md2"><th>${dc:h(msg['hash.md2.func.encHashMD2'])}</th><td><span id="encHashMD2" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('hash.md5')}"><tr data-dencode-method="hash.md5"><th>${dc:h(msg['hash.md5.func.encHashMD5'])}</th><td><span id="encHashMD5" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.md2')}"><tr data-dencode-method="hash.md2"><th>${dc:h(msg['hash.md2.func.encHashMd2'])}</th><td><span id="encHashMd2" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.md5')}"><tr data-dencode-method="hash.md5"><th>${dc:h(msg['hash.md5.func.encHashMd5'])}</th><td><span id="encHashMd5" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('hash.sha1')}"><tr data-dencode-method="hash.sha1"><th>${dc:h(msg['hash.sha1.func.encHashSHA1'])}</th><td><span id="encHashSHA1" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('hash.sha256')}"><tr data-dencode-method="hash.sha256"><th>${dc:h(msg['hash.sha256.func.encHashSHA256'])}</th><td><span id="encHashSHA256" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('hash.sha384')}"><tr data-dencode-method="hash.sha384"><th>${dc:h(msg['hash.sha384.func.encHashSHA384'])}</th><td><span id="encHashSHA384" class="for-disp"></span></td></tr></c:if>
-							<c:if test="${methods.contains('hash.sha512')}"><tr data-dencode-method="hash.sha512"><th>${dc:h(msg['hash.sha512.func.encHashSHA512'])}</th><td><span id="encHashSHA512" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.sha1')}"><tr data-dencode-method="hash.sha1"><th>${dc:h(msg['hash.sha1.func.encHashSha1'])}</th><td><span id="encHashSha1" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.sha256')}"><tr data-dencode-method="hash.sha256"><th>${dc:h(msg['hash.sha256.func.encHashSha256'])}</th><td><span id="encHashSha256" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.sha384')}"><tr data-dencode-method="hash.sha384"><th>${dc:h(msg['hash.sha384.func.encHashSha384'])}</th><td><span id="encHashSha384" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.sha512')}"><tr data-dencode-method="hash.sha512"><th>${dc:h(msg['hash.sha512.func.encHashSha512'])}</th><td><span id="encHashSha512" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('hash.sha3')}"><tr data-dencode-method="hash.sha3"><th>${dc:h(msg['hash.sha3.func.encHashSha3'])}</th><td><span id="encHashSha3" class="for-disp"></span>
 								<div class="dencode-option-group">
 									<div class="input-group">
@@ -2415,7 +2415,7 @@
 							</td></tr></c:if>
 						</tbody>
 						<tbody>
-							<c:if test="${methods.contains('hash.crc32')}"><tr data-dencode-method="hash.crc32"><th>${dc:h(msg['hash.crc32.func.encHashCRC32'])}</th><td><span id="encHashCRC32" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('hash.crc32')}"><tr data-dencode-method="hash.crc32"><th>${dc:h(msg['hash.crc32.func.encHashCrc32'])}</th><td><span id="encHashCrc32" class="for-disp"></span></td></tr></c:if>
 						</tbody>
 					</c:if>
 				</table>

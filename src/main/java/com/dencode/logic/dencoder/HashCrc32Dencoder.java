@@ -16,20 +16,36 @@
  */
 package com.dencode.logic.dencoder;
 
+import java.util.zip.CRC32;
+
 import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="hash", method="hash.sha512", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
-public class HashSHA512Dencoder {
-	
-	private HashSHA512Dencoder() {
+@Dencoder(type="hash", method="hash.crc32", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
+public class HashCrc32Dencoder {
+
+	private HashCrc32Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
-	public static String encHashSHA512(DencodeCondition cond) {
-		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-512");
+	public static String encHashCrc32(DencodeCondition cond) {
+		return encHashCrc32(cond.valueAsBinary());
+	}
+
+
+	@Deprecated
+	@DencoderFunction
+	public static String encHashCRC32(DencodeCondition cond) {
+		return encHashCrc32(cond);
+	}
+
+
+	private static String encHashCrc32(byte[] binValue) {
+		CRC32 crc = new CRC32();
+		crc.update(binValue, 0, binValue.length);
+		return Long.toHexString(crc.getValue());
 	}
 }

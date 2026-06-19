@@ -20,16 +20,23 @@ import com.dencode.logic.dencoder.annotation.Dencoder;
 import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
-@Dencoder(type="hash", method="hash.md2", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
-public class HashMD2Dencoder {
-	
-	private HashMD2Dencoder() {
+@Dencoder(type="hash", method="hash.sha256", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
+public class HashSha256Dencoder {
+
+	private HashSha256Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
-	public static String encHashMD2(DencodeCondition cond) {
-		return DencodeUtils.encHash(cond.valueAsBinary(), "MD2");
+	public static String encHashSha256(DencodeCondition cond) {
+		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-256");
+	}
+
+
+	@Deprecated
+	@DencoderFunction
+	public static String encHashSHA256(DencodeCondition cond) {
+		return encHashSha256(cond);
 	}
 }

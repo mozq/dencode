@@ -21,15 +21,22 @@ import com.dencode.logic.dencoder.annotation.DencoderFunction;
 import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="hash", method="hash.sha384", hasEncoder=true, hasDecoder=false, useOe=true, useNl=true)
-public class HashSHA384Dencoder {
-	
-	private HashSHA384Dencoder() {
+public class HashSha384Dencoder {
+
+	private HashSha384Dencoder() {
 		// NOP
 	}
-	
-	
+
+
+	@DencoderFunction
+	public static String encHashSha384(DencodeCondition cond) {
+		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-384");
+	}
+
+
+	@Deprecated
 	@DencoderFunction
 	public static String encHashSHA384(DencodeCondition cond) {
-		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-384");
+		return encHashSha384(cond);
 	}
 }

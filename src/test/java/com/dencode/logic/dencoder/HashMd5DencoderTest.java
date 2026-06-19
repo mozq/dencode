@@ -20,25 +20,25 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class HashSHA256DencoderTest {
+public class HashMd5DencoderTest {
 	private final DencoderTester tester = new DencoderTester(
-			HashSHA256Dencoder::encHashSHA256);
+			HashMd5Dencoder::encHashMd5);
 
 	@Test
 	public void test() {
-		tester.testEncoder("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", tester.options());
-		tester.testEncoder("Hello, world!", "315f5bdb76d078c43b8ac0064e4a0164612b1fce77c869345bfc94c75894edd3", tester.options());
-		tester.testEncoder("ア", "f49423c7fc7144a91dbf2657894a522c6cdf678cb728bd57ffce04be3d414b40", tester.options());
+		tester.testEncoder("", "d41d8cd98f00b204e9800998ecf8427e", tester.options());
+		tester.testEncoder("Hello, world!", "6cd3556deb0da54bca060b4c39479839", tester.options());
+		tester.testEncoder("ア", "b51b28a79559b6fb30682b6602cf8068", tester.options());
 	}
 
 	@Test
 	public void test_charset() {
-		tester.testEncoder("\u00FF", "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89", tester.options(), StandardCharsets.ISO_8859_1); // U+00FF ÿ
+		tester.testEncoder("\u00FF", "00594fd4f42ba43fc1ca0427a0576295", tester.options(), StandardCharsets.ISO_8859_1); // U+00FF ÿ
 	}
 
 	@Test
 	public void test_lineBreak() {
-		tester.testEncoder("a\nb", "7e18f737311b2dc3b2f269dd78396b0351f14fb66efa879f768cb23181883c78", tester.options(), "\n");
-		tester.testEncoder("a\nb", "18745f36a05e29072709042d6062ce54f1b08ff36c27ba80c39f81fb010c8ce2", tester.options(), "\r\n");
+		tester.testEncoder("a\nb", "8cdeb44417f3c26826595d5820cf5700", tester.options(), "\n");
+		tester.testEncoder("a\nb", "65d5f03c46e62e3f2babbe712d2ce464", tester.options(), "\r\n");
 	}
 }

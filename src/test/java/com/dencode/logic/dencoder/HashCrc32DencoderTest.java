@@ -20,25 +20,25 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class HashMD2DencoderTest {
+public class HashCrc32DencoderTest {
 	private final DencoderTester tester = new DencoderTester(
-			HashMD2Dencoder::encHashMD2);
+			HashCrc32Dencoder::encHashCrc32);
 
 	@Test
 	public void test() {
-		tester.testEncoder("", "8350e5a3e24c153df2275c9f80692773", tester.options());
-		tester.testEncoder("Hello, world!", "8cca0e965edd0e223b744f9cedf8e141", tester.options());
-		tester.testEncoder("ア", "39eb0dec41bdca20425eaefbe0055cee", tester.options());
+		tester.testEncoder("", "0", tester.options());
+		tester.testEncoder("Hello, world!", "ebe6c6e6", tester.options());
+		tester.testEncoder("ア", "65888fe6", tester.options());
 	}
 
 	@Test
 	public void test_charset() {
-		tester.testEncoder("\u00FF", "0797438d0baf3d71b7194ab3c71746b6", tester.options(), StandardCharsets.ISO_8859_1); // U+00FF ÿ
+		tester.testEncoder("\u00FF", "ff000000", tester.options(), StandardCharsets.ISO_8859_1); // U+00FF ÿ
 	}
 
 	@Test
 	public void test_lineBreak() {
-		tester.testEncoder("a\nb", "78881ab1ca3d3c009c64159092a5531f", tester.options(), "\n");
-		tester.testEncoder("a\nb", "ede8fc3d085ca1acf0c92bf32cc1610d", tester.options(), "\r\n");
+		tester.testEncoder("a\nb", "ef0790fb", tester.options(), "\n");
+		tester.testEncoder("a\nb", "f35534d7", tester.options(), "\r\n");
 	}
 }

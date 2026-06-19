@@ -20,9 +20,9 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
-public class HashSHA384DencoderTest {
+public class HashSha384DencoderTest {
 	private final DencoderTester tester = new DencoderTester(
-			HashSHA384Dencoder::encHashSHA384);
+			HashSha384Dencoder::encHashSha384);
 
 	@Test
 	public void test() {
