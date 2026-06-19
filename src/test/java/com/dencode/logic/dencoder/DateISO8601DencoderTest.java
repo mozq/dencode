@@ -54,7 +54,7 @@ public class DateISO8601DencoderTest {
 	public void test_extended() {
 		// Method description example
 		extTester.testEncoder("444972896.789", "1984-02-07T12:34:56.789+09:00", extTester.options("."), TOKYO);
-		extTester.testEncoder("Tue, 07 Feb 1984 12:34:56 JST", "1984-02-07T12:34:56+09:00", extTester.options("."), TOKYO);
+		extTester.testEncoder("Tue, 07 Feb 1984 12:34:56 +0900", "1984-02-07T12:34:56+09:00", extTester.options("."), TOKYO);
 
 		// Time zone conversion
 		extTester.testEncoder("1984-02-07T12:34:56+09:00", "1984-02-07T03:34:56Z", extTester.options("."), UTC);

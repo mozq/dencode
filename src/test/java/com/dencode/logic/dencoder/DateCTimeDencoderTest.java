@@ -31,37 +31,37 @@ public class DateCTimeDencoderTest {
 	@Test
 	public void test() {
 		// Method description example
-		tester.testEncoder("444972896.789", "Tue Feb 07 12:34:56 1984", tester.options(), TOKYO);
-		tester.testEncoder("1984-02-07T12:34:56.789+09:00", "Tue Feb 07 12:34:56 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896.789", "Tue Feb  7 12:34:56 1984", tester.options(), TOKYO);
+		tester.testEncoder("1984-02-07T12:34:56.789+09:00", "Tue Feb  7 12:34:56 1984", tester.options(), TOKYO);
 
 		// Fractional seconds are not emitted by ctime formatter
-		tester.testEncoder("444972896", "Tue Feb 07 12:34:56 1984", tester.options(), TOKYO);
-		tester.testEncoder("444972896.789123456", "Tue Feb 07 12:34:56 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896", "Tue Feb  7 12:34:56 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896.789123456", "Tue Feb  7 12:34:56 1984", tester.options(), TOKYO);
 	}
 
 	@Test
 	public void test_zone() {
-		tester.testEncoder("1984-02-07T12:34:56+09:00", "Tue Feb 07 03:34:56 1984", tester.options(), UTC);
-		tester.testEncoder("1984-02-07T12:34:56+09:00", "Mon Feb 06 22:34:56 1984", tester.options(), NEW_YORK);
+		tester.testEncoder("1984-02-07T12:34:56+09:00", "Tue Feb  7 03:34:56 1984", tester.options(), UTC);
+		tester.testEncoder("1984-02-07T12:34:56+09:00", "Mon Feb  6 22:34:56 1984", tester.options(), NEW_YORK);
 
 		// Local input is interpreted in the selected zone
-		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb 07 12:34:56 1984", tester.options(), TOKYO);
-		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb 07 12:34:56 1984", tester.options(), UTC);
-		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb 07 12:34:56 1984", tester.options(), NEW_YORK);
+		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb  7 12:34:56 1984", tester.options(), TOKYO);
+		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb  7 12:34:56 1984", tester.options(), UTC);
+		tester.testEncoder("1984-02-07T12:34:56", "Tue Feb  7 12:34:56 1984", tester.options(), NEW_YORK);
 	}
 
 	@Test
 	public void test_unixTimeInput() {
-		tester.testEncoder("0", "Thu Jan 01 00:00:00 1970", tester.options(), UTC);
-		tester.testEncoder("0", "Thu Jan 01 09:00:00 1970", tester.options(), TOKYO);
+		tester.testEncoder("0", "Thu Jan  1 00:00:00 1970", tester.options(), UTC);
+		tester.testEncoder("0", "Thu Jan  1 09:00:00 1970", tester.options(), TOKYO);
 		tester.testEncoder("-1", "Wed Dec 31 23:59:59 1969", tester.options(), UTC);
 	}
 
 	@Test
 	public void test_lines() {
-		tester.testEncoder("444972896\n444972897", "Tue Feb 07 12:34:56 1984\nTue Feb 07 12:34:57 1984", tester.options(), TOKYO);
-		tester.testEncoder("444972896\r\n444972897", "Tue Feb 07 12:34:56 1984\nTue Feb 07 12:34:57 1984", tester.options(), TOKYO);
-		tester.testEncoder("444972896\n\n444972897", "Tue Feb 07 12:34:56 1984\n\nTue Feb 07 12:34:57 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896\n444972897", "Tue Feb  7 12:34:56 1984\nTue Feb  7 12:34:57 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896\r\n444972897", "Tue Feb  7 12:34:56 1984\nTue Feb  7 12:34:57 1984", tester.options(), TOKYO);
+		tester.testEncoder("444972896\n\n444972897", "Tue Feb  7 12:34:56 1984\n\nTue Feb  7 12:34:57 1984", tester.options(), TOKYO);
 	}
 
 	@Test

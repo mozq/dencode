@@ -4,4 +4,4 @@
 
 <p>Na przykład data 23 stycznia 2000, 01:23:45.678 (JST) sformatowana jako ctime:</p>
 
-<pre>Mon Jan 03 01:23:45 2000</pre>
+<pre>Sun Jan 23 01:23:45 2000</pre>

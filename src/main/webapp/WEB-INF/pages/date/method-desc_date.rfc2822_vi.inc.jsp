@@ -5,4 +5,4 @@
 
 <p>Ví dụ, nếu chuyển đổi ngày 23 tháng 1 năm 2000, 01:23:45.678 (JST) sang RFC 2822, kết quả sẽ như sau:</p>
 
-<pre>Sun, 23 Jan 2000 01:23:45 JST</pre>
+<pre>Sun, 23 Jan 2000 01:23:45 +0900</pre>

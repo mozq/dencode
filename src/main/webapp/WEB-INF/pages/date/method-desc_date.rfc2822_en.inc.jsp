@@ -5,4 +5,4 @@
 
 <p>For example, converting January 23, 2000 1:23:45.678 (JST) to RFC 2822 results in the following:</p>
 
-<pre>Sun, 23 Jan 2000 01:23:45 JST</pre>
+<pre>Sun, 23 Jan 2000 01:23:45 +0900</pre>

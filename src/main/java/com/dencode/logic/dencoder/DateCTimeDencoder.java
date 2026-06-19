@@ -18,6 +18,8 @@ package com.dencode.logic.dencoder;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,26 +29,31 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="date", method="date.ctime", hasEncoder=true, hasDecoder=false, useTz=true)
 public class DateCTimeDencoder {
-	
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss uuuu", Locale.US);
-	
+
+	private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
+			.appendPattern("EEE MMM ")
+			.padNext(2, ' ')
+			.appendValue(ChronoField.DAY_OF_MONTH)
+			.appendPattern(" HH:mm:ss uuuu")
+			.toFormatter(Locale.US);
+
 	private DateCTimeDencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encDateCTime(DencodeCondition cond) {
 		return encDateCTime(cond.valueAsDates());
 	}
-	
-	
+
+
 	private static String encDateCTime(List<ZonedDateTime> vals) {
 		return DencodeUtils.dencodeLines(vals, (dateVal) -> {
 			if (dateVal == null) {
 				return null;
 			}
-			
+
 			return FORMATTER.format(dateVal);
 		});
 	}

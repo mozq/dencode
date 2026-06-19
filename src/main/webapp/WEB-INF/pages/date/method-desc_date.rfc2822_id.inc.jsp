@@ -5,4 +5,4 @@
 
 <p>Sebagai contoh, jika Anda mengonversi 23 Januari 2000, 01:23:45.678 (JST) ke RFC 2822, hasilnya adalah sebagai berikut.</p>
 
-<pre>Sun, 23 Jan 2000 01:23:45 JST</pre>
+<pre>Sun, 23 Jan 2000 01:23:45 +0900</pre>

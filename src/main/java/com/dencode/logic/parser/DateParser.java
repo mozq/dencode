@@ -49,19 +49,19 @@ import java.util.regex.Pattern;
 import com.dencode.logic.util.CharWidthUtils;
 
 public class DateParser {
-	
+
 	private static final int DATE_MAX_LENGTH = 50;
-	
+
 	private static final DateTimeFormatter DATE_FORMATTER_DATE_TIME_SEPARATOR = new DateTimeFormatterBuilder().appendPattern("['T']['t'][' ']['　']").toFormatter();
 	private static final DateTimeFormatter DATE_FORMATTER_ZONE_SEPARATOR = new DateTimeFormatterBuilder().appendPattern("[','][' ']").toFormatter();
-	
+
 	// "[X][Z]['['VV']']"
 	private static final DateTimeFormatter DATE_FORMATTER_ZONE = new DateTimeFormatterBuilder()
 			.optionalStart().appendZoneOrOffsetId().optionalEnd() // +HH:MM, America/New_York, UTC, UTC+HH:MM
 			.optionalStart().appendPattern("Z").optionalEnd() // +HHMM
 			.optionalStart().appendLiteral('[').appendZoneRegionId().appendLiteral(']').optionalEnd() // [America/New_York]
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// "[[' ']X['['VV']']]"
 	private static final DateTimeFormatter DATE_FORMATTER_OPTION_ZONE = new DateTimeFormatterBuilder()
 			.optionalStart()
@@ -69,19 +69,19 @@ public class DateParser {
 			.append(DATE_FORMATTER_ZONE)
 			.optionalEnd()
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// u-MMM-d / EEE MMM d u
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_YMMMD = new DateTimeFormatterBuilder()
 			.parseCaseInsensitive()
 			.optionalStart().appendPattern("uuuu['-']['/']['.'][','][' ']MMMM['-']['/']['.'][','][' ']d['st']['nd']['rd']['th']").optionalEnd()
 			.optionalStart().appendPattern("uuuu['-']['/']['.'][','][' ']MMM['-']['/']['.'][','][' ']d['st']['nd']['rd']['th']").optionalEnd()
-			.optionalStart().appendPattern("[EEE[','][' ']]MMMM['-']['/']['.'][','][' ']d['st']['nd']['rd']['th'][['-']['/']['.'][','][' ']uuuu]").optionalEnd()
-			.optionalStart().appendPattern("[EEE[','][' ']]MMM['-']['/']['.'][','][' ']d['st']['nd']['rd']['th'][['-']['/']['.'][','][' ']uuuu]").optionalEnd()
+			.optionalStart().appendPattern("[EEE[','][' ']]MMMM['-']['/']['.'][','][' '][' ']d['st']['nd']['rd']['th'][['-']['/']['.'][','][' ']uuuu]").optionalEnd()
+			.optionalStart().appendPattern("[EEE[','][' ']]MMM['-']['/']['.'][','][' '][' ']d['st']['nd']['rd']['th'][['-']['/']['.'][','][' ']uuuu]").optionalEnd()
 			.optionalStart().appendPattern("[EEE[','][' ']]d['st']['nd']['rd']['th']['-']['/']['.'][','][' ']MMMM[['-']['/']['.'][','][' ']uuuu]").optionalEnd()
 			.optionalStart().appendPattern("[EEE[','][' ']]d['st']['nd']['rd']['th']['-']['/']['.'][','][' ']MMM[['-']['/']['.'][','][' ']uuuu]").optionalEnd()
 			.parseCaseSensitive()
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// ISO Basic
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_TIME_ISO_BASIC = new DateTimeFormatterBuilder()
 			.appendPattern("uuuuMMdd")
@@ -90,13 +90,13 @@ public class DateParser {
 			.appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, false)
 			.appendPattern("]]]")
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// ISO Week / Ordinal
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_ISO = new DateTimeFormatterBuilder()
 			.optionalStart().append(DateTimeFormatter.ISO_WEEK_DATE).optionalEnd()
 			.optionalStart().append(DateTimeFormatter.ISO_ORDINAL_DATE).optionalEnd()
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// "u-M[-d]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_YMD = new DateTimeFormatterBuilder()
 			//.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
@@ -104,14 +104,14 @@ public class DateParser {
 			.optionalStart().appendPattern("uuuu'/'M['/'d]").optionalEnd()
 			.optionalStart().appendPattern("uuuu'.'M['.'d]").optionalEnd()
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// "u'年'[M'月'[d'日']]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_YMD_JP = new DateTimeFormatterBuilder()
 			//.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
 			.appendPattern("uuuu'年'[M'月'[d'日']]")
 			.toFormatter(Locale.JAPAN)
 			.withChronology(JapaneseChronology.INSTANCE);
-	
+
 	// "Gy'年'[M'月'[d'日']]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_DATE_GYMD_JP_DEFAULT = new DateTimeFormatterBuilder()
 			.optionalStart().appendPattern("[GGGGG][GGGG][GGG]y'年'[M'月'[d'日']]").optionalEnd()
@@ -122,14 +122,14 @@ public class DateParser {
 			.optionalStart().appendPattern("[GGGGG][GGGG][GGG]y['.'M['.'d]]").optionalEnd()
 			.toFormatter(Locale.JAPAN)
 			.withChronology(JapaneseChronology.INSTANCE);
-	
+
 	// "H[:m[:s[.n]]]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_TIME_HMS = new DateTimeFormatterBuilder()
 			.appendPattern("H[:m[:s[[.][,]")
 			.appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, false)
 			.appendPattern("]]]")
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// "H'時'[m'分'[s[.n]'秒']]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_TIME_HMS_JP = new DateTimeFormatterBuilder()
 			.appendPattern("H'時'[m'分'[s[[.][,]")
@@ -137,7 +137,7 @@ public class DateParser {
 			.appendPattern("]'秒']]")
 			.toFormatter(Locale.JAPAN)
 			.withChronology(JapaneseChronology.INSTANCE);
-	
+
 	// "h[:m[:s[.n]]]a"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_TIME_HMS_AMPM = new DateTimeFormatterBuilder()
 			.appendPattern("h[:m[:s[[.][,]")
@@ -148,7 +148,7 @@ public class DateParser {
 			.appendPattern("a")
 			.parseCaseSensitive()
 			.toFormatter(Locale.ENGLISH);
-	
+
 	// "ah'時'[m'分'[s[.n]'秒']]"
 	private static final DateTimeFormatter DATE_FORMATTER_LOCAL_TIME_HMS_AMPM_JP = new DateTimeFormatterBuilder()
 			.optionalStart()
@@ -169,7 +169,7 @@ public class DateParser {
 			.optionalEnd()
 			.toFormatter(Locale.JAPAN)
 			.withChronology(JapaneseChronology.INSTANCE);
-	
+
 	private static final DateTimeFormatter[] DATE_FORMATTERS = {
 			// Date time
 			new DateTimeFormatterBuilder()
@@ -241,9 +241,9 @@ public class DateParser {
 				.toFormatter(Locale.JAPAN)
 				.withChronology(JapaneseChronology.INSTANCE),
 	};
-	
+
 	private static final Pattern DATE_ZONE_SHORT_NAME_PATTERN = Pattern.compile("[A-Z]{3}");
-	
+
 	private DateParser() {
 		// NOP
 	}
@@ -253,17 +253,17 @@ public class DateParser {
 		if (val == null || val.isEmpty()) {
 			return null;
 		}
-		
+
 		if (DATE_MAX_LENGTH < val.length()) {
 			return null;
 		}
-		
+
 		if (val.equalsIgnoreCase("now")) {
 			return ZonedDateTime.now(zone);
 		}
-		
+
 		String strDate = CharWidthUtils.toHalfWidth(val, EnumSet.of(ALPHABET, NUMBER, SYMBOL, SPACE));
-		
+
 		try {
 			// Parse as UNIX time
 			BigDecimal epochSec = new BigDecimal(strDate);
@@ -273,7 +273,7 @@ public class DateParser {
 		} catch (NumberFormatException | DateTimeException e) {
 			// THRU
 		}
-		
+
 		strDate = strDate.replace("元年", "1年");
 		Matcher matcher = DATE_ZONE_SHORT_NAME_PATTERN.matcher(strDate);
 		if (matcher.find()) {
@@ -294,19 +294,19 @@ public class DateParser {
 			matcher.appendTail(sb);
 			strDate = sb.toString();
 		}
-		
+
 		try {
 			return parseDateAsZonedDateTime(strDate, DATE_FORMATTERS, zone, 1970, Month.JANUARY, 1);
 		} catch (Exception e) {
 			// THRU
 		}
-		
+
 		return null;
 	}
-	
+
 	private static ZonedDateTime parseDateAsZonedDateTime(String date, DateTimeFormatter[] formatters, ZoneId zone, int defaultYear, Month defaultMonth, int defaultDay) {
 		DateTimeParseException exception = null;
-		
+
 		for (DateTimeFormatter formatter : formatters) {
 			try {
 				TemporalAccessor temporal = formatter.parseBest(date, ZonedDateTime::from, OffsetDateTime::from, LocalDateTime::from, LocalDate::from, OffsetTime::from, LocalTime::from, YearMonth::from, MonthDay::from);
@@ -315,19 +315,19 @@ public class DateParser {
 				exception = e;
 			}
 		}
-		
+
 		if (exception != null) {
 			throw exception;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static ZonedDateTime toZonedDateTime(TemporalAccessor temporal, ZoneId zone, int defaultYear, Month defaultMonth, int defaultDay) {
 		if (temporal == null) {
 			return null;
 		}
-		
+
 		ZonedDateTime zonedDT;
 		if (temporal instanceof ZonedDateTime) {
 			zonedDT = ((ZonedDateTime)temporal).withZoneSameInstant(zone);
@@ -353,7 +353,7 @@ public class DateParser {
 			Instant instant = Instant.from(temporal);
 			zonedDT = ZonedDateTime.ofInstant(instant, zone);
 		}
-		
+
 		return zonedDT;
 	}
 }

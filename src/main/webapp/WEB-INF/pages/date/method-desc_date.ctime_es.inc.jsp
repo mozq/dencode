@@ -4,4 +4,4 @@
 
 <p>Por ejemplo, convertir 2000-01-23 01:23:45.678 (JST) a ctime da el siguiente resultado:</p>
 
-<pre>Mon Jan 03 01:23:45 2000</pre>
+<pre>Sun Jan 23 01:23:45 2000</pre>

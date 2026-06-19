@@ -16,7 +16,6 @@
  */
 package com.dencode.logic.dencoder;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,30 +27,26 @@ import com.dencode.logic.model.DencodeCondition;
 
 @Dencoder(type="date", method="date.rfc2822", hasEncoder=true, hasDecoder=false, useTz=true)
 public class DateRFC2822Dencoder {
-	
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("EEE, dd MMM uuuu HH:mm:ss zzz", Locale.US);
-	
+
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("EEE, dd MMM uuuu HH:mm:ss Z", Locale.US);
+
 	private DateRFC2822Dencoder() {
 		// NOP
 	}
-	
-	
+
+
 	@DencoderFunction
 	public static String encDateRFC2822(DencodeCondition cond) {
 		return encDateRFC2822(cond.valueAsDates());
 	}
-	
-	
+
+
 	private static String encDateRFC2822(List<ZonedDateTime> vals) {
 		return DencodeUtils.dencodeLines(vals, (dateVal) -> {
 			if (dateVal == null) {
 				return null;
 			}
-			
-			if (dateVal.getZone().getId().equals("UTC")) {
-				dateVal = dateVal.withZoneSameInstant(ZoneId.of("GMT"));
-			}
-			
+
 			return FORMATTER.format(dateVal);
 		});
 	}

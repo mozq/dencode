@@ -4,4 +4,4 @@
 
 <p>Sebagai contoh, jika Anda mengonversi 23 Januari 2000, 01:23:45.678 (JST) ke ctime, hasilnya adalah sebagai berikut.</p>
 
-<pre>Mon Jan 03 01:23:45 2000</pre>
+<pre>Sun Jan 23 01:23:45 2000</pre>

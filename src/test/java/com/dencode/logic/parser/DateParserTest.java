@@ -84,10 +84,17 @@ public class DateParserTest {
 	@Test
 	public void test_zone() {
 		assertZonedDateTime("1984-02-07T03:34:56Z[UTC]", DateParser.parseDateAsZonedDateTime("Tue, 07 Feb 1984 12:34:56 JST", UTC));
+		assertZonedDateTime("1984-02-07T03:34:56Z[UTC]", DateParser.parseDateAsZonedDateTime("Tue, 07 Feb 1984 12:34:56 +0900", UTC));
 		assertZonedDateTime("1984-02-06T22:34:56-05:00[America/New_York]", DateParser.parseDateAsZonedDateTime("1984-02-07T12:34:56+09:00", NEW_YORK));
 		assertZonedDateTime("1984-02-07T12:34:56Z[UTC]", DateParser.parseDateAsZonedDateTime("1984-02-07T12:34:56 UTC", UTC));
 		assertZonedDateTime("1984-02-07T12:34:56Z[UTC]", DateParser.parseDateAsZonedDateTime("1984-02-07T12:34:56 GMT", UTC));
 		assertZonedDateTime("1984-02-07T17:34:56Z[UTC]", DateParser.parseDateAsZonedDateTime("Tue, 07 Feb 1984 12:34:56 EST", UTC));
+	}
+
+	@Test
+	public void test_ctime() {
+		assertZonedDateTime("1984-02-07T12:34:56+09:00[Asia/Tokyo]", DateParser.parseDateAsZonedDateTime("Tue Feb  7 12:34:56 1984", TOKYO));
+		assertZonedDateTime("2000-01-23T01:23:45+09:00[Asia/Tokyo]", DateParser.parseDateAsZonedDateTime("Sun Jan 23 01:23:45 2000", TOKYO));
 	}
 
 	@Test
