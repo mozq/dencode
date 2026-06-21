@@ -75,6 +75,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
         - [Kebab Case](https://dencode.com/string/kebab-case)
     - [Letter Case (Upper, Lower, Swap, Capital)](https://dencode.com/string/letter-case)
     - [Character Width (Half, Full)](https://dencode.com/string/character-width)
+    - [Japanese Kana / Romaji](https://dencode.com/string/japanese-kana)
     - [Unicode Normalization](https://dencode.com/string/unicode-normalization)
     - [Unicode Styled Text](https://dencode.com/string/unicode-styled-text)
     - [Text Reverse](https://dencode.com/string/text-reverse)

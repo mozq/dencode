@@ -103,6 +103,7 @@
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/letter-case" data-dencode-method="string.letter-case">${dc:h(msg['string.letter-case.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/character-width" data-dencode-method="string.character-width">${dc:h(msg['string.character-width.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/string/japanese-kana" data-dencode-method="string.japanese-kana">${dc:h(msg['string.japanese-kana.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/string/unicode-normalization" data-dencode-method="string.unicode-normalization">${dc:h(msg['string.unicode-normalization.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/string/unicode-styled-text" data-dencode-method="string.unicode-styled-text">${dc:h(msg['string.unicode-styled-text.method'])}</a></li>
@@ -1394,6 +1395,19 @@
 							</td></tr></c:if>
 							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrHalfWidth'])}</th><td><span id="encStrHalfWidth" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.character-width')}"><tr data-dencode-method="string.character-width"><th>${dc:h(msg['string.character-width.func.encStrFullWidth'])}</th><td><span id="encStrFullWidth" class="for-disp"></span></td></tr></c:if>
+							<c:if test="${methods.contains('string.japanese-kana')}"><tr data-dencode-method="string.japanese-kana"><th>${dc:h(msg['string.japanese-kana.func.encStrJapaneseKana'])}</th><td><span id="encStrJapaneseKana" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['string.japanese-kana.script'])}</span>
+										<select name="string.japanese-kana.script" class="dencode-option form-select">
+											<option value="hiragana">${dc:h(msg['string.japanese-kana.script.hiragana'])}</option>
+											<option value="katakana">${dc:h(msg['string.japanese-kana.script.katakana'])}</option>
+											<option value="romaji-hepburn">${dc:h(msg['string.japanese-kana.script.romaji-hepburn'])}</option>
+											<option value="romaji-kunrei">${dc:h(msg['string.japanese-kana.script.romaji-kunrei'])}</option>
+										</select>
+									</div>
+								</div>
+							</td></tr></c:if>
 							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFC'])}</th><td><span id="encStrUnicodeNFC" class="for-disp"></span></td></tr></c:if>
 							<c:if test="${methods.contains('string.unicode-normalization')}"><tr data-dencode-method="string.unicode-normalization"><th>${dc:h(msg['string.unicode-normalization.func.encStrUnicodeNFKC'])}</th><td><span id="encStrUnicodeNFKC" class="for-disp"></span></td></tr></c:if>
 						</tbody>
