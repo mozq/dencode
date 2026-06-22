@@ -32,11 +32,4 @@ public class HashSha1Dencoder {
 	public static String encHashSha1(DencodeCondition cond) {
 		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-1");
 	}
-
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashSHA1(DencodeCondition cond) {
-		return encHashSha1(cond);
-	}
 }

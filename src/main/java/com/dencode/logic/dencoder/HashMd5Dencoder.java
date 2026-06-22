@@ -32,11 +32,4 @@ public class HashMd5Dencoder {
 	public static String encHashMd5(DencodeCondition cond) {
 		return DencodeUtils.encHash(cond.valueAsBinary(), "MD5");
 	}
-
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashMD5(DencodeCondition cond) {
-		return encHashMd5(cond);
-	}
 }

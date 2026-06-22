@@ -32,11 +32,4 @@ public class HashMd2Dencoder {
 	public static String encHashMd2(DencodeCondition cond) {
 		return DencodeUtils.encHash(cond.valueAsBinary(), "MD2");
 	}
-
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashMD2(DencodeCondition cond) {
-		return encHashMd2(cond);
-	}
 }

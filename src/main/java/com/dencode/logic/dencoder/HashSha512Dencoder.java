@@ -32,11 +32,4 @@ public class HashSha512Dencoder {
 	public static String encHashSha512(DencodeCondition cond) {
 		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-512");
 	}
-
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashSHA512(DencodeCondition cond) {
-		return encHashSha512(cond);
-	}
 }

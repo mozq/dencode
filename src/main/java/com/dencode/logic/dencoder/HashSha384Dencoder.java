@@ -32,11 +32,4 @@ public class HashSha384Dencoder {
 	public static String encHashSha384(DencodeCondition cond) {
 		return DencodeUtils.encHash(cond.valueAsBinary(), "SHA-384");
 	}
-
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashSHA384(DencodeCondition cond) {
-		return encHashSha384(cond);
-	}
 }

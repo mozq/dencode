@@ -35,14 +35,6 @@ public class HashCrc32Dencoder {
 		return encHashCrc32(cond.valueAsBinary());
 	}
 
-
-	@Deprecated
-	@DencoderFunction
-	public static String encHashCRC32(DencodeCondition cond) {
-		return encHashCrc32(cond);
-	}
-
-
 	private static String encHashCrc32(byte[] binValue) {
 		CRC32 crc = new CRC32();
 		crc.update(binValue, 0, binValue.length);
