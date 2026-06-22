@@ -183,6 +183,7 @@
 					<li><a href="${dc:h(basePath)}/cipher/affine" data-dencode-method="cipher.affine">${dc:h(msg['cipher.affine.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/cipher/vigenere" data-dencode-method="cipher.vigenere">${dc:h(msg['cipher.vigenere.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/cipher/baconian" data-dencode-method="cipher.baconian">${dc:h(msg['cipher.baconian.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/cipher/enigma" data-dencode-method="cipher.enigma">${dc:h(msg['cipher.enigma.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/cipher/jis-keyboard" data-dencode-method="cipher.jis-keyboard">${dc:h(msg['cipher.jis-keyboard.method'])}</a></li>
@@ -642,6 +643,17 @@
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['cipher.vigenere.key'])}</span>
 										<input type="text" name="_cipher.vigenere.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.vigenere.key.tooltip'])}" data-sync-with="cipher.vigenere.key" />
+									</div>
+								</div>
+							</td></tr></c:if>
+							<c:if test="${methods.contains('cipher.baconian')}"><tr data-dencode-method="cipher.baconian"><th>${dc:h(msg['cipher.baconian.func.decCipherBaconian'])}</th><td><span id="decCipherBaconian" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.baconian.variant'])}</span>
+										<select name="_cipher.baconian.variant" class="dencode-option form-select" data-sync-with="cipher.baconian.variant">
+											<option value="26">${dc:h(msg['cipher.baconian.variant.26'])}</option>
+											<option value="24">${dc:h(msg['cipher.baconian.variant.24'])}</option>
+										</select>
 									</div>
 								</div>
 							</td></tr></c:if>
@@ -1867,6 +1879,31 @@
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['cipher.vigenere.key'])}</span>
 										<input type="text" name="cipher.vigenere.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.vigenere.key.tooltip'])}" />
+									</div>
+								</div>
+							</td></tr></c:if>
+							<c:if test="${methods.contains('cipher.baconian')}"><tr data-dencode-method="cipher.baconian"><th>${dc:h(msg['cipher.baconian.func.encCipherBaconian'])}</th><td><span id="encCipherBaconian" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.baconian.variant'])}</span>
+										<select name="cipher.baconian.variant" class="dencode-option form-select">
+											<option value="26">${dc:h(msg['cipher.baconian.variant.26'])}</option>
+											<option value="24">${dc:h(msg['cipher.baconian.variant.24'])}</option>
+										</select>
+									</div>
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.baconian.notation'])}</span>
+										<select name="cipher.baconian.notation" class="dencode-option form-select">
+											<option value="ab">${dc:h(msg['cipher.baconian.notation.ab'])}</option>
+											<option value="01">${dc:h(msg['cipher.baconian.notation.01'])}</option>
+										</select>
+									</div>
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.baconian.grouping'])}</span>
+										<select name="cipher.baconian.grouping" class="dencode-option form-select">
+											<option value="space">${dc:h(msg['cipher.baconian.grouping.space'])}</option>
+											<option value="none">${dc:h(msg['cipher.baconian.grouping.none'])}</option>
+										</select>
 									</div>
 								</div>
 							</td></tr></c:if>
