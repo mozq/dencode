@@ -76,7 +76,7 @@ public class CipherBaconianDencoder {
 		char groupingCh = GROUPING_CHARS.getOrDefault(grouping, GROUPING_CHARS.get(DEFAULT_GROUPING));
 
 		int len = val.length();
-		StringBuilder sb = new StringBuilder(len * ((groupingCh == GROUPING_NONE_CHAR) ? CODE_LEN : CODE_LEN + 1));
+		StringBuilder sb = new StringBuilder(encodeCapacity(val, variantChars, groupingCh));
 		boolean hasPrev = false;
 		boolean prevSupported = false;
 
@@ -100,6 +100,49 @@ public class CipherBaconianDencoder {
 		}
 
 		return sb.toString();
+	}
+
+	private static int encodeCapacity(String val, char[] variantChars, char groupingCh) {
+		int len = val.length();
+		int supportedCount = countSupportedChars(val, variantChars);
+		long capacity = len + ((long)supportedCount * (CODE_LEN - 1));
+
+		if (groupingCh != GROUPING_NONE_CHAR) {
+			capacity += countGroupingChars(val, variantChars);
+		}
+
+		return (capacity <= Integer.MAX_VALUE) ? (int)capacity : len;
+	}
+
+	private static int countSupportedChars(String val, char[] variantChars) {
+		int len = val.length();
+		int count = 0;
+		for (int i = 0; i < len; i++) {
+			if (charIndex(val.charAt(i), variantChars) != -1) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	private static int countGroupingChars(String val, char[] variantChars) {
+		int len = val.length();
+		int count = 0;
+		boolean hasPrev = false;
+		boolean prevSupported = false;
+
+		for (int i = 0; i < len; i++) {
+			boolean supported = (charIndex(val.charAt(i), variantChars) != -1);
+			if (hasPrev && (prevSupported || supported)) {
+				count++;
+			}
+
+			hasPrev = true;
+			prevSupported = supported;
+		}
+
+		return count;
 	}
 
 	private static String decCipherBaconian(String val, String variant) {
