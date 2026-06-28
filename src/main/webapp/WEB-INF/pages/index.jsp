@@ -183,6 +183,7 @@
 					<li><a href="${dc:h(basePath)}/cipher/affine" data-dencode-method="cipher.affine">${dc:h(msg['cipher.affine.method'])}</a></li>
 					<li><hr /></li>
 					<li><a href="${dc:h(basePath)}/cipher/vigenere" data-dencode-method="cipher.vigenere">${dc:h(msg['cipher.vigenere.method'])}</a></li>
+					<li><a href="${dc:h(basePath)}/cipher/playfair" data-dencode-method="cipher.playfair">${dc:h(msg['cipher.playfair.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/cipher/baconian" data-dencode-method="cipher.baconian">${dc:h(msg['cipher.baconian.method'])}</a></li>
 					<li><a href="${dc:h(basePath)}/cipher/enigma" data-dencode-method="cipher.enigma">${dc:h(msg['cipher.enigma.method'])}</a></li>
 					<li><hr /></li>
@@ -643,6 +644,14 @@
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['cipher.vigenere.key'])}</span>
 										<input type="text" name="_cipher.vigenere.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.vigenere.key.tooltip'])}" data-sync-with="cipher.vigenere.key" />
+									</div>
+								</div>
+							</td></tr></c:if>
+							<c:if test="${methods.contains('cipher.playfair')}"><tr data-dencode-method="cipher.playfair"><th>${dc:h(msg['cipher.playfair.func.decCipherPlayfair'])}</th><td><span id="decCipherPlayfair" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.playfair.key'])}</span>
+										<input type="text" name="_cipher.playfair.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.playfair.key.tooltip'])}" data-sync-with="cipher.playfair.key" />
 									</div>
 								</div>
 							</td></tr></c:if>
@@ -1879,6 +1888,14 @@
 									<div class="input-group">
 										<span class="input-group-text">${dc:h(msg['cipher.vigenere.key'])}</span>
 										<input type="text" name="cipher.vigenere.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.vigenere.key.tooltip'])}" />
+									</div>
+								</div>
+							</td></tr></c:if>
+							<c:if test="${methods.contains('cipher.playfair')}"><tr data-dencode-method="cipher.playfair"><th>${dc:h(msg['cipher.playfair.func.encCipherPlayfair'])}</th><td><span id="encCipherPlayfair" class="for-disp"></span>
+								<div class="dencode-option-group">
+									<div class="input-group">
+										<span class="input-group-text">${dc:h(msg['cipher.playfair.key'])}</span>
+										<input type="text" name="cipher.playfair.key" class="dencode-option form-control" value="" placeholder="${dc:h(msg['cipher.playfair.key.tooltip'])}" />
 									</div>
 								</div>
 							</td></tr></c:if>

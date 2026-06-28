@@ -116,6 +116,7 @@ gcloud app deploy build/app/app.yaml --no-promote --no-stop-previous-version
     - [Atbash Cipher](https://dencode.com/cipher/atbash)
     - [Affine Cipher](https://dencode.com/cipher/affine)
     - [Vigenère Cipher](https://dencode.com/cipher/vigenere)
+    - [Playfair Cipher](https://dencode.com/cipher/playfair)
     - [Baconian Cipher](https://dencode.com/cipher/baconian)
     - [Enigma Cipher](https://dencode.com/cipher/enigma)
     - [JIS Keyboard](https://dencode.com/cipher/jis-keyboard)
